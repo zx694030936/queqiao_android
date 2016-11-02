@@ -96,7 +96,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     finish();
                     MainActivity.intent(LoginActivity.this,new String[]{""});
                 }else {
-                    toast(response.body().getMsg());
+                    toast(response.body().getMsg())  ;
                 }
             }
 
