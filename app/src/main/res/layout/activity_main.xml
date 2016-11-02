@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activity.main.MainActivity">
+    <!--底部的选择按钮-->
+    <com.queqiaolove.widget.MyRadioGroup
+        android:id="@+id/rg_maintab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_queqiao"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/rb_queqiao_main_selector"
+            android:drawablePadding="5dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="11dp"
+            android:paddingTop="12dp"
+            android:text="鹊桥"
+            android:textColor="@color/gray_normal_text"
+            android:textSize="10dp" />
+
+        <RadioButton
+            android:id="@+id/rb_find"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/rb_find_main_selector"
+            android:drawablePadding="5dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="11dp"
+            android:paddingTop="10dp"
+            android:text="发现"
+            android:textColor="@color/gray_normal_text"
+            android:textSize="12sp" />
+        <View
+            android:layout_width="78dp"
+            android:layout_height="10dp"/>
+        <RadioButton
+            android:id="@+id/rb_message"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/rb_message_main_selector"
+            android:drawablePadding="5dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="11dp"
+            android:paddingTop="12dp"
+            android:text="消息"
+            android:textColor="@color/gray_normal_text"
+            android:textSize="10dp" />
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/rb_mine_main_selector"
+            android:drawablePadding="5dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="11dp"
+            android:paddingTop="12dp"
+            android:text="个人"
+            android:textColor="@color/gray_normal_text"
+            android:textSize="10dp" />
+
+    </com.queqiaolove.widget.MyRadioGroup>
+    <!--分割线-->
+    <View
+        android:id="@+id/v_split"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_above="@id/rg_maintab"
+        android:background="#cccccc"
+        />
+    <!--顶部的viewpage-->
+    <com.queqiaolove.widget.NoScrollViewPager
+        android:id="@+id/vp_noscrollmain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/v_split"
+        android:background="@color/white" />
+
+    <!--直播按钮-->
+    <ImageView
+        android:id="@+id/iv_pusher_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dp"
+        android:src="@mipmap/btn_pusher_main"
+        android:scaleType="centerCrop"/>
+
+</RelativeLayout>
