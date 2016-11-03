@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.javabean.RecommendDataBean;
+import com.queqiaolove.javabean.live.LiveUrlListBean;
 import com.queqiaolove.util.CommonUtils;
 
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/17.
  */
-public class RecommendPcLiveGvAdapter extends BaseAdapter {
+public class PcLiveGvAdapter extends BaseAdapter {
     private final Activity mActivity;
-    private final List<RecommendDataBean.PczbListBean> pclist;
+    private final List<LiveUrlListBean.ListBean> pclist;
 
-    public RecommendPcLiveGvAdapter(Activity activity, List<RecommendDataBean.PczbListBean> list) {
+    public PcLiveGvAdapter(Activity activity, List<LiveUrlListBean.ListBean>list) {
         mActivity = activity;
         pclist = list;
     }
@@ -54,7 +54,7 @@ public class RecommendPcLiveGvAdapter extends BaseAdapter {
         holder.tv_anchor_pclive = (TextView) convertView.findViewById(R.id.tv_anchor_pclive);
         holder.tv_headline_pclive = (TextView) convertView.findViewById(R.id.tv_headline_pclive);
         /*获取数据*/
-        RecommendDataBean.PczbListBean data = pclist.get(position);
+        LiveUrlListBean.ListBean data = pclist.get(position);
         String zhibo_fm_pic = data.getZhibo_fm_pic();
         String btitle = data.getBtitle();
         String saytitle = data.getSaytitle();

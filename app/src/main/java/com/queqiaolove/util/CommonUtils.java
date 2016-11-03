@@ -29,6 +29,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.queqiaolove.QueQiaoLoveApp;
+import com.queqiaolove.R;
 import com.queqiaolove.global.Constants;
 
 import java.io.File;
@@ -216,5 +217,30 @@ public class CommonUtils {
         ViewGroup.LayoutParams params = scrollView.getLayoutParams();
         params.height = totalHeight;
         scrollView.setLayoutParams(params);
+    }
+    /*返回等级对应图片*/
+    public static int getLevelImage(String level){
+        int l = R.mipmap.userinfo_level_default;
+        switch (level.trim()){
+            case "1":
+                l = R.mipmap.userinfo_level_default;
+                break;
+            case "2":
+                l = R.mipmap.userinfo_level_default;
+                break;
+            case "3":
+                l = R.mipmap.userinfo_level_default;
+                break;
+            case "4":
+                l = R.mipmap.userinfo_level_default;
+                break;
+            case "5":
+                l = R.mipmap.userinfo_level_default;
+                break;
+            case "6":
+                l = R.mipmap.userinfo_level_default;
+                break;
+        }
+        return l;
     }
 }

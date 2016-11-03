@@ -37,8 +37,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (QueQiaoLoveApp.getMemberId()!=-1){
+        if (QueQiaoLoveApp.getUserId()!=-1){
             MainActivity.intent(LoginActivity.this,new String[]{""});
+            finish();
         }
         setContentView(R.layout.activity_login);
         initView();
@@ -92,7 +93,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (response.body().getReturnvalue().equals("true")){
                     LoginBean body = response.body();
                     Log.e("userid",response.body().getUserid()+"");
-                    QueQiaoLoveApp.setMemberId(Integer.parseInt(body.getUserid()));
+                    QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
                     finish();
                     MainActivity.intent(LoginActivity.this,new String[]{""});
                 }else {

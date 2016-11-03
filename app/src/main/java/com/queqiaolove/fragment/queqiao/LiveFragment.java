@@ -10,7 +10,7 @@ import com.queqiaolove.activity.live.vertical.VerticalLiveActivity;
 import com.queqiaolove.activity.main.PcLiveActivity;
 import com.queqiaolove.activity.main.PhoneLiveActivity;
 import com.queqiaolove.adapter.main.PhoneLiveGvAdapter;
-import com.queqiaolove.adapter.queqiao.recommend.RecommendPcLiveGvAdapter;
+import com.queqiaolove.adapter.queqiao.recommend.PcLiveGvAdapter;
 import com.queqiaolove.base.BaseFragment;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.global.Constants;
@@ -36,6 +36,8 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     private MyGridView gv_pclive;
     private MyGridView gv_phonelive;
     private List<LiveUrlListBean.ListBean> phonelivelist;//手机直播列表
+    private List<LiveUrlListBean.ListBean> pclivelist;
+
     @Override
     protected View initTitleView() {
         return null;
@@ -50,11 +52,11 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         /*pc直播*/
         tv_more_pclive = mContentView.findViewById(R.id.tv_more_pclive);
         gv_pclive = (MyGridView) mContentView.findViewById(R.id.gv_pclive);
-        gv_pclive.setAdapter(new RecommendPcLiveGvAdapter(mActivity));
         gv_pclive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HorizontalLiveActivity.intent(mActivity,"");
+                LiveUrlListBean.ListBean bean = pclivelist.get(i);
+                HorizontalLiveActivity.intent(mActivity,bean);
             }
         });
         /*手机直播*/
@@ -78,6 +80,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected ContentPage.RequestState onLoad() {
+        loadPCLivelist();
         loadPhotoLivelist();//jia加载手机列表
         return ContentPage.RequestState.STATE_SUCCESS;
     }
@@ -94,6 +97,29 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 PhoneLiveActivity.intent(mActivity,"1");
                 break;
         }
+    }
+    /*加载pc直播列表*/
+    private void loadPCLivelist() {
+        LiveAPI liveAPI = Http.getInstance().create(LiveAPI.class);
+        liveAPI.getLiveUrlList("utf-8",pageno,pagesize, Constants.LIVETYPE_PC).enqueue(new Callback<LiveUrlListBean>() {
+            @Override
+            public void onResponse(Call<LiveUrlListBean> call, Response<LiveUrlListBean> response) {
+                if (response.body().getReturnvalue().equals("true")){
+                    pclivelist = response.body().getList();
+                    Log.e("pclivelist",pclivelist.size()+"");
+                    gv_pclive.setAdapter(new PcLiveGvAdapter(mActivity,pclivelist));//pc列表
+
+                }else {
+                    toast("数据异常");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LiveUrlListBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
     /*加载手机直播列表*/
     private void loadPhotoLivelist() {

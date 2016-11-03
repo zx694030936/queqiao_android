@@ -55,6 +55,7 @@
             android:text="毕业院校:" />
 
         <TextView
+            android:id="@+id/tv_school_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
             android:text="专业:" />
 
         <TextView
+            android:id="@+id/tv_major_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -99,6 +101,7 @@
             android:text="职业:" />
 
         <TextView
+            android:id="@+id/tv_job_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -121,6 +124,7 @@
             android:text="公司行业:" />
 
         <TextView
+            android:id="@+id/tv_companyindustry_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -143,6 +147,7 @@
             android:text="公司性质:" />
 
         <TextView
+            android:id="@+id/tv_companynature_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -165,6 +170,7 @@
             android:text="掌握语音:" />
 
         <TextView
+            android:id="@+id/tv_language_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"

@@ -10,12 +10,6 @@ import android.util.Log;
 import com.queqiaolove.global.Constants;
 import com.queqiaolove.util.CommonUtils;
 import com.queqiaolove.util.SharedPrefUtil;
-import com.tencent.TIMConnListener;
-import com.tencent.TIMLogLevel;
-import com.tencent.TIMLogListener;
-import com.tencent.TIMManager;
-import com.tencent.TIMMessageListener;
-import com.tencent.TIMUserStatusListener;
 
 /**
  * Created by WD on 2016/10/2.
@@ -56,19 +50,19 @@ public class QueQiaoLoveApp extends Application {
     /**
      * 获取用户id
      */
-    public static int getMemberId(){
+    public static int getUserId(){
         //获取当前登录用户id
         mAppUserId = SharedPrefUtil.getInt(mContext, Constants.USERID,-1);
-        Log.e("memberid", mAppUserId +"");
+        Log.e("userid", mAppUserId +"");
         return mAppUserId;
     }
     /**
      * 设置用户id
      */
-    public static void setMemberId(int userid){
+    public static void setUserId(int userid){
         //获取当前登录用户id
         SharedPrefUtil.putInt(mContext, Constants.USERID,userid);
-        Log.e("memberid", mAppUserId +"");
+        Log.e("userid", mAppUserId +"");
     }
     @Override
     public ComponentName startService(Intent service) {
@@ -76,19 +70,4 @@ public class QueQiaoLoveApp extends Application {
         return super.startService(service);
     }
 
-    public static void initTIMManager(TIMMessageListener messageListener,
-                                      TIMConnListener connListener ,
-                                      TIMLogListener timLogListener,
-                                      TIMUserStatusListener timUserStatusListener){
-        /*im 通讯管理器初始化*/
-        TIMManager.getInstance().addMessageListener(messageListener);//新消息通知
-        TIMManager.getInstance().setConnectionListener(connListener);//网络事件通知
-        TIMManager.getInstance().setLogListener(timLogListener);//日志事件
-        TIMManager.getInstance().setUserStatusListener(timUserStatusListener);//用户状态变更
-        TIMManager.getInstance().disableCrashReport();//crash上报关闭
-        TIMManager.getInstance().setLogLevel(TIMLogLevel.INFO);//日志等级
-        TIMManager.getInstance().initLogSettings(true ,null);//打印日志，保存路径
-        TIMManager.getInstance().disableStorage();//禁用消息存储
-        TIMManager.getInstance().init(mContext);
-    }
 }

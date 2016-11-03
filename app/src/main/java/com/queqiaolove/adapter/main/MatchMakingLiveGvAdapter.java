@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.javabean.live.LiveUrlListBean;
+import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.util.CommonUtils;
 
 import java.util.List;
@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class MatchMakingLiveGvAdapter extends BaseAdapter {
     private final Activity mActivity;
-    private final List<LiveUrlListBean.ListBean> phonelivelist;
+    private final List<RecommendDataBean.HdzbListBean> phonelivelist;
 
-    public MatchMakingLiveGvAdapter(Activity activity, List<LiveUrlListBean.ListBean> list) {
+    public MatchMakingLiveGvAdapter(Activity activity, List<RecommendDataBean.HdzbListBean> list) {
         mActivity = activity;
         phonelivelist = list;
     }
@@ -53,7 +53,7 @@ public class MatchMakingLiveGvAdapter extends BaseAdapter {
         holder.tv_numoflook_phonelive = (TextView) convertView.findViewById(R.id.tv_numoflook_phonelive);
         holder.tv_location_phonelive = (TextView) convertView.findViewById(R.id.tv_location_phonelive);
         /*获取数据*/
-        LiveUrlListBean.ListBean data = phonelivelist.get(position);
+        RecommendDataBean.HdzbListBean data = phonelivelist.get(position);
         String zhibo_fm_pic = data.getZhibo_fm_pic();
         String btitle = data.getBtitle();
         String saytitle = data.getSaytitle();

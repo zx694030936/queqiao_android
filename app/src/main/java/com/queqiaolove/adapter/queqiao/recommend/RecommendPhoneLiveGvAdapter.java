@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.javabean.live.LiveUrlListBean;
+import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.util.CommonUtils;
 
 import java.util.List;
@@ -18,16 +18,16 @@ import java.util.List;
  */
 public class RecommendPhoneLiveGvAdapter extends BaseAdapter {
     private final Activity mActivity;
-    private final List<LiveUrlListBean.ListBean> phonelivelist;
+    private final List<RecommendDataBean.AppzbListBean> phonelivelist;
 
-    public RecommendPhoneLiveGvAdapter(Activity activity, List<LiveUrlListBean.ListBean> list) {
+    public RecommendPhoneLiveGvAdapter(Activity activity, List<RecommendDataBean.AppzbListBean> list) {
         mActivity = activity;
         phonelivelist = list;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return phonelivelist.size();
     }
 
     @Override
@@ -53,8 +53,9 @@ public class RecommendPhoneLiveGvAdapter extends BaseAdapter {
         holder.tv_numoflook_phonelive = (TextView) convertView.findViewById(R.id.tv_numoflook_phonelive);
         holder.tv_anchor_phonelive = (TextView) convertView.findViewById(R.id.tv_anchor_phonelive);
         holder.tv_location_phonelive = (TextView) convertView.findViewById(R.id.tv_location_phonelive);
+        holder.tv_headlineandtopic_phonelive = (TextView) convertView.findViewById(R.id.tv_headlineandtopic_phonelive);
         /*获取数据*/
-        LiveUrlListBean.ListBean data = phonelivelist.get(position);
+        RecommendDataBean.AppzbListBean data = phonelivelist.get(position);
         String zhibo_fm_pic = data.getZhibo_fm_pic();
         String btitle = data.getBtitle();
         String saytitle = data.getSaytitle();
@@ -66,6 +67,7 @@ public class RecommendPhoneLiveGvAdapter extends BaseAdapter {
         holder.tv_anchor_phonelive.setText(username);
         holder.tv_numoflook_phonelive.setText(watch_num);
         holder.tv_location_phonelive.setText(city);
+        holder.tv_headlineandtopic_phonelive.setText(saytitle+btitle);
 
         return convertView;
     }
@@ -74,5 +76,6 @@ public class RecommendPhoneLiveGvAdapter extends BaseAdapter {
         TextView tv_numoflook_phonelive;//观看人数
         TextView tv_anchor_phonelive;//主播名
         TextView tv_location_phonelive;//位置
+        public TextView tv_headlineandtopic_phonelive;//标题
     }
 }

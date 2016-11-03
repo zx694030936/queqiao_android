@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
@@ -20,27 +19,12 @@ import com.queqiaolove.http.api.LiveAPI;
 import com.queqiaolove.javabean.push.GetPushUrlBean;
 import com.queqiaolove.widget.dialog.LockHomePusherDialog;
 import com.queqiaolove.widget.dialog.SelectTopicPusherDialog;
-import com.tencent.TIMCallBack;
-import com.tencent.TIMConnListener;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMLogListener;
-import com.tencent.TIMManager;
-import com.tencent.TIMMessage;
-import com.tencent.TIMMessageListener;
-import com.tencent.TIMUser;
-import com.tencent.TIMUserStatusListener;
-import com.tencent.TIMValueCallBack;
 
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tencent.tls.platform.TLSErrInfo;
-import tencent.tls.platform.TLSGuestLoginListener;
-import tencent.tls.platform.TLSLoginHelper;
-import tencent.tls.platform.TLSUserInfo;
 
 /**
  * Created by WD on 2016/10/8.
@@ -146,77 +130,7 @@ public class HomePusherActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    /*创建直播大群*/
-    private void createLiveGroup(String identifier) {
-        //创建直播大群
-        TIMGroupManager.getInstance().createAVChatroomGroup(identifier, new TIMValueCallBack<String>() {
-            @Override
-            public void onError(int code, String desc) {
-                Log.e(tag, "create av group failed. code: " + code + " errmsg: " + desc);
-            }
 
-            @Override
-            public void onSuccess(String s) {
-                //getPushUrl();//获取推流url
-                Log.e(tag, "create av group succ, groupId:" + s);
-            }
-        });
-    }
-
-    // 示例代码： Android 平台下实现IM SDK 的访客登录
-    public void guestLogin() {
-        //调用TLS（Tencent Login Server）的访客登录模式
-        final TLSLoginHelper mTLSLoginHelper = TLSLoginHelper.getInstance();
-        mTLSLoginHelper.TLSGuestLogin(new TLSGuestLoginListener() {
-            @Override
-            public void OnGuestLoginSuccess(TLSUserInfo tlsUserInfo) {
-                //设置 SDKAPPID
-                TIMUser user = new TIMUser();
-                user.setAccountType(String.valueOf(Constants.IMSDK_ACCOUNT_TYPE));
-                user.setAppIdAt3rd(String.valueOf(Constants.IMSDK_APPID));
-                user.setIdentifier(tlsUserInfo.identifier);
-                String userSig = mTLSLoginHelper.getUserSig(tlsUserInfo.identifier);
-                final String identifier = tlsUserInfo.identifier;
-                Log.e("identifier", "identifier");
-                //发起 IM SDK 登录操作，登录成功后就可以发消息了
-                TIMManager.getInstance().login(Constants.IMSDK_APPID, user, userSig, new TIMCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        // OK, 登录成功，后面就可以发消息了！
-                        //createLiveGroup(identifier);
-                        Log.e("imlogin", "success");
-                        TIMManager.getInstance().logout(new TIMCallBack() {
-                            @Override
-                            public void onError(int i, String s) {
-                                Log.e("identifier", TIMManager.getInstance().getLoginUser());
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Log.e("identifier", TIMManager.getInstance().getLoginUser());
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-                        // im sdk 登录失败，请检查 IMSDK_APPID 是不是搞错了
-                        Log.e("imlogin", "fail");
-                    }
-                });
-            }
-
-            @Override
-            public void OnGuestLoginFail(TLSErrInfo tlsErrInfo) {
-                Log.e("imloginfail", tlsErrInfo.Msg);
-            }
-
-            @Override
-            public void OnGuestLoginTimeout(TLSErrInfo tlsErrInfo) {
-                Log.e("imloginfail", tlsErrInfo.Msg);
-            }
-        });
-    }
 
     /*获取推流地址*/
     private void getPushUrl() {
@@ -272,55 +186,6 @@ public class HomePusherActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        TIMManager.getInstance().logout(new TIMCallBack() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onSuccess() {
-
-            }
-        });
     }
 
-    private void initIM() {
-        QueQiaoLoveApp.initTIMManager(new TIMMessageListener() {
-            @Override
-            public boolean onNewMessages(List<TIMMessage> list) {
-                return false;
-            }
-        }, new TIMConnListener() {
-            @Override
-            public void onConnected() {
-
-            }
-
-            @Override
-            public void onDisconnected(int i, String s) {
-
-            }
-
-            @Override
-            public void onWifiNeedAuth(String s) {
-
-            }
-        }, new TIMLogListener() {
-            @Override
-            public void log(int i, String s, String s1) {
-
-            }
-        }, new TIMUserStatusListener() {
-            @Override
-            public void onForceOffline() {
-
-            }
-
-            @Override
-            public void onUserSigExpired() {
-
-            }
-        });
-    }
 }

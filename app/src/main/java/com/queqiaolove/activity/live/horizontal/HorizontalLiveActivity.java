@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.queqiaolove.R;
 import com.queqiaolove.adapter.live.horizontal.ChartOrInfoVpAdapter;
-import com.queqiaolove.global.Constants;
+import com.queqiaolove.javabean.live.LiveUrlListBean;
 import com.queqiaolove.widget.NoScrollViewPager;
 import com.queqiaolove.widget.dialog.NoPusherDialog;
 import com.tencent.rtmp.ITXLivePlayListener;
@@ -40,45 +40,80 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
     private ImageView iv_littlescreen;
     private ChartOrInfoVpAdapter adapter;
     private Bundle savedInstanceState;
+    private LiveUrlListBean.ListBean data;
+
+    private String username="";
+    private String roomid ="";
+    private String watch_num="";
+    private String play_rtmp="";//拉流地址
+    private String isend ="1";//是否在播:0在播，1结束
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_littlescreen_live);
+        activityOnCreate(getIntent().getExtras());
+        setContentView(R.layout.activity_horizantollive_littlescreen);
         initVerticalView();
         initVerticalEvent();
         Log.e("verticalscreen","initview");
     }
 
+    private void activityOnCreate(Bundle extras) {
+        data = (LiveUrlListBean.ListBean) extras.getSerializable(NORMAL_HORIZONTALLIVE);
+        if(data!=null){
+            isend = data.getIsend();
+            username = data.getUsername();
+            roomid = data.getId();
+            watch_num = data.getWatch_num();
+            play_rtmp = data.getPlay_rtmp();
+        }
+    }
+
     private void initVerticalView() {
-        issetVisibility = true;
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        rl_live_above = (RelativeLayout) findViewById(R.id.rl_live_above);
-        iv_fullscreen = (ImageView) findViewById(R.id.iv_full_norhorizontallive);
+        if (isend.equals("1")) {//已结束
+            setContentView(R.layout.activity_horizantollive_littlescreen);
+            issetVisibility = true;
+            iv_back = (ImageView) findViewById(R.id.iv_back);
+            rl_live_above = (RelativeLayout) findViewById(R.id.rl_live_above);
+            iv_fullscreen = (ImageView) findViewById(R.id.iv_full_norhorizontallive);
 
-        rg_chartorinfo = (RadioGroup) findViewById(R.id.rg_chartorinfo);
-        vp_chartorinfo = (NoScrollViewPager) findViewById(R.id.vp_chartorinfo);
-        adapter = new ChartOrInfoVpAdapter(getSupportFragmentManager());
-        vp_chartorinfo.setAdapter(adapter);
+            rg_chartorinfo = (RadioGroup) findViewById(R.id.rg_chartorinfo);
+            vp_chartorinfo = (NoScrollViewPager) findViewById(R.id.vp_chartorinfo);
+            adapter = new ChartOrInfoVpAdapter(getSupportFragmentManager());
+            vp_chartorinfo.setAdapter(null);
+        }else {
+            issetVisibility = true;
+            iv_back = (ImageView) findViewById(R.id.iv_back);
+            rl_live_above = (RelativeLayout) findViewById(R.id.rl_live_above);
+            iv_fullscreen = (ImageView) findViewById(R.id.iv_full_norhorizontallive);
 
-        if (mLivePlayer == null || mPlayerView == null) {
-            //先创建一个Player对象,并使用setPlayerView将这个TXLivePlayer对象与我们刚刚添加到界面上的TXCloudVideoView控件进行关联
-            mLivePlayer = new TXLivePlayer(this);
-            int result = mLivePlayer.startPlay(Constants.playUrl, TXLivePlayer.PLAY_TYPE_LIVE_RTMP);
+            rg_chartorinfo = (RadioGroup) findViewById(R.id.rg_chartorinfo);
+            vp_chartorinfo = (NoScrollViewPager) findViewById(R.id.vp_chartorinfo);
+            adapter = new ChartOrInfoVpAdapter(getSupportFragmentManager());
+            vp_chartorinfo.setAdapter(adapter);
 
-            mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
-            mLivePlayer.setPlayerView(mPlayerView);
-            mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
-            mPlayerView.setRenderRotation(90);
-        } else {
-            mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
-            mLivePlayer.setPlayerView(mPlayerView);
-            mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
-            mPlayerView.setRenderRotation(90);
+            if (mLivePlayer == null || mPlayerView == null) {
+                //先创建一个Player对象,并使用setPlayerView将这个TXLivePlayer对象与我们刚刚添加到界面上的TXCloudVideoView控件进行关联
+                mLivePlayer = new TXLivePlayer(this);
+                int result = mLivePlayer.startPlay(play_rtmp, TXLivePlayer.PLAY_TYPE_LIVE_RTMP);
+
+                mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
+                mLivePlayer.setPlayerView(mPlayerView);
+                mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
+                //mPlayerView.setRenderRotation(90);
+            } else {
+                mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
+                mLivePlayer.setPlayerView(mPlayerView);
+                mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
+                //mPlayerView.setRenderRotation(90);
+            }
         }
     }
 
     private void initVerticalEvent() {
+        if (isend.equals("0")) {
+            mLivePlayer.setPlayListener(this);
+        }
         iv_back.setOnClickListener(this);
         iv_fullscreen.setOnClickListener(this);
         mPlayerView.setOnClickListener(this);
@@ -86,7 +121,6 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         rg_chartorinfo.check(R.id.rb_chart_horizontallive);
         vp_chartorinfo.setCurrentItem(0, false);
 
-        mLivePlayer.setPlayListener(this);
     }
 
     /**
@@ -94,7 +128,7 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
      *
      * @param activity
      */
-    public static void intent(Activity activity, String data) {
+    public static void intent(Activity activity, LiveUrlListBean.ListBean data) {
         Intent intent = new Intent();
         intent.setClass(activity, HorizontalLiveActivity.class);
         intent.putExtra(NORMAL_HORIZONTALLIVE, data);
@@ -138,7 +172,9 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mLivePlayer.stopPlay(true);
+        if (mLivePlayer!=null) {
+            mLivePlayer.stopPlay(true);
+        }
     }
 
     @Override
@@ -169,13 +205,21 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         super.onConfigurationChanged(newConfig);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // land do nothing is ok横
-            setContentView(R.layout.activity_fullscreen_live);
+            if (isend.equals("1")) {//已结束
+                setContentView(R.layout.activity_nolive_fullscreen);
+            }else {
+                setContentView(R.layout.activity_horizontallive_fullscreen);
+            }
             initHorizontalView();
             initHorizontalEvent();
 
         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             // port do nothing is ok竖
-            setContentView(R.layout.activity_littlescreen_live);
+            if (isend.equals("1")) {//已结束
+                setContentView(R.layout.activity_nolive_littlescreen);
+            }else {
+                setContentView(R.layout.activity_horizantollive_littlescreen);
+            }
             Log.e("verticalscreen","create");
             initVerticalView();
             initVerticalEvent();
@@ -188,18 +232,24 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         iv_back = (ImageView) findViewById(R.id.iv_back);
         rl_live_above = (RelativeLayout) findViewById(R.id.rl_live_above);
         iv_littlescreen = (ImageView) findViewById(R.id.iv_little_horizontallive);
+        if (isend.equals("1")) {//已结束
 
-        mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
-        mLivePlayer.setPlayerView(mPlayerView);
-        mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_FULL_FILL_SCREEN);
-        mPlayerView.setRenderRotation(90);
+        }else {
+
+            mPlayerView = (TXCloudVideoView) findViewById(R.id.txcv_player);
+            mLivePlayer.setPlayerView(mPlayerView);
+            mPlayerView.setRenderMode(TXLiveConstants.RENDER_MODE_FULL_FILL_SCREEN);
+            //mPlayerView.setRenderRotation(90);
+        }
 
     }
 
     private void initHorizontalEvent() {
         iv_back.setOnClickListener(this);
         mPlayerView.setOnClickListener(this);
-        mLivePlayer.setPlayListener(this);
         iv_littlescreen.setOnClickListener(this);
+        if (isend.equals("0")) {
+            mLivePlayer.setPlayListener(this);
+        }
     }
 }

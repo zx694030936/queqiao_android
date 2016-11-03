@@ -151,14 +151,14 @@ public class _RecommendFragment extends BaseFragment implements View.OnClickList
 	public void onClick(View v) {
 		switch (v.getId()){
 			case R.id.matchmaking1_recommend:
-				HorizontalLiveActivity.intent(mActivity,"1");
+				HorizontalLiveActivity.intent(mActivity,null);
 				break;
 			case R.id.member1_recommend:
 				LiveUrlListBean.ListBean data1 = phonelivelist.get(0);
 				VerticalLiveActivity.intent(mActivity,data1);
 				break;
 			case R.id.hot1_recommend_queqiao://相亲1
-				HorizontalLiveActivity.intent(mActivity,"1");
+				HorizontalLiveActivity.intent(mActivity,null);
 				break;
 			case R.id.tv_more_matchmaking://相亲活动-更多页
 				MatchMakingActivity.intent(mActivity,"1");

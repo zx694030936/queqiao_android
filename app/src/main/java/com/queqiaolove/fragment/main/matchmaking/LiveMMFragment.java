@@ -59,6 +59,6 @@ public class LiveMMFragment extends BaseFragment implements PullToRefreshLayout.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        HorizontalLiveActivity.intent(mActivity,"1");
+        HorizontalLiveActivity.intent(mActivity,null);
     }
 }
