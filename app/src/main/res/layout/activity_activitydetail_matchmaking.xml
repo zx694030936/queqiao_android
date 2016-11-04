@@ -15,11 +15,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/iv_cover_activity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:src="@mipmap/ic_default_welfare"
                 android:scaleType="centerCrop"/>
             <TextView
+                android:id="@+id/iv_name_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -37,6 +39,7 @@
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/iv_location_activity"
                     android:layout_width="1dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -55,21 +58,24 @@
                     android:textColor="@color/gray_normal_text"
                     />
                 <TextView
+                    android:id="@+id/iv_numofjoin_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="100"
                     android:textSize="12sp"
+                    android:layout_marginRight="20dp"
                     android:textColor="@color/pink_video_text"
                     />
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:text="/100"
                     android:textSize="12sp"
                     android:textColor="@color/black"
-                    />
+                    />-->
                 <TextView
+                    android:id="@+id/iv_dayofend_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8"
@@ -84,19 +90,14 @@
                     android:textColor="@color/black"
                     />
             </LinearLayout>
-            <TextView
+            <WebView
+                android:id="@+id/wv_content_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="22dp"
-                android:text="活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容
-                活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容
-                活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容
-                活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容
-                活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容"
-                android:textSize="12sp"
-                android:textColor="@color/gray_normal_text"/>
+                android:scrollbars="none"/>
             <TextView
                 android:id="@+id/tv_next"
                 android:layout_width="wrap_content"

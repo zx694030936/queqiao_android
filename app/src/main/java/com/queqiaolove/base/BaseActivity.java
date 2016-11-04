@@ -20,6 +20,8 @@ public abstract class BaseActivity extends Activity{
     protected LinearLayout mContent;//内容布局
     private View mView;
     protected int userid = -1;
+    protected int pageno = 1;
+    protected int pagesize = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

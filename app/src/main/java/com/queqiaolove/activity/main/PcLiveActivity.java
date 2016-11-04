@@ -3,6 +3,7 @@ package com.queqiaolove.activity.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,6 +15,16 @@ import com.queqiaolove.activity.live.horizontal.HorizontalLiveActivity;
 import com.queqiaolove.adapter.main.PcLiveGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.global.Constants;
+import com.queqiaolove.http.Http;
+import com.queqiaolove.http.api.LiveAPI;
+import com.queqiaolove.javabean.live.LiveUrlListBean;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by LENOVO on 2016/10/17.
@@ -24,6 +35,7 @@ public class PcLiveActivity extends BaseActivity implements PullToRefreshLayout.
     protected PullToRefreshLayout refresh_view;//可刷新的布局
     private PullableGridView gv_pulltofresh;
     private ImageView iv_back;
+    private List<LiveUrlListBean.ListBean> pclivelist;
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -63,7 +75,7 @@ public class PcLiveActivity extends BaseActivity implements PullToRefreshLayout.
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        gv_pulltofresh.setAdapter(new PcLiveGvAdapter(mActivity));
+        loadPCLivelist();
         return ContentPage.RequestState.STATE_SUCCESS;
     }
 
@@ -99,5 +111,29 @@ public class PcLiveActivity extends BaseActivity implements PullToRefreshLayout.
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         HorizontalLiveActivity.intent(mActivity,null);
+    }
+
+    /*加载pc直播列表*/
+    private void loadPCLivelist() {
+        LiveAPI liveAPI = Http.getInstance().create(LiveAPI.class);
+        liveAPI.getLiveUrlList("utf-8",pageno,pagesize, Constants.LIVETYPE_PC).enqueue(new Callback<LiveUrlListBean>() {
+            @Override
+            public void onResponse(Call<LiveUrlListBean> call, Response<LiveUrlListBean> response) {
+                if (response.body().getReturnvalue().equals("true")){
+                    pclivelist = response.body().getList();
+                    Log.e("pclivelist",pclivelist.size()+"");
+                    gv_pulltofresh.setAdapter(new PcLiveGvAdapter(mActivity,pclivelist));//pc列表
+
+                }else {
+                    toast("数据异常");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LiveUrlListBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
 }

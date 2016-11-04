@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/iv_anchor_live"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="120dp"
             android:src="@mipmap/default_mylivevideo"
             android:scaleType="centerCrop"
             />

@@ -21,7 +21,8 @@ public abstract class BaseFragment extends Fragment {
 	protected LinearLayout mContent;//内容布局
 	private View mView;
 	protected int userid = -1;
-
+	protected int pageno = 1;
+	protected int pagesize = 10;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
