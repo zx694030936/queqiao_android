@@ -42,7 +42,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_nickname_mine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -52,7 +51,6 @@
                         android:textSize="16sp" />
 
                     <ImageView
-                        android:id="@+id/iv_level_mine"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
@@ -76,7 +74,6 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_id_mine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="用户id"
@@ -98,7 +95,6 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_percent_mine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="60%"
@@ -142,7 +138,6 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/iv_uploadpic_mine"
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -154,14 +149,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:orientation="horizontal">
-                    <com.queqiaolove.widget.MyGridView
-                        android:id="@+id/mgv_pic_mine"
-                        android:layout_width="match_parent"
+
+                    <ImageView
+                        android:layout_width="1dp"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        android:numColumns="3"
-                        >
-                    </com.queqiaolove.widget.MyGridView>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_default_uploadphoto" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_default_uploadphoto" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_default_uploadphoto" />
                 </LinearLayout>
 
                 <TextView
@@ -201,7 +211,6 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/iv_uploadvideo_mine"
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -213,14 +222,65 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:orientation="horizontal">
-                    <com.queqiaolove.widget.MyGridView
-                        android:id="@+id/mgv_video_mine"
-                        android:layout_width="match_parent"
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        android:numColumns="3"
-                        >
-                    </com.queqiaolove.widget.MyGridView>
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_default_uploadphoto" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_play_mine" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_default_uploadphoto" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_play_mine" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_default_uploadphoto" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_play_mine" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <TextView

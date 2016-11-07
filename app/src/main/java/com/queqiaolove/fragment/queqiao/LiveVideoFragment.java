@@ -7,6 +7,7 @@ import android.widget.ListView;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.livevideo.LiveVideoActivity;
+import com.queqiaolove.adapter.queqiao.LiveVideoLvAdapter;
 import com.queqiaolove.base.BaseFragment;
 import com.queqiaolove.base.ContentPage;
 
@@ -43,11 +44,8 @@ public class LiveVideoFragment extends BaseFragment implements PullToRefreshLayo
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        loadLivevideo();
+        lv_video.setAdapter(new LiveVideoLvAdapter(mActivity));
         return ContentPage.RequestState.STATE_SUCCESS;
-    }
-    /*加载点播列表*/
-    private void loadLivevideo() {
     }
 
     @Override

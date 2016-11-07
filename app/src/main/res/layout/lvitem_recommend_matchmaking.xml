@@ -47,7 +47,7 @@
             android:layout_marginLeft="5dp"
             android:descendantFocusability="blocksDescendants"
             android:divider="@null"
-            android:numColumns="2"
+            android:numColumns="3"
             android:scrollbars="none"></com.queqiaolove.widget.MyGridView>
         <!--相亲视频-->
         <com.queqiaolove.widget.MyGridView

@@ -16,6 +16,9 @@ public class RegistBean {
     private String userid;
     private String upic;
 
+    private String uuid;//环信ID
+    private String password;//环信密码
+
     public String getReturnvalue() {
         return returnvalue;
     }
@@ -47,4 +50,21 @@ public class RegistBean {
     public void setUpic(String upic) {
         this.upic = upic;
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

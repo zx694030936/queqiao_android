@@ -39,8 +39,7 @@ public interface LiveAPI {
      * @param encoding
      * @param pageno
      * @param pagesize
-     * @param livetype    1:移动端直播，2:pc端直播，3热门所有直播，4最新所有直播，
-     *                    5男神所有直播，6女神所有直播，7相亲直播
+     * @param livetype
      * @return
      */
     @FormUrlEncoded

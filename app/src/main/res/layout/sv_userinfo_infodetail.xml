@@ -55,7 +55,6 @@
             android:text="姓名:" />
 
         <TextView
-            android:id="@+id/tv_username_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -78,7 +77,6 @@
             android:text="年龄:" />
 
         <TextView
-            android:id="@+id/tv_age2_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -101,7 +99,6 @@
             android:text="性别:" />
 
         <TextView
-            android:id="@+id/tv_sex_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -124,7 +121,6 @@
             android:text="民族:" />
 
         <TextView
-            android:id="@+id/tv_nation_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -147,7 +143,6 @@
             android:text="身高:" />
 
         <TextView
-            android:id="@+id/tv_height2_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -170,7 +165,6 @@
             android:text="体重:" />
 
         <TextView
-            android:id="@+id/tv_weight_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -193,7 +187,6 @@
             android:text="学历:" />
 
         <TextView
-            android:id="@+id/tv_education_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -216,7 +209,6 @@
             android:text="月收入:" />
 
         <TextView
-            android:id="@+id/tv_monthincome_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -239,7 +231,6 @@
             android:text="婚姻状况:" />
 
         <TextView
-            android:id="@+id/tv_maritalstatus_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -262,7 +253,6 @@
             android:text="子女状况:" />
 
         <TextView
-            android:id="@+id/tv_childstatus_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -285,7 +275,6 @@
             android:text="购房情况:" />
 
         <TextView
-            android:id="@+id/tv_buyhouse_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -308,7 +297,6 @@
             android:text="购车情况:" />
 
         <TextView
-            android:id="@+id/tv_buycar_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -331,7 +319,6 @@
             android:text="居住地:" />
 
         <TextView
-            android:id="@+id/tv_address_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"

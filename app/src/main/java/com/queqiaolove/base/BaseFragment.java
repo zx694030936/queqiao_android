@@ -20,9 +20,8 @@ public abstract class BaseFragment extends Fragment {
 	protected LinearLayout mTitleView;//标题布局
 	protected LinearLayout mContent;//内容布局
 	private View mView;
-	protected int userid = -1;
-	protected int pageno = 1;
-	protected int pagesize = 10;
+	protected String userid = "";
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public abstract class BaseFragment extends Fragment {
 	 */
 	public View onCreateSuccessView(){return mContentView;}
 	
-	protected ContentPage.RequestState check(List data){
+	protected RequestState check(List data){
 		RequestState state = null;
 		if(data == null){
 			state = RequestState.STATE_ERROR;

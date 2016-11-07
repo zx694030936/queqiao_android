@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_anchor_live"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:src="@mipmap/default_mylivevideo"
             android:scaleType="centerCrop"/>
 
@@ -32,7 +32,6 @@
             >
 
             <TextView
-                android:id="@+id/tv_numoflook_matchmakingvideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -57,7 +56,6 @@
         android:orientation="horizontal"
         android:background="@color/white">
         <TextView
-            android:id="@+id/tv_location_matchmakingvideo"
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -70,7 +68,6 @@
             android:textSize="12sp"
             android:textColor="@color/gray_queqiao_text"/>
         <TextView
-            android:id="@+id/tv_numofjoin_matchmakingvideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

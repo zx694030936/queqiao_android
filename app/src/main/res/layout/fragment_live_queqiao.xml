@@ -9,57 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!--pc直播-->
+        <!--最热直播-->
         <include layout="@layout/lvitem_recommend_pclive" />
         <!--直播会员-->
         <include layout="@layout/lvitem_recommend_phonelive" />
-        <!--相亲活动-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="15dp">
-        <!--相亲活动-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:paddingBottom="6dp"
-                android:text="相亲活动"
-                android:textColor="@color/black_queqiao_text"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_more_matchmaking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingBottom="9dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="14dp"
-                android:text="更多>"
-                android:textColor="@color/gray_queqiao_text"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <!--相亲直播-->
-        <com.queqiaolove.widget.MyGridView
-            android:id="@+id/gv_live_matchmaking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:descendantFocusability="blocksDescendants"
-            android:divider="@null"
-            android:numColumns="2"
-            android:scrollbars="none"></com.queqiaolove.widget.MyGridView>
-    </LinearLayout>
     </LinearLayout>
 </ScrollView>

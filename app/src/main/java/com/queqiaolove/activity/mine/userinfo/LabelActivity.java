@@ -12,15 +12,6 @@ import com.queqiaolove.R;
 import com.queqiaolove.adapter.mine.LabelUserInfoGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
-import com.queqiaolove.http.Http;
-import com.queqiaolove.http.api.MineAPI;
-import com.queqiaolove.javabean.mine.UserInfoLabelListbean;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by WD on 2016/10/14.
@@ -70,32 +61,9 @@ public class LabelActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected ContentPage.RequestState onLoad() {
-
-        loadlabellist();
+        gv_label_userinfo.setAdapter(new LabelUserInfoGvAdapter(mActivity));
         return ContentPage.RequestState.STATE_SUCCESS;
     }
-    /*加载标签列表*/
-    private void loadlabellist() {
-        MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
-        mineAPI.userInfroLabelList().enqueue(new Callback<UserInfoLabelListbean>() {
-            @Override
-            public void onResponse(Call<UserInfoLabelListbean> call, Response<UserInfoLabelListbean> response) {
-                UserInfoLabelListbean body = response.body();
-                if (body.getReturnvalue().equals("true")) {
-                    List<UserInfoLabelListbean.ListBean> list = body.getList();
-                    gv_label_userinfo.setAdapter(new LabelUserInfoGvAdapter(mActivity,list));
-                } else {
-                    toast(body.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserInfoLabelListbean> call, Throwable t) {
-                toast("网络数据异常");
-            }
-        });
-    }
-
     /**
      * 从外部跳转到本类的反复
      * @param activity

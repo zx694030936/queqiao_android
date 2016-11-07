@@ -40,7 +40,6 @@
         android:background="@color/gray_background_queqiaopage" />
 
     <TextView
-        android:id="@+id/tv_ucontent_userinfo"
         style="@style/textstyle_userinfo_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chatuidemo.ui.SplashActivity;
 import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.main.MainActivity;
@@ -33,13 +36,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private TextView et_pwd;
     private String phone;
     private String pwd;
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (QueQiaoLoveApp.getUserId()!=-1){
+
+        flag = getIntent().getIntExtra("flag",0);//账号被顶下去的的时候的处理，0为正常，1为被顶
+        if (QueQiaoLoveApp.getMemberId()!=-1&&flag == 0){
             MainActivity.intent(LoginActivity.this,new String[]{""});
-            finish();
         }
         setContentView(R.layout.activity_login);
         initView();
@@ -81,6 +86,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     break;
                 }
                 login();
+
                 break;
         }
     }
@@ -89,13 +95,47 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         LoginAPI loginAPI = Http.getInstance().create(LoginAPI.class);
         loginAPI.login(phone,pwd).enqueue(new Callback<LoginBean>() {
             @Override
-            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+            public void onResponse(Call<LoginBean> call, final Response<LoginBean> response) {
+
+
                 if (response.body().getReturnvalue().equals("true")){
+
                     LoginBean body = response.body();
-                    Log.e("userid",response.body().getUserid()+"");
-                    QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
-                    finish();
-                    MainActivity.intent(LoginActivity.this,new String[]{""});
+                    QueQiaoLoveApp.setMemberId(Integer.parseInt(body.getUserid()));
+
+                    String username = "wcdma123456";//环信测试ID
+                    String password = "123";//环信测试密码
+
+//                    String username = body.getUuid();//环信ID
+//                    String password = body.getPassword();//环信密码
+
+
+                    EMClient.getInstance().login(username, password, new EMCallBack() {//环信登录方法
+                        @Override
+                        public void onSuccess() {
+
+                            EMClient.getInstance().groupManager().loadAllGroups();
+                            EMClient.getInstance().chatManager().loadAllConversations();
+
+                            MainActivity.intent(LoginActivity.this, new String[]{""});
+                            finish();
+                        }
+
+                        @Override
+                        public void onProgress(int progress, String status) {
+                        }
+
+                        @Override
+                        public void onError(final int code, final String message) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+
                 }else {
                     toast(response.body().getMsg());
                 }

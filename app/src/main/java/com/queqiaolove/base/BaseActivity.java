@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import com.queqiaolove.R;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by WD on 2016/10/7.
  */
@@ -19,10 +17,7 @@ public abstract class BaseActivity extends Activity{
     protected LinearLayout mTitleView;//标题布局
     protected LinearLayout mContent;//内容布局
     private View mView;
-    protected int userid = -1;
-    protected int pageno = 1;
-    protected int pagesize = 10;
-
+    protected String userid = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +50,6 @@ public abstract class BaseActivity extends Activity{
         };
         mContent.addView(contentPage);
         setContentView(mView);
-        ButterKnife.inject(this);
     }
 
 
@@ -84,13 +78,6 @@ public abstract class BaseActivity extends Activity{
      * @return
      */
     public View onCreateSuccessView(){return mContentView;}
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
     /**
      * toast工具类
      */

@@ -36,7 +36,6 @@ public interface Constants {
     final String LIVETYPE = "livetype";//直播类别:1手机，2pc
     final int LIVETYPE_PHONE = 1;//直播类别:1手机
     final int LIVETYPE_PC = 2;//直播类别:2pc
-    final int LIVETYPE_MM = 7;//直播类别:7相亲活动
     /*登陆*/
     /*获取验证码的方式*/
     final int OBTAINCODE_REGISTER = 1;//注册时

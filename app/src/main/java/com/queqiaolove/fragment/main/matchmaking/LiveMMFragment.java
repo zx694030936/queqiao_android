@@ -10,16 +10,6 @@ import com.queqiaolove.activity.live.horizontal.HorizontalLiveActivity;
 import com.queqiaolove.adapter.main.matchmaking.LiveMMGvAdapter;
 import com.queqiaolove.base.BaseFragment;
 import com.queqiaolove.base.ContentPage;
-import com.queqiaolove.global.Constants;
-import com.queqiaolove.http.Http;
-import com.queqiaolove.http.api.LiveAPI;
-import com.queqiaolove.javabean.live.LiveUrlListBean;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by LENOVO on 2016/10/17.
@@ -27,8 +17,6 @@ import retrofit2.Response;
 public class LiveMMFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     protected PullToRefreshLayout refresh_view;//可刷新的布局
     private PullableGridView gv_pulltofresh;
-    private List<LiveUrlListBean.ListBean> list;
-
     @Override
     protected View initTitleView() {
         return null;
@@ -55,31 +43,9 @@ public class LiveMMFragment extends BaseFragment implements PullToRefreshLayout.
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        loadLiveList();
+        gv_pulltofresh.setAdapter(new LiveMMGvAdapter(mActivity));
         return ContentPage.RequestState.STATE_SUCCESS;
     }
-    /*相亲直播列表*/
-    private void loadLiveList() {
-        LiveAPI liveAPI = Http.getInstance().create(LiveAPI.class);
-        liveAPI.getLiveUrlList("utf-9",pageno,pagesize, Constants.LIVETYPE_MM).enqueue(new Callback<LiveUrlListBean>() {
-            @Override
-            public void onResponse(Call<LiveUrlListBean> call, Response<LiveUrlListBean> response) {
-                LiveUrlListBean body = response.body();
-                if (body.getReturnvalue().equals("true")){
-                    list = body.getList();
-                    gv_pulltofresh.setAdapter(new LiveMMGvAdapter(mActivity,list));
-                }else {
-                    toast(body.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LiveUrlListBean> call, Throwable t) {
-                toast("网络数据异常");
-            }
-        });
-    }
-
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
@@ -93,6 +59,6 @@ public class LiveMMFragment extends BaseFragment implements PullToRefreshLayout.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        HorizontalLiveActivity.intent(mActivity,null);
+        HorizontalLiveActivity.intent(mActivity,"1");
     }
 }

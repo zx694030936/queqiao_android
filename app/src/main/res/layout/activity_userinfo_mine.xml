@@ -18,6 +18,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/iv_background_userinfo"
                 android:layout_width="match_parent"
                 android:layout_height="222dp"
                 android:scaleType="centerCrop"
@@ -38,8 +39,6 @@
                 android:layout_alignBottom="@id/iv_background_userinfo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="28dp"
-                android:layout_marginTop="20dp"
-                android:layout_centerVertical="true"
                 android:orientation="vertical">
 
                 <com.queqiaolove.widget.CircleImageView
@@ -61,7 +60,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_nickname_userinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -70,7 +68,6 @@
                         android:textSize="16sp" />
 
                     <ImageView
-                        android:id="@+id/iv_level_userinfo"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
@@ -87,7 +84,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_age1_userinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -96,7 +92,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_height1_userinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -107,7 +102,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_location_userinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -119,40 +113,34 @@
         </RelativeLayout>
         <!--标签-->
         <include layout="@layout/sv_userinfo_label"
-            android:id="@+id/ll_label_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             />
         <!--爱情宣言-->
         <include layout="@layout/sv_userinfo_lovemanifesto"
-            android:id="@+id/ll_lovemanifesto_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             />
         <!--自我介绍-->
         <include layout="@layout/sv_userinfo_introduce"
-            android:id="@+id/ll_introduce_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             />
         <!--详细资料-->
         <include layout="@layout/sv_userinfo_infodetail"
-            android:id="@+id/ll_infodetail_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"/>
         <!--联系方式-->
         <include layout="@layout/sv_userinfo_contactway"
-            android:id="@+id/ll_lovemanifesto_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"/>
         <!--教育及工作-->
         <include layout="@layout/sv_userinfo_education"
-            android:id="@+id/ll_education_userinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"/>

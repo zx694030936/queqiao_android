@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
@@ -20,11 +21,12 @@ import com.queqiaolove.javabean.push.GetPushUrlBean;
 import com.queqiaolove.widget.dialog.LockHomePusherDialog;
 import com.queqiaolove.widget.dialog.SelectTopicPusherDialog;
 
-import java.util.HashMap;
 
+import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 /**
  * Created by WD on 2016/10/8.
@@ -132,6 +134,7 @@ public class HomePusherActivity extends BaseActivity implements View.OnClickList
 
 
 
+
     /*获取推流地址*/
     private void getPushUrl() {
         HashMap<String, Integer> map = new HashMap<>();
@@ -186,6 +189,8 @@ public class HomePusherActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
     }
+
 
 }
