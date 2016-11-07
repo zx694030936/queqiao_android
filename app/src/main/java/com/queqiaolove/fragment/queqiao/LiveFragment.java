@@ -58,20 +58,8 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         /*pc直播*/
         tv_more_pclive = mContentView.findViewById(R.id.tv_more_pclive);
         gv_pclive = (MyGridView) mContentView.findViewById(R.id.gv_pclive);
-<<<<<<< HEAD
-        gv_pclive.setAdapter(new RecommendPcLiveGvAdapter(mActivity));
-        gv_pclive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                HorizontalLiveActivity.intent(mActivity,"");
-            }
-        });
-        /*手机直播*/
-=======
 
 		/*手机直播*/
->>>>>>> c72dee5453e4f5d483ccd161b008a918fc2639f9
         tv_more_phonelive = mContentView.findViewById(R.id.tv_more_phonelive);
         gv_phonelive = (MyGridView) mContentView.findViewById(R.id.gv_phonelive);
 

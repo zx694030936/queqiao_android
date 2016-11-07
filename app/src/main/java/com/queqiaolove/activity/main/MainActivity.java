@@ -26,7 +26,6 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
     private ImageView iv_pushe;
     //private ArrayList<BaseFragment> mArraylList = new ArrayList<>();;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

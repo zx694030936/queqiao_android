@@ -143,52 +143,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             @Override
             public void onResponse(Call<RegistBean> call, Response<RegistBean> response) {
                 if (response.body().getReturnvalue().equals("true")){
-<<<<<<< HEAD
-                    //FinishRegisterActivity.intent(mActivity,"1");
-                    RegistBean body = response.body();
-
-                    final String username = body.getUuid();//环信ID
-                    final String password = body.getPassword();//环信密码
-                    /**
-                     * 之后都是环信的代码
-                     */
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                EMClient.getInstance().login(username, password, new EMCallBack() {//环信登录方法
-                                    @Override
-                                    public void onSuccess() {//登陆成功
-                                        EMClient.getInstance().groupManager().loadAllGroups();
-                                        EMClient.getInstance().chatManager().loadAllConversations();
-                                        MainActivity.intent(mActivity,new String[]{"0"});
-                                        finish();
-
-                                    }
-
-                                    @Override
-                                    public void onProgress(int progress, String status) {
-                                    }
-
-                                    @Override
-                                    public void onError(final int code, final String message) {
-                                        runOnUiThread(new Runnable() {
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                });
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
-=======
                     FinishRegisterActivity.intent(mActivity,"1");
->>>>>>> c72dee5453e4f5d483ccd161b008a918fc2639f9
                 }else {
                     toast(response.body().getMsg());
                 }

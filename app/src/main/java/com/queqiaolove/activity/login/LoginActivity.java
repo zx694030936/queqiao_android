@@ -94,45 +94,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     LoginBean body = response.body();
                     Log.e("userid",response.body().getUserid()+"");
                     QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
-<<<<<<< HEAD
-
-//                    String username = "wcdma123456";//环信测试ID
-//                    String password = "123";//环信测试密码
-
-                    String username = body.getUuid();//环信ID
-                    String password = body.getPassword();//环信密码
-
-
-                    EMClient.getInstance().login(username, password, new EMCallBack() {//环信登录方法
-                        @Override
-                        public void onSuccess() {
-
-                            EMClient.getInstance().groupManager().loadAllGroups();
-                            EMClient.getInstance().chatManager().loadAllConversations();
-
-                            MainActivity.intent(LoginActivity.this, new String[]{""});
-                            finish();
-                        }
-
-                        @Override
-                        public void onProgress(int progress, String status) {
-                        }
-
-                        @Override
-                        public void onError(final int code, final String message) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
-
-=======
                     finish();
                     MainActivity.intent(LoginActivity.this,new String[]{""});
->>>>>>> c72dee5453e4f5d483ccd161b008a918fc2639f9
                 }else {
                     toast(response.body().getMsg());
                 }
