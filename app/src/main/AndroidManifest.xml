@@ -155,8 +155,12 @@
         <!--发现-->
         <!--福利，谁看过我-->
         <activity android:name=".activity.find.welfare.WhoLookedMeActivity" />
+        <!--福利，谁喜欢我-->
+        <activity android:name=".activity.find.welfare.WhoLikeMeActivity" />
         <!--福利，我喜欢谁-->
         <activity android:name=".activity.find.welfare.ILikeWhoActivity" />
+        <!--福利，互相喜欢-->
+        <activity android:name=".activity.find.welfare.LoveTogetherActivity" />
         <!--福利，会员权限详情-->
         <activity android:name=".activity.find.welfare.MemberPowerDetailActivity" />
 
@@ -169,43 +173,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
 
-        <!--腾讯云IM开始-->
-        <!--  消息收发service -->
-        <service
-            android:name="com.tencent.qalsdk.service.QalService"
-            android:exported="false"
-            android:process=":QALSERVICE"></service>
-        <!--  消息收发辅助service -->
-        <service
-            android:name="com.tencent.qalsdk.service.QalAssistService"
-            android:exported="false"
-            android:process=":QALSERVICE"></service>
-        <!--  离线消息广播接收器 -->
-        <receiver
-            android:name="com.tencent.qalsdk.QALBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.tencent.qalsdk.broadcast.qal" />
-            </intent-filter>
-        </receiver>
-        <!--  系统消息广播接收器 -->
-        <receiver
-            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
-            android:process=":QALSERVICE">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.TIME_SET" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-            </intent-filter>
-        </receiver>
-        <!--腾讯云IM结束-->
+
     </application>
 
 </manifest>

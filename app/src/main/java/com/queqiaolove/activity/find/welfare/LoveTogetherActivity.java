@@ -10,14 +10,15 @@ import android.widget.TextView;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.pullableview.PullableGridView;
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.user.UserInfoActivity;
-import com.queqiaolove.adapter.find.WhoLookMeGvAdapter;
+import com.queqiaolove.adapter.find.LoveTogetherGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.FindAPI;
-import com.queqiaolove.javabean.find.WhoLookMeListBean;
+import com.queqiaolove.javabean.find.LoveTogetherListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,15 @@ import retrofit2.Response;
 /**
  * Created by WD on 2016/10/14.
  */
-public class WhoLookedMeActivity extends BaseActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class LoveTogetherActivity extends BaseActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private static String LOVE = "love";
     private ImageView iv_back;
     private TextView tv_next;
     private PullableGridView gv_pulltofresh;
     protected PullToRefreshLayout refresh_view;//可刷新的布局
     private String title;
-    private List<WhoLookMeListBean.ListBean> whoLikeMeList = new ArrayList<>();
+    private List<LoveTogetherListBean.ListBean> LoveTogetherList = new ArrayList<>();
+
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -50,7 +52,7 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected View initContentLayout() {
-        return View.inflate(mActivity, R.layout.activity_welfare_wholookedme,null);
+        return View.inflate(mActivity, R.layout.activity_welfare_ilikewho,null);
     }
 
     @Override
@@ -78,31 +80,33 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        gv_pulltofresh.setAdapter(new WhoLookMeGvAdapter(mActivity, whoLikeMeList));
+        userid = QueQiaoLoveApp.getUserId();
+        LoveTogetherList.clear();
+        loadLoveTogetherList();
         return ContentPage.RequestState.STATE_SUCCESS;
     }
-
-    /*谁看过我的列表*/
-    private void loadWhoLookedMeList() {
+    /*加载互相喜欢列表*/
+    private void loadLoveTogetherList() {
         FindAPI findAPI = Http.getInstance().create(FindAPI.class);
-        findAPI.wholookmeList(userid,pageno,pagesize).enqueue(new Callback<WhoLookMeListBean>() {
+        findAPI.loveTogetherList(userid,pageno,pagesize).enqueue(new Callback<LoveTogetherListBean>() {
             @Override
-            public void onResponse(Call<WhoLookMeListBean> call, Response<WhoLookMeListBean> response) {
-                WhoLookMeListBean body = response.body();
+            public void onResponse(Call<LoveTogetherListBean> call, Response<LoveTogetherListBean> response) {
+                LoveTogetherListBean body = response.body();
                 if (body.getReturnvalue().equals("true")){
-                    whoLikeMeList.addAll(body.getList());
-                    gv_pulltofresh.setAdapter(new WhoLookMeGvAdapter(mActivity, whoLikeMeList));
+                    LoveTogetherList.addAll(body.getList());
+                    gv_pulltofresh.setAdapter(new LoveTogetherGvAdapter(mActivity,LoveTogetherList));
                 }else {
                     toast(body.getMsg());
                 }
             }
 
             @Override
-            public void onFailure(Call<WhoLookMeListBean> call, Throwable t) {
-                toast("网络数据异常");
+            public void onFailure(Call<LoveTogetherListBean> call, Throwable t) {
+
             }
         });
     }
+
 
     /**
      * 从外部跳转到本类的反复
@@ -110,7 +114,7 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
      */
     public static void intent(Activity activity, String data) {
         Intent intent = new Intent();
-        intent.setClass(activity, WhoLookedMeActivity.class);
+        intent.setClass(activity, LoveTogetherActivity.class);
         intent.putExtra(LOVE, data);
         activity.startActivity(intent);
     }
@@ -126,16 +130,16 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        pageno=1;
-        whoLikeMeList.clear();
-        loadWhoLookedMeList();
+        pageno = 1;
+        LoveTogetherList.clear();
+        loadLoveTogetherList();
         pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         pageno++;
-        loadWhoLookedMeList();
+        loadLoveTogetherList();
         pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 

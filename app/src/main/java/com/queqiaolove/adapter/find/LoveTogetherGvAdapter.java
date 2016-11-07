@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.javabean.find.WhoLookMeListBean;
+import com.queqiaolove.javabean.find.LoveTogetherListBean;
 import com.queqiaolove.util.CommonUtils;
 
 import java.util.List;
@@ -16,17 +16,23 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/17.
  */
-public class WhoLookMeGvAdapter extends BaseAdapter{
+public class LoveTogetherGvAdapter extends BaseAdapter{
     private final Activity mActivity;
-    List<WhoLookMeListBean.ListBean> whoLikeMeList;
-    public WhoLookMeGvAdapter(Activity activity, List<WhoLookMeListBean.ListBean> list) {
+    List<LoveTogetherListBean.ListBean> loveTogetherList;
+
+
+    public LoveTogetherGvAdapter(Activity activity, List<LoveTogetherListBean.ListBean> list) {
         mActivity = activity;
-        whoLikeMeList = list;
+        loveTogetherList = list;
+    }
+
+    public LoveTogetherGvAdapter(Activity activity) {
+        mActivity = activity;
     }
 
     @Override
     public int getCount() {
-        return whoLikeMeList.size();
+        return loveTogetherList.size();
     }
 
     @Override
@@ -41,6 +47,7 @@ public class WhoLookMeGvAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
+
         Viewholder holder = new Viewholder();
         if (convertView == null) {
             convertView = View.inflate(mActivity, R.layout.gvitem_wholookme, null);
@@ -50,7 +57,7 @@ public class WhoLookMeGvAdapter extends BaseAdapter{
         }
         holder.iv_usericon = (ImageView) convertView.findViewById(R.id.iv_usericon_wholookme);
         holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time_wholookme);
-        WhoLookMeListBean.ListBean listBean = whoLikeMeList.get(position);
+        LoveTogetherListBean.ListBean listBean = loveTogetherList.get(position);
         String pic = listBean.getPic();
         String indbdate = listBean.getIndbdate();
 

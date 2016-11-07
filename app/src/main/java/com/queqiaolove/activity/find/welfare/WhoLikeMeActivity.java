@@ -10,14 +10,16 @@ import android.widget.TextView;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.pullableview.PullableGridView;
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.user.UserInfoActivity;
+import com.queqiaolove.adapter.find.WhoLikeMeGvAdapter;
 import com.queqiaolove.adapter.find.WhoLookMeGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.FindAPI;
-import com.queqiaolove.javabean.find.WhoLookMeListBean;
+import com.queqiaolove.javabean.find.WhoLikeMeListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +31,14 @@ import retrofit2.Response;
 /**
  * Created by WD on 2016/10/14.
  */
-public class WhoLookedMeActivity extends BaseActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class WhoLikeMeActivity extends BaseActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private static String LOVE = "love";
     private ImageView iv_back;
     private TextView tv_next;
     private PullableGridView gv_pulltofresh;
     protected PullToRefreshLayout refresh_view;//可刷新的布局
     private String title;
-    private List<WhoLookMeListBean.ListBean> whoLikeMeList = new ArrayList<>();
+    private List<WhoLikeMeListBean.ListBean> whoLikeMeList = new ArrayList<>();
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -78,27 +80,28 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        gv_pulltofresh.setAdapter(new WhoLookMeGvAdapter(mActivity, whoLikeMeList));
+        userid = QueQiaoLoveApp.getUserId();
+        whoLikeMeList.clear();
+        loadWhoLookMeList();
         return ContentPage.RequestState.STATE_SUCCESS;
     }
-
     /*谁看过我的列表*/
-    private void loadWhoLookedMeList() {
+    private void loadWhoLookMeList() {
         FindAPI findAPI = Http.getInstance().create(FindAPI.class);
-        findAPI.wholookmeList(userid,pageno,pagesize).enqueue(new Callback<WhoLookMeListBean>() {
+        findAPI.wholikemeList(userid,pageno,pagesize).enqueue(new Callback<WhoLikeMeListBean>() {
             @Override
-            public void onResponse(Call<WhoLookMeListBean> call, Response<WhoLookMeListBean> response) {
-                WhoLookMeListBean body = response.body();
+            public void onResponse(Call<WhoLikeMeListBean> call, Response<WhoLikeMeListBean> response) {
+                WhoLikeMeListBean body = response.body();
                 if (body.getReturnvalue().equals("true")){
                     whoLikeMeList.addAll(body.getList());
-                    gv_pulltofresh.setAdapter(new WhoLookMeGvAdapter(mActivity, whoLikeMeList));
+                    gv_pulltofresh.setAdapter(new WhoLikeMeGvAdapter(mActivity, whoLikeMeList));
                 }else {
                     toast(body.getMsg());
                 }
             }
 
             @Override
-            public void onFailure(Call<WhoLookMeListBean> call, Throwable t) {
+            public void onFailure(Call<WhoLikeMeListBean> call, Throwable t) {
                 toast("网络数据异常");
             }
         });
@@ -110,7 +113,7 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
      */
     public static void intent(Activity activity, String data) {
         Intent intent = new Intent();
-        intent.setClass(activity, WhoLookedMeActivity.class);
+        intent.setClass(activity, WhoLikeMeActivity.class);
         intent.putExtra(LOVE, data);
         activity.startActivity(intent);
     }
@@ -126,16 +129,16 @@ public class WhoLookedMeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        pageno=1;
+        pageno = 1;
         whoLikeMeList.clear();
-        loadWhoLookedMeList();
+        loadWhoLookMeList();
         pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         pageno++;
-        loadWhoLookedMeList();
+        loadWhoLookMeList();
         pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 

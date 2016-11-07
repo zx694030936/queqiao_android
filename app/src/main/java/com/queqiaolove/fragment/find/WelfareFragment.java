@@ -5,7 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.queqiaolove.R;
-import com.queqiaolove.activity.find.welfare.ILikeWhoActivity;
+import com.queqiaolove.activity.find.welfare.LoveTogetherActivity;
 import com.queqiaolove.activity.find.welfare.MemberPowerDetailActivity;
 import com.queqiaolove.activity.find.welfare.WhoLookedMeActivity;
 import com.queqiaolove.activity.mine.member.OpenMemberActivity;
@@ -106,7 +106,7 @@ public class WelfareFragment extends BaseFragment implements View.OnClickListene
                 WhoLookedMeActivity.intent(mActivity,"我喜欢谁");
                 break;
             case R.id.rl_mutual_mine:
-                ILikeWhoActivity.intent(mActivity,"互相喜欢");
+                LoveTogetherActivity.intent(mActivity,"互相喜欢");
                 break;
         }
     }

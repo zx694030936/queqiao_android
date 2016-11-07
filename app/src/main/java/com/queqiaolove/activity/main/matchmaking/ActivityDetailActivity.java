@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
-import com.queqiaolove.activity.login.ConstructionActivity;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.FindAPI;
+import com.queqiaolove.javabean.find.JoinActivityBean;
 import com.queqiaolove.javabean.find.MakemakingActivityDetailBean;
 import com.queqiaolove.javabean.find.MakemakingActivityListBean;
 import com.queqiaolove.util.CommonUtils;
@@ -165,12 +165,35 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_next://报名
-                ConstructionActivity.intent(mActivity,"");
+                userid = QueQiaoLoveApp.getUserId();
+                joinActivity();
+                //ConstructionActivity.intent(mActivity,"");
                 break;
             case R.id.iv_back:
                 finish();
                 break;
         }
+    }
+    /*报名活动*/
+    private void joinActivity() {
+        FindAPI findAPI = Http.getInstance().create(FindAPI.class);
+        findAPI.joinActivity(userid, Integer.parseInt(id)).enqueue(new Callback<JoinActivityBean>() {
+            @Override
+            public void onResponse(Call<JoinActivityBean> call, Response<JoinActivityBean> response) {
+                JoinActivityBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    toast("报名成功");
+                    finish();
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JoinActivityBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
 
     /**

@@ -10,11 +10,22 @@ import android.widget.TextView;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.pullableview.PullableGridView;
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.user.UserInfoActivity;
 import com.queqiaolove.adapter.find.ILikeWhoGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.http.Http;
+import com.queqiaolove.http.api.FindAPI;
+import com.queqiaolove.javabean.find.ILikeWhoListBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by WD on 2016/10/14.
@@ -26,6 +37,7 @@ public class ILikeWhoActivity extends BaseActivity implements View.OnClickListen
     private PullableGridView gv_pulltofresh;
     protected PullToRefreshLayout refresh_view;//可刷新的布局
     private String title;
+    private List<ILikeWhoListBean.ListBean> iLikewhoList = new ArrayList<>();
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -67,9 +79,33 @@ public class ILikeWhoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        gv_pulltofresh.setAdapter(new ILikeWhoGvAdapter(mActivity));
+        userid = QueQiaoLoveApp.getUserId();
+        iLikewhoList.clear();
+        loadILikeWhoList();
         return ContentPage.RequestState.STATE_SUCCESS;
     }
+    /*谁看过我的列表*/
+    private void loadILikeWhoList() {
+        FindAPI findAPI = Http.getInstance().create(FindAPI.class);
+        findAPI.iLikeWhoList(userid,pageno,pagesize).enqueue(new Callback<ILikeWhoListBean>() {
+            @Override
+            public void onResponse(Call<ILikeWhoListBean> call, Response<ILikeWhoListBean> response) {
+                ILikeWhoListBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    iLikewhoList.addAll(body.getList());
+                    gv_pulltofresh.setAdapter(new ILikeWhoGvAdapter(mActivity, iLikewhoList));
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ILikeWhoListBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
+    }
+
     /**
      * 从外部跳转到本类的反复
      * @param activity
@@ -92,11 +128,16 @@ public class ILikeWhoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        pageno = 1;
+        iLikewhoList.clear();
+        loadILikeWhoList();
         pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+        pageno++;
+        loadILikeWhoList();
         pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 

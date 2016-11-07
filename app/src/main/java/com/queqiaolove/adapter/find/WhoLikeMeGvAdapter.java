@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.javabean.find.WhoLookMeListBean;
+import com.queqiaolove.javabean.find.WhoLikeMeListBean;
 import com.queqiaolove.util.CommonUtils;
 
 import java.util.List;
@@ -16,10 +16,11 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/17.
  */
-public class WhoLookMeGvAdapter extends BaseAdapter{
+public class WhoLikeMeGvAdapter extends BaseAdapter{
     private final Activity mActivity;
-    List<WhoLookMeListBean.ListBean> whoLikeMeList;
-    public WhoLookMeGvAdapter(Activity activity, List<WhoLookMeListBean.ListBean> list) {
+    List<WhoLikeMeListBean.ListBean> whoLikeMeList;
+
+    public WhoLikeMeGvAdapter(Activity activity, List<WhoLikeMeListBean.ListBean> list) {
         mActivity = activity;
         whoLikeMeList = list;
     }
@@ -41,6 +42,7 @@ public class WhoLookMeGvAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
+
         Viewholder holder = new Viewholder();
         if (convertView == null) {
             convertView = View.inflate(mActivity, R.layout.gvitem_wholookme, null);
@@ -50,7 +52,7 @@ public class WhoLookMeGvAdapter extends BaseAdapter{
         }
         holder.iv_usericon = (ImageView) convertView.findViewById(R.id.iv_usericon_wholookme);
         holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time_wholookme);
-        WhoLookMeListBean.ListBean listBean = whoLikeMeList.get(position);
+        WhoLikeMeListBean.ListBean listBean = whoLikeMeList.get(position);
         String pic = listBean.getPic();
         String indbdate = listBean.getIndbdate();
 
