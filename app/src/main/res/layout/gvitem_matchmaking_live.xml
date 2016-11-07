@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_anchor_live"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_default_vertical_live" />
 

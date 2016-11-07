@@ -30,13 +30,13 @@ public interface LoginAPI {
      * @param nickname  昵称
      * @return
      */
-    @GET("api/regist/regist/")
-    Call<RegistBean> regist(@Query("mobile") String mobile,
-                            @Query("password1") String password1,
-                            @Query("password2") String password2,
-                            @Query("yqcode") String yqcode,
-                            @Query("yzm") String yzm,
-                            @Query("nickname") String nickname);
+    @GET("a/regist/regist/")
+    Call<RegistBean>registFirst(@Query("mobile") String mobile,
+                                @Query("password1") String password1,
+                                @Query("password2") String password2,
+                                @Query("yqcode") String yqcode,
+                                @Query("yzm") String yzm,
+                                @Query("nickname") String nickname);
 
     /**
      * 注册第二步

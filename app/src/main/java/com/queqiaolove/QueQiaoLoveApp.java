@@ -5,14 +5,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.hyphenate.chatuidemo.DemoHelper;
 import com.queqiaolove.global.Constants;
 import com.queqiaolove.util.CommonUtils;
 import com.queqiaolove.util.SharedPrefUtil;
-
 
 /**
  * Created by WD on 2016/10/2.
@@ -22,9 +19,6 @@ public class QueQiaoLoveApp extends Application {
     private static int mainThreadId ;
     private static Handler handler;
     private static int mAppUserId = -1;
-    public static Context applicationContext;
-    private static QueQiaoLoveApp instance;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,11 +33,6 @@ public class QueQiaoLoveApp extends Application {
         //TIMManager.getInstance().init(mContext);
         //QalService.serviceInit(mContext,true);
         //QALSDKManager.getInstance().init(mContext,Constants.IMSDK_APPID);
-        applicationContext = this;
-        instance = this;
-        DemoHelper.getInstance().init(applicationContext);
-        //red packet code : 初始化红包上下文，开启日志输出开关
-
     }
 
     public static Context getmContext(){
@@ -64,7 +53,7 @@ public class QueQiaoLoveApp extends Application {
     public static int getUserId(){
         //获取当前登录用户id
         mAppUserId = SharedPrefUtil.getInt(mContext, Constants.USERID,-1);
-        Log.e("memberid", mAppUserId +"");
+        Log.e("userid", mAppUserId +"");
         return mAppUserId;
     }
     /**
@@ -73,7 +62,7 @@ public class QueQiaoLoveApp extends Application {
     public static void setUserId(int userid){
         //获取当前登录用户id
         SharedPrefUtil.putInt(mContext, Constants.USERID,userid);
-        Log.e("memberid", mAppUserId +"");
+        Log.e("userid", mAppUserId +"");
     }
     @Override
     public ComponentName startService(Intent service) {
@@ -81,13 +70,4 @@ public class QueQiaoLoveApp extends Application {
         return super.startService(service);
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-
-    public static QueQiaoLoveApp getInstance() {
-        return instance;
-    }
 }

@@ -22,5 +22,5 @@ public interface SysAPI {
     @FormUrlEncoded
     @POST("api/sys/province/")
     Call<ProviceListBean> provinceList(@Field("encoding") String encoding,
-                                       @Field("isshow") int isshow);
+                                        @Field("isshow") int isshow);
 }

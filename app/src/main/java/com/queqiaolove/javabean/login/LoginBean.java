@@ -20,9 +20,6 @@ public class LoginBean {
     private String upic;
     private String msg;
 
-    private String uuid;//环信ID
-    private String password;//环信密码
-
     public String getReturnvalue() {
         return returnvalue;
     }
@@ -61,21 +58,5 @@ public class LoginBean {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
