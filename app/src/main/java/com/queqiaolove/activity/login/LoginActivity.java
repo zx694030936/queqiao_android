@@ -3,7 +3,6 @@ package com.queqiaolove.activity.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chatuidemo.ui.SplashActivity;
 import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.main.MainActivity;
@@ -43,7 +41,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         flag = getIntent().getIntExtra("flag",0);//账号被顶下去的的时候的处理，0为正常，1为被顶
-        if (QueQiaoLoveApp.getMemberId()!=-1&&flag == 0){
+        if (QueQiaoLoveApp.getUserId()!=-1&&flag == 0){
             MainActivity.intent(LoginActivity.this,new String[]{""});
         }
         setContentView(R.layout.activity_login);
@@ -101,7 +99,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (response.body().getReturnvalue().equals("true")){
 
                     LoginBean body = response.body();
-                    QueQiaoLoveApp.setMemberId(Integer.parseInt(body.getUserid()));
+                    QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
 
                     String username = "wcdma123456";//环信测试ID
                     String password = "123";//环信测试密码

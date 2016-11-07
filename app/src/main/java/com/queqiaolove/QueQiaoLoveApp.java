@@ -61,7 +61,7 @@ public class QueQiaoLoveApp extends Application {
     /**
      * 获取用户id
      */
-    public static int getMemberId(){
+    public static int getUserId(){
         //获取当前登录用户id
         mAppUserId = SharedPrefUtil.getInt(mContext, Constants.USERID,-1);
         Log.e("memberid", mAppUserId +"");
@@ -70,7 +70,7 @@ public class QueQiaoLoveApp extends Application {
     /**
      * 设置用户id
      */
-    public static void setMemberId(int userid){
+    public static void setUserId(int userid){
         //获取当前登录用户id
         SharedPrefUtil.putInt(mContext, Constants.USERID,userid);
         Log.e("memberid", mAppUserId +"");

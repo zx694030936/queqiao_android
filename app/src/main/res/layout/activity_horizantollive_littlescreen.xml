@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background_queqiaopage">
+
+    <RelativeLayout
+        android:id="@+id/ll_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.tencent.rtmp.ui.TXCloudVideoView
+            android:id="@+id/txcv_player"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="visible" />
+        <RelativeLayout
+            android:id="@+id/rl_live_above"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_back_horizantollive"/>
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_more_horizantollive"/>
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_hasmessage_horizantollive"/>
+            <ImageView
+                android:id="@+id/iv_full_norhorizontallive"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/ic_full_horizantollive"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_live"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_chartorinfo"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_chart_horizontallive"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="聊天"
+                android:textColor="@color/rb_live_color_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_info_horizontallive"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="主播"
+                android:textColor="@color/rb_live_color_selector"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_queqiao"
+            android:drawableLeft="@mipmap/ic_attention_horizantollive"
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:text="关注"
+            android:textColor="@color/white" />
+    </LinearLayout>
+    <com.queqiaolove.widget.NoScrollViewPager
+        android:id="@+id/vp_chartorinfo"
+        android:layout_below="@id/ll_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.queqiaolove.widget.NoScrollViewPager>
+</RelativeLayout>
