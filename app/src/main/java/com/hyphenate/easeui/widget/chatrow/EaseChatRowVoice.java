@@ -1,17 +1,17 @@
 package com.hyphenate.easeui.widget.chatrow;
 
-import com.hyphenate.chat.EMFileMessageBody;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMVoiceMessageBody;
-import com.queqiaolove.R;
-import com.hyphenate.util.EMLog;
-
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hyphenate.chat.EMFileMessageBody;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMVoiceMessageBody;
+import com.hyphenate.util.EMLog;
+import com.queqiaolove.R;
 
 public class EaseChatRowVoice extends EaseChatRowFile{
 
@@ -50,9 +50,10 @@ public class EaseChatRowVoice extends EaseChatRowFile{
                 && EaseChatRowVoicePlayClickListener.playMsgId.equals(message.getMsgId()) && EaseChatRowVoicePlayClickListener.isPlaying) {
             AnimationDrawable voiceAnimation;
             if (message.direct() == EMMessage.Direct.RECEIVE) {
-                voiceImageView.setImageResource(R.anim.voice_from_icon);
+                voiceImageView.setImageResource(R.drawable.voice_from_icon);
+
             } else {
-                voiceImageView.setImageResource(R.anim.voice_to_icon);
+                voiceImageView.setImageResource(R.drawable.voice_to_icon);
             }
             voiceAnimation = (AnimationDrawable) voiceImageView.getDrawable();
             voiceAnimation.start();
