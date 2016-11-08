@@ -6,8 +6,9 @@
     <ImageView
         android:id="@+id/iv_pic1_mine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="75dp"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="5dp"
+        android:scaleType="centerCrop"
         android:src="@mipmap/ic_default_uploadphoto" />
 </LinearLayout>

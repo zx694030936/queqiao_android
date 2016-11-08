@@ -16,9 +16,10 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/17.
  */
-public class MatchMakingVideoGvAdapter extends BaseAdapter{
+public class MatchMakingVideoGvAdapter extends BaseAdapter {
     private final Activity mActivity;
     List<RecommendDataBean.HdspListBean> hdsp_list;
+
     public MatchMakingVideoGvAdapter(Activity activity, List<RecommendDataBean.HdspListBean> list) {
         mActivity = activity;
         hdsp_list = list;
@@ -42,34 +43,32 @@ public class MatchMakingVideoGvAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         Viewholder holder = new Viewholder();
-        if(convertView == null){
-            convertView = View.inflate(mActivity, R.layout.gvitem_matchmaking_video,null);
+        if (convertView == null) {
+            convertView = View.inflate(mActivity, R.layout.gvitem_matchmaking_video, null);
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (Viewholder) convertView.getTag();
         }
         holder.iv_anchor_live = (ImageView) convertView.findViewById(R.id.iv_anchor_live);
         holder.tv_numoflook_matchmakingvideo = (TextView) convertView.findViewById(R.id.tv_numoflook_matchmakingvideo);
-        holder.tv_location_matchmakingvideo = (TextView) convertView.findViewById(R.id.tv_location_matchmakingvideo);
-        holder.tv_numofjoin_matchmakingvideo = (TextView) convertView.findViewById(R.id.tv_numofjoin_matchmakingvideo);
+        holder.tv_headline_matchmakingvideo = (TextView) convertView.findViewById(R.id.tv_headline_matchmakingvideo);
         /*获取数据*/
-        RecommendDataBean.HdspListBean data = hdsp_list.get(position);
-        String video_pic = data.getVideo_pic();
-        String participant_num = data.getParticipant_num();
-        String watch_num = data.getWatch_num();
-        String city = data.getCity();
+        if (hdsp_list.size() >=2) {
+            RecommendDataBean.HdspListBean data = hdsp_list.get(position);
+            String video_pic = data.getVideo_pic();
+            String watch_num = data.getWatch_num();
+            String atitle = data.getAtitle();
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.default_mylivevideo,holder.iv_anchor_live,video_pic);
-        holder.tv_numoflook_matchmakingvideo.setText(watch_num);
-        holder.tv_location_matchmakingvideo.setText(city);
-        holder.tv_numofjoin_matchmakingvideo.setText(participant_num);
-
+            CommonUtils.loadImage(R.mipmap.default_mylivevideo, holder.iv_anchor_live, video_pic);
+            holder.tv_numoflook_matchmakingvideo.setText(watch_num);
+            holder.tv_headline_matchmakingvideo.setText(atitle);
+        }
         return convertView;
     }
-    public class Viewholder{
+
+    public class Viewholder {
         ImageView iv_anchor_live;//封面图片
         TextView tv_numoflook_matchmakingvideo;//观看人数
-        TextView tv_numofjoin_matchmakingvideo;//参加人数
-        TextView tv_location_matchmakingvideo;//位置
+        TextView tv_headline_matchmakingvideo;//标题
     }
 }

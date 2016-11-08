@@ -1,13 +1,27 @@
 package com.queqiaolove.activity.mine;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
@@ -19,14 +33,22 @@ import com.queqiaolove.activity.mine.userinfo.LabelActivity;
 import com.queqiaolove.activity.mine.userinfo.LoveManifestoActivity;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.global.Constants;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MineAPI;
+import com.queqiaolove.javabean.mine.UploadImageBean;
 import com.queqiaolove.javabean.mine.UserInfroDetailBean;
 import com.queqiaolove.util.CommonUtils;
 import com.queqiaolove.widget.CircleImageView;
+import com.queqiaolove.widget.dialog.SelectUserIconDialog;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,8 +157,17 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
     private List<UserInfroDetailBean.LabelListBean> label_list;//用户的标签
     private List<UserInfroDetailBean.PicListBean> pic_list;//个人相册照片
     private String language = "";
-    //控件
-
+    /*上传头像*/
+    private final int SELECT_PIC_BY_TACK_PHOTO = 0;
+    private final int SELECT_PIC_BY_PICK_PHOTO = 1;
+    private Uri photoUri;
+    private String picPath = "";
+    private ProgressDialog progressDialog;
+    private final int MY_PERMISSIONS_REQUEST_SELECTPHOTO_PHONE = 123;
+    private final int MY_PERMISSIONS_REQUEST_TAKEPHOTO_PHONE = 124;
+    private final int RESULT_CAMERA_CROP_PATH_RESULT = 3;
+    private String carrier;//厂商
+    private int selectflag;//上传方式
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -216,6 +247,7 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tv_edit_contactway.setOnClickListener(this);
         tv_edit_education.setOnClickListener(this);
 
+        cirUsericonUserinfo.setOnClickListener(this);
     }
 
     @Override
@@ -356,6 +388,70 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_back://返回
                 finish();
                 break;
+            case R.id.cir_usericon_userinfo://上传头像
+                if (Build.VERSION.SDK_INT >= 23) {
+                    //权限已经被授予，在这里直接写要执行的相应方法即可
+                    SelectUserIconDialog selectUserIconDialog = new SelectUserIconDialog(mActivity, 1);
+                    selectUserIconDialog.show();
+                    selectUserIconDialog.setDialogCameraListener(new SelectUserIconDialog.DialogCameraListener() {
+                        @Override
+                        public void camera() {
+                        /*申请权限*/
+                            //第二个参数是需要申请的权限
+                            if (ContextCompat.checkSelfPermission(mActivity,
+                                    Manifest.permission.CAMERA)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                //权限还没有授予，需要在这里写申请权限的代码
+                                ActivityCompat.requestPermissions(mActivity,
+                                        new String[]{Manifest.permission.CAMERA,
+                                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                Manifest.permission.MANAGE_DOCUMENTS},
+                                        MY_PERMISSIONS_REQUEST_TAKEPHOTO_PHONE);
+
+                            } else {
+                                takePhoto();//拍照
+                            }
+                        }
+                    });
+                    selectUserIconDialog.setDialogAlbumListener(new SelectUserIconDialog.DialogAlbumListener() {
+                        @Override
+                        public void album() {
+                        /*申请权限*/
+                            //第二个参数是需要申请的权限
+                            if (ContextCompat.checkSelfPermission(mActivity,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                //权限还没有授予，需要在这里写申请权限的代码
+                                ActivityCompat.requestPermissions(mActivity,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                                , Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.MANAGE_DOCUMENTS },
+                                        MY_PERMISSIONS_REQUEST_SELECTPHOTO_PHONE);
+
+                            } else {
+                                pickPhoto24();//相册
+                            }
+
+                        }
+                    });
+                } else {
+                    SelectUserIconDialog selectUserIconDialog = new SelectUserIconDialog(mActivity, 1);
+                    selectUserIconDialog.show();
+                    selectUserIconDialog.setDialogCameraListener(new SelectUserIconDialog.DialogCameraListener() {
+                        @Override
+                        public void camera() {
+                            takePhoto();//拍照
+                        }
+                    });
+                    selectUserIconDialog.setDialogAlbumListener(new SelectUserIconDialog.DialogAlbumListener() {
+                        @Override
+                        public void album() {
+                            pickPhoto23();//相册
+
+                        }
+                    });
+                }
+                break;
             case R.id.tv_edit_label://标签
                 LabelActivity.intent(mActivity, "1");
                 break;
@@ -376,5 +472,275 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
+    /**
+     * 拍照获取图片
+     */
+    private void takePhoto() {
+        // 执行拍照前，应该先判断SD卡是否存在
+        String SDState = Environment.getExternalStorageState();
+        if (SDState.equals(Environment.MEDIA_MOUNTED)) {
 
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            /***
+             * 需要说明一下，以下操作使用照相机拍照，拍照后的图片会存放在相册中的
+             * 这里使用的这种方式有一个好处就是获取的图片是拍照后的原图
+             * 如果不使用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
+             */
+            ContentValues values = new ContentValues();
+            photoUri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Log.e("takephotouri", photoUri + "");
+            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
+            mActivity.startActivityForResult(intent, SELECT_PIC_BY_TACK_PHOTO);
+        } else {
+            Toast.makeText(mActivity, "内存卡不存在", Toast.LENGTH_LONG).show();
+        }
+    }
+    /*裁剪*/
+    public void cropImg(Uri uri, boolean hasdata) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        //可裁剪
+        intent.putExtra("crop", true);
+        //宽高比
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //裁剪后大小
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        if (hasdata) {
+            intent.putExtra("return-data", true);
+        } else {
+            intent.putExtra("return-data", false);
+
+        }
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDfetection", true);
+        startActivityForResult(intent, RESULT_CAMERA_CROP_PATH_RESULT);
+    }
+
+    /**
+     * 从相册中取图片23
+     */
+    private void pickPhoto23() {
+        Intent intent = new Intent();
+        /*如果要限制上传到服务器的图片类型时可以直接写如：image/jpeg 、 image/png等的类型*/
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivity.startActivityForResult(intent, SELECT_PIC_BY_PICK_PHOTO);
+    }
+
+    /**
+     * 从相册中取图片24
+     */
+    private void pickPhoto24() {
+        Intent intent = new Intent();
+        /*如果要限制上传到服务器的图片类型时可以直接写如：image/jpeg 、 image/png等的类型*/
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        mActivity.startActivityForResult(intent, SELECT_PIC_BY_PICK_PHOTO);
+    }
+    /*打开相机，或相册的回调方法*/
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 点击取消按钮
+        if (resultCode == RESULT_CANCELED) {
+            return;
+        }
+
+        // 可以使用同一个方法，这里分开写为了防止以后扩展不同的需求
+        switch (requestCode) {
+            case SELECT_PIC_BY_PICK_PHOTO:// 如果是直接从相册获取
+                selectflag = SELECT_PIC_BY_PICK_PHOTO;
+                photoUri = data.getData();
+                //Log.e("photoUri", photoUri +"");
+                if (Build.VERSION.SDK_INT >= 23) {
+                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    File userIcon = new File(picPath);
+                    photoUri = Uri.fromFile(userIcon);
+                    cropImg(photoUri, true);
+                    Log.e("pickphotoUri24", photoUri + "");
+                } else {
+                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    File userIcon = new File(picPath);
+                    photoUri = Uri.fromFile(userIcon);
+
+                    Log.e("pickphotoUri23", photoUri + "");
+                    cropImg(photoUri, true);
+                }
+                break;
+            case SELECT_PIC_BY_TACK_PHOTO:// 如果是调用相机拍照时
+                selectflag = SELECT_PIC_BY_TACK_PHOTO;
+                carrier = Build.MANUFACTURER;
+                Log.e("phonecarrier", carrier + "");
+                if (Build.VERSION.SDK_INT >= 23) {
+                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    File userIcon = new File(picPath);
+                    photoUri = Uri.fromFile(userIcon);
+                    Log.e("takephotoUri24", photoUri + "");
+                    cropImg(photoUri, true);
+                } else {
+                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    File userIcon = new File(picPath);
+                    photoUri = Uri.fromFile(userIcon);
+                    Log.e("takephotoUri23", photoUri + "");
+                    cropImg(photoUri, true);
+                }
+                break;
+            case RESULT_CAMERA_CROP_PATH_RESULT:// 如果裁剪成功
+                doPhoto(requestCode, data);
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    /**
+     * 选择图片后，获取图片的路径
+     *
+     * @param requestCode
+     * @param data
+     */
+    private void doPhoto(int requestCode, Intent data) {
+
+        // 从相册取图片，有些手机有异常情况，请注意
+        if (data == null) {
+            Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (data != null) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                picPath = Environment.getExternalStorageDirectory().getPath();
+                File userIcon = new File(picPath, "usericon.jpg");
+
+                Bitmap bitmap = data.getParcelableExtra("data");
+                try {
+                    FileOutputStream fos = new FileOutputStream(userIcon);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //photoUri = Uri.fromFile(userIcon);
+                picPath = userIcon.getPath();
+                //Log.e("24picPath", photoUri + "");
+
+                Log.e("userIcon", picPath);
+                if (picPath.equals("") || picPath.equals(null)) {
+                    toast("图片读取错误");
+                    return;
+                }
+                progressDialog = ProgressDialog.show(mActivity, null, "正在上传图片，请稍候...");
+                uploadUserIcon();
+                return;
+            } else {
+                picPath = Environment.getExternalStorageDirectory().getPath();
+                File userIcon = new File(picPath, "usericon.jpg");
+
+                Bitmap bitmap = data.getParcelableExtra("data");
+                try {
+                    FileOutputStream fos = new FileOutputStream(userIcon);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //photoUri = Uri.fromFile(userIcon);
+                picPath = userIcon.getPath();
+                //Log.e("24picPath", photoUri + "");
+
+                Log.e("userIcon", picPath);
+                if (picPath.equals("") || picPath.equals(null)) {
+                    toast("图片读取错误");
+                    return;
+                }
+                progressDialog = ProgressDialog.show(mActivity, null, "正在上传图片，请稍候...");
+                uploadUserIcon();
+            }
+
+
+        }
+    }
+    /*上传头像*/
+    private void uploadUserIcon() {
+        userid = QueQiaoLoveApp.getUserId();
+        File userIcon = new File(picPath);
+        if (selectflag == SELECT_PIC_BY_TACK_PHOTO && carrier.trim().equals("samsung")) {//如果是三星机型
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(photoUri));
+                bitmap = rotateBitmapByDegree(bitmap, 90);
+                FileOutputStream fos = new FileOutputStream(userIcon);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userIcon);
+        /*MultipartBody.Part body =
+                MultipartBody.Part.createFormData("image", userIcon.getName(), requestBody);*/
+        MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
+        Log.e("filename",userIcon.getName());
+        mineAPI.uploadImage(userid,
+                Constants.UPLOADIMAGE_USERICON,200,200,requestBody).enqueue(new Callback<UploadImageBean>() {
+            @Override
+            public void onResponse(Call<UploadImageBean> call, Response<UploadImageBean> response) {
+                UploadImageBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    photoUri = Uri.fromFile(new File(picPath));
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(photoUri));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    cirUsericonUserinfo.setImageBitmap(bitmap);
+                    toast("上传成功");
+                    if (progressDialog != null) progressDialog.dismiss();
+                }else {
+                    toast(body.getMsg());
+                    if (progressDialog != null) progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
+
+    }
+
+
+
+    /**
+     * 将图片按照某个角度进行旋转
+     *
+     * @param bm     需要旋转的图片
+     * @param degree 旋转角度
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotateBitmapByDegree(Bitmap bm, int degree) {
+        Bitmap returnBm = null;
+
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            bm.recycle();
+            bm = null;
+        }
+        return returnBm;
+    }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background_queqiaopage"
+    android:orientation="vertical"
+    android:scrollbars="none">
+    <!--标题-->
+    <include
+        android:id="@+id/ll_title_main"
+        layout="@layout/title_main"/>
+
+    <RadioGroup
+        android:id="@+id/rg_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_activity_find"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:textSize="14sp"
+            android:text="活动"
+            android:textColor="@color/rb_purpleandblack_selector"
+             />
+
+        <RadioButton
+            android:id="@+id/rb_welfare_find"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:textSize="14sp"
+            android:text="福利"
+            android:textColor="@color/rb_purpleandblack_selector"
+             />
+
+        <RadioButton
+            android:id="@+id/rb_nearby_find"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:textSize="14sp"
+            android:text="附近的人"
+            android:textColor="@color/rb_purpleandblack_selector"
+             />
+    </RadioGroup>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_background_queqiaopage"/>
+    <com.queqiaolove.widget.NoScrollViewPager
+        android:id="@+id/vp_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.queqiaolove.widget.NoScrollViewPager>
+</LinearLayout>

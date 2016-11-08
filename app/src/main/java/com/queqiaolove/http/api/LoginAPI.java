@@ -31,7 +31,7 @@ public interface LoginAPI {
      * @return
      */
     @GET("a/regist/regist/")
-    Call<RegistBean>registFirst(@Query("mobile") String mobile,
+    Call<RegistBean>regist(@Query("mobile") String mobile,
                                 @Query("password1") String password1,
                                 @Query("password2") String password2,
                                 @Query("yqcode") String yqcode,

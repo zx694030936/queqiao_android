@@ -94,7 +94,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 bean.setWatch_num(data.getWatch_num());
                 bean.setZhibo_fm_pic(data.getZhibo_fm_pic());
 
-                HorizontalLiveActivity.intent(mActivity, bean);
+                HorizontalLiveActivity.intent(mActivity, "");
             }
         });
         //手机直播
@@ -126,7 +126,6 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 RecommendDataBean.HdzbListBean data = hdzb_list.get(makemakingposition);
                 LiveUrlListBean.ListBean bean = new LiveUrlListBean.ListBean();
                 bean.setBtitle(data.getBtitle());
-                bean.setCity(data.getCity());
                 bean.setGroupid(data.getGroupid());
                 bean.setId(data.getId());
                 bean.setIf_open(data.getIf_open());

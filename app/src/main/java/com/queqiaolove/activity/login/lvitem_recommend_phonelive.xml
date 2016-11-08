@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--直播会员-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="6dp"
+            android:text="直播会员"
+            android:textColor="@color/black_queqiao_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_more_phonelive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="9dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="14dp"
+            android:text="更多>"
+            android:textColor="@color/gray_queqiao_text"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <com.queqiaolove.widget.MyGridView
+        android:id="@+id/gv_phonelive"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:numColumns="3"
+        android:descendantFocusability="blocksDescendants"
+        android:divider="@null"
+        android:scrollbars="none">
+    </com.queqiaolove.widget.MyGridView>
+</LinearLayout>

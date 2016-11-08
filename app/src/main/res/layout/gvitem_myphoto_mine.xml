@@ -8,8 +8,8 @@
         <ImageView
             android:id="@+id/iv_cover_mine"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/mine_myphoto_default"
+            android:layout_height="124dp"
+            android:src="@mipmap/btn_mine_uploadphoto"
             android:scaleType="centerCrop"/>
     </RelativeLayout>
 </LinearLayout>

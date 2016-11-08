@@ -1,7 +1,16 @@
 package com.queqiaolove.fragment.main;
 
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.queqiaolove.QueQiaoLoveApp;
@@ -16,6 +25,7 @@ import com.queqiaolove.activity.mine.LiveVideoMineActivity;
 import com.queqiaolove.activity.mine.MyAccountMineActivity;
 import com.queqiaolove.activity.mine.PhotoMineActivity;
 import com.queqiaolove.activity.mine.SettingMineActivity;
+import com.queqiaolove.activity.mine.UpLoadPhotoActivity;
 import com.queqiaolove.activity.mine.UserInfoMineActivity;
 import com.queqiaolove.activity.mine.VideoMineActivity;
 import com.queqiaolove.activity.mine.member.OpenMemberActivity;
@@ -29,6 +39,7 @@ import com.queqiaolove.javabean.mine.UserBaseInfoBean;
 import com.queqiaolove.util.CommonUtils;
 import com.queqiaolove.widget.CircleImageView;
 import com.queqiaolove.widget.MyGridView;
+import com.queqiaolove.widget.dialog.SelectUserIconDialog;
 
 import java.util.List;
 
@@ -76,16 +87,26 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private List<String> video_list;
     private MyGridView mlv_pic_mine;
     private MyGridView mlv_video_mine;
-
+    /*上传图片*/
+    private final int SELECT_PIC_BY_TACK_PHOTO = 0;
+    private final int SELECT_PIC_BY_PICK_PHOTO = 1;
+    private Uri photoUri;
+    private String picPath = "";
+    private ProgressDialog progressDialog;
+    private final int MY_PERMISSIONS_REQUEST_SELECTPHOTO_PHONE = 123;
+    private final int MY_PERMISSIONS_REQUEST_TAKEPHOTO_PHONE = 124;
+    private final int RESULT_CAMERA_CROP_PATH_RESULT = 3;
+    private String carrier;//厂商
+    private int selectflag;//上传方式
 
     @Override
     protected View initTitleView() {
-        return View.inflate(mActivity, R.layout.title_mine,null);
+        return View.inflate(mActivity, R.layout.title_mine, null);
     }
 
     @Override
     protected View initContentLayout() {
-        return View.inflate(mActivity, R.layout.fragment_mine_main,null);
+        return View.inflate(mActivity, R.layout.fragment_mine_main, null);
     }
 
     @Override
@@ -145,14 +166,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_coral_openmember.setOnClickListener(this);
         tv_jade_openmember.setOnClickListener(this);
         tv_diamond_openmember.setOnClickListener(this);
+        /*上传图片、视频*/
+        iv_uploadpic_mine.setOnClickListener(this);
+        iv_uploadvideo_mine.setOnClickListener(this);
     }
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        userid = QueQiaoLoveApp.getUserId();
-        loadUserBaseInfo();
+
         return ContentPage.RequestState.STATE_SUCCESS;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userid = QueQiaoLoveApp.getUserId();
+        loadUserBaseInfo();
+    }
+
     /*加载基本信息*/
     private void loadUserBaseInfo() {
         MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
@@ -186,67 +217,148 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_nickname_mine.setText(nickname);
         tv_id_mine.setText(ucode);
         tv_percent_mine.setText(integrity_degree);
-        CommonUtils.loadImage(R.mipmap.ic_default_usericon,cir_usericon_mine,upic);
+        CommonUtils.loadImage(R.mipmap.ic_default_usericon, cir_usericon_mine, upic);
         iv_level_mine.setImageResource(CommonUtils.getLevelImage(step));
 
-        mlv_pic_mine.setAdapter(new PicMlvAdapter(mActivity,pic_list));
-        mlv_video_mine.setAdapter(new VideoMlvAdapter(mActivity,video_list));
+        mlv_pic_mine.setAdapter(new PicMlvAdapter(mActivity, pic_list));
+        mlv_video_mine.setAdapter(new VideoMlvAdapter(mActivity, video_list));
+
+        /*设置相片缩略图列表高度*/
+        ViewTreeObserver viewTreeObserver = mlv_pic_mine.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int width = iv_uploadpic_mine.getMeasuredHeight();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mlv_pic_mine.getLayoutParams();
+                params.height = (int) (width/3.5*5);
+                mlv_pic_mine.setLayoutParams(params);
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.rl_userinfo_mine://用户资料
                 //LoginActivity.intent(mActivity,"1");
-                UserInfoMineActivity.intent(mActivity,"1");
+                UserInfoMineActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_setting_mine://设置
-                SettingMineActivity.intent(mActivity,"1");
+                SettingMineActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_allservice_mine://全部服务
-                AllServiceActivity.intent(mActivity,"1");
+                AllServiceActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_myphoto_mine://我的图片
-                PhotoMineActivity.intent(mActivity,"1");
+                PhotoMineActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_myvideo_mine://我的视频
-                VideoMineActivity.intent(mActivity,"1");
+                VideoMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_gift_mine://我的礼物
-                GiftMineActivity.intent(mActivity,"1");
+                GiftMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_order_mine://我的订单
-                ConstructionActivity.intent(mActivity,"1");
+                ConstructionActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_fanscontribution_mine://粉丝贡献
-                FansConstructionMineActivity.intent(mActivity,"1");
+                FansConstructionMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_attention_mine://我的关注
-                AttentionMineActivity.intent(mActivity,"1");
+                AttentionMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_livevideo_mine://我的点播
-                LiveVideoMineActivity.intent(mActivity,"1");
+                LiveVideoMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_myaccount_mine://我的账户
-                MyAccountMineActivity.intent(mActivity,"1");
+                MyAccountMineActivity.intent(mActivity, "1");
                 break;
             case R.id.rl_invitecode_mine://我的邀请码
-                InviteCodeMineActivity.intent(mActivity,"1");
+                InviteCodeMineActivity.intent(mActivity, "1");
                 break;
             /*开通会员*/
             case R.id.tv_pear_openmember://珍珠
-                OpenMemberActivity.intent(mActivity,"珍珠");
+                OpenMemberActivity.intent(mActivity, "珍珠");
                 break;
             case R.id.tv_coral_openmember://珊瑚
-                OpenMemberActivity.intent(mActivity,"珊瑚");
+                OpenMemberActivity.intent(mActivity, "珊瑚");
                 break;
             case R.id.tv_jade_openmember://翡翠
-                OpenMemberActivity.intent(mActivity,"翡翠");
+                OpenMemberActivity.intent(mActivity, "翡翠");
                 break;
             case R.id.tv_diamond_openmember://钻石
-                OpenMemberActivity.intent(mActivity,"钻石");
+                OpenMemberActivity.intent(mActivity, "钻石");
+                break;
+            case R.id.iv_uploadpic_mine://上传图片
+                if (Build.VERSION.SDK_INT >= 23) {
+                    //权限已经被授予，在这里直接写要执行的相应方法即可
+                    SelectUserIconDialog selectUserIconDialog = new SelectUserIconDialog(mActivity, 1);
+                    selectUserIconDialog.show();
+                    selectUserIconDialog.setDialogCameraListener(new SelectUserIconDialog.DialogCameraListener() {
+                        @Override
+                        public void camera() {
+                        /*申请权限*/
+                            //第二个参数是需要申请的权限
+                            if (ContextCompat.checkSelfPermission(mActivity,
+                                    Manifest.permission.CAMERA)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                //权限还没有授予，需要在这里写申请权限的代码
+                                ActivityCompat.requestPermissions(mActivity,
+                                        new String[]{Manifest.permission.CAMERA,
+                                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                Manifest.permission.MANAGE_DOCUMENTS},
+                                        MY_PERMISSIONS_REQUEST_TAKEPHOTO_PHONE);
+
+                            } else {
+                                UpLoadPhotoActivity.intent(mActivity,UpLoadPhotoActivity.PHOTO);
+
+                            }
+                        }
+                    });
+                    selectUserIconDialog.setDialogAlbumListener(new SelectUserIconDialog.DialogAlbumListener() {
+                        @Override
+                        public void album() {
+                        /*申请权限*/
+                            //第二个参数是需要申请的权限
+                            if (ContextCompat.checkSelfPermission(mActivity,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                //权限还没有授予，需要在这里写申请权限的代码
+                                ActivityCompat.requestPermissions(mActivity,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                                , Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.MANAGE_DOCUMENTS},
+                                        MY_PERMISSIONS_REQUEST_SELECTPHOTO_PHONE);
+
+                            } else {
+                                UpLoadPhotoActivity.intent(mActivity,UpLoadPhotoActivity.PIC24);
+                            }
+
+                        }
+                    });
+                } else {
+                    SelectUserIconDialog selectUserIconDialog = new SelectUserIconDialog(mActivity, 1);
+                    selectUserIconDialog.show();
+                    selectUserIconDialog.setDialogCameraListener(new SelectUserIconDialog.DialogCameraListener() {
+                        @Override
+                        public void camera() {
+                            UpLoadPhotoActivity.intent(mActivity,UpLoadPhotoActivity.PHOTO);
+                        }
+                    });
+                    selectUserIconDialog.setDialogAlbumListener(new SelectUserIconDialog.DialogAlbumListener() {
+                        @Override
+                        public void album() {
+                            UpLoadPhotoActivity.intent(mActivity,UpLoadPhotoActivity.PIC23);
+                        }
+                    });
+                }
+                break;
+            case R.id.iv_uploadvideo_mine://上传视频
+                OpenMemberActivity.intent(mActivity, "钻石");
                 break;
 
         }
     }
+
+
 }

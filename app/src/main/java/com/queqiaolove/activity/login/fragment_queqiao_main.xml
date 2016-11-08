@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background_queqiaopage"
+    android:orientation="vertical"
+    android:scrollbars="none">
+    <!--标题-->
+    <include
+        android:id="@+id/ll_title_main"
+        layout="@layout/title_main"/>
+
+    <RadioGroup
+        android:id="@+id/rg_queqiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_recommend_queqiao"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="推荐"
+            android:textColor="@color/rb_queqiao_color_selector"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_live_queqiao"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="直播"
+            android:textColor="@color/rb_queqiao_color_selector"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_video_queqiao"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="点播"
+            android:textColor="@color/rb_queqiao_color_selector"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_photo_queqiao"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="照片"
+            android:textColor="@color/rb_queqiao_color_selector"
+            android:textSize="14sp" />
+    </RadioGroup>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_background_queqiaopage"/>
+    <com.queqiaolove.widget.NoScrollViewPager
+        android:id="@+id/vp_queqiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.queqiaolove.widget.NoScrollViewPager>
+</LinearLayout>

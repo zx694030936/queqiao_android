@@ -25,7 +25,7 @@ public class PicMlvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return pic_list.size();
     }
 
     @Override
@@ -42,13 +42,9 @@ public class PicMlvAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(mActivity, R.layout.lv_pic_baseinfo,null);
         ImageView iv = (ImageView) v.findViewById(R.id.iv_pic1_mine);
-        String upic = "";
-        if (pic_list.size()-1<=i){
-            v.setVisibility(View.INVISIBLE);
-        }else {
-            upic = pic_list.get(i).getUpic();
-            CommonUtils.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
-        }
+        String upic = pic_list.get(i).getUpic();
+
+        CommonUtils.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
 
         return v;
     }

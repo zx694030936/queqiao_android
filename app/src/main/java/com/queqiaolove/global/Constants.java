@@ -45,4 +45,7 @@ public interface Constants {
     final int OBTAINCODE_CHANGEPWD = 4;//修改秘密
 
 
+    /*个人*/
+    final int UPLOADIMAGE_USERICON = 1;//上传用户头像
+    final int UPLOADIMAGE_PHOTO = 2;//上传用户照片
 }

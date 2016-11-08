@@ -1,6 +1,5 @@
 package com.queqiaolove.javabean;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,75 +7,75 @@ import java.util.List;
  */
 public class RecommendDataBean {
 
+
     /**
      * returnvalue : true
      * msg : 成功
-     * pczb_list : [{"id":"61","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"joke的直播间","saytitle":"LOL话题?","if_open":"1","isend":"0","username":"joker","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_7","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.m3u8","groupid":""}]
-     * appzb_list : [{"id":"58","zhibo_fm_pic":"http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png","btitle":"觉得基督教世界","saytitle":"#好身材show出来#","if_open":"2","isend":"0","username":"小武","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_4","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.m3u8","groupid":""},{"id":"55","zhibo_fm_pic":"http://182.92.213.51:1070/54","btitle":"搜索一下","saytitle":"#我颜值高#","if_open":"1","isend":"1","username":"1221221","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_11","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_11.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_11.m3u8","groupid":""},{"id":"56","zhibo_fm_pic":"http://182.92.213.51:1070//img/1.png","btitle":"搜索一下","saytitle":"#我颜值高#","if_open":"1","isend":"1","username":"哈哈","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_12","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_12.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_12.m3u8","groupid":""},{"id":"54","zhibo_fm_pic":"http://182.92.213.51:1070//img/1.png","btitle":"搜索一下","saytitle":"#我颜值高#","if_open":"1","isend":"1","username":"zy","city":"朝阳区","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_2","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.m3u8","groupid":""},{"id":"60","zhibo_fm_pic":"http://182.92.213.51:1070//img/4.png","btitle":"直播","saytitle":"#大学生#","if_open":"1","isend":"1","username":"伟伟","city":"安庆市","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_6","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_6.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_6.m3u8","groupid":""},{"id":"59","zhibo_fm_pic":"http://182.92.213.51:1070//img/3.png","btitle":"歌神","saytitle":"#清新可爱#","if_open":"1","isend":"1","username":"肥羊","city":"","watch_num":"0","play_rtmp":"","play_flv":"","play_hls":"","groupid":""}]
-     * hdzb_list : [{"id":"63","zhibo_fm_pic":"http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png","btitle":"觉得基督教世界","saytitle":"#好身材show出来#","if_open":"2","isend":"1","username":"你好","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_14","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.m3u8","groupid":""},{"id":"62","zhibo_fm_pic":"http://182.92.213.51:1070//img/1.png","btitle":"搜索一下","saytitle":"#我颜值高#","if_open":"1","isend":"1","username":"呵呵","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_13","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_13.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_13.m3u8","groupid":""}]
-     * hdsp_list : [{"id":"3","video_pic":"http://182.92.213.51:1070//activityimg/161102124940366302_s.jpg","city":"赤峰市","watch_num":"0","participant_num":"0"},{"id":"2","video_pic":"http://182.92.213.51:1070//activityimg/161102115314418082_s.jpg","city":"定西市","watch_num":"26","participant_num":"1"}]
-     * hdyg_list : [{"id":"1","atitle":"关于开展\u201c我们的节日·爱在七夕\u201d","trailer_pic":"http://182.92.213.51:1070//activityimg/161102105945733747_s.jpg","city":"东城区","watch_num":"29","participant_num":"6","like_num":"4","daydiff":"27天后结束"}]
+     * pczb_list : [{"id":"66","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"wq dfsa","saytitle":"LOL话题?","if_open":"1","isend":"0","username":"","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_53","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_53.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_53.m3u8","groupid":""},{"id":"55","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"达到啊","saytitle":"LOL话题?","if_open":"1","isend":"0","username":"","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_11","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_11.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_11.m3u8","groupid":""},{"id":"72","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"我在pc做直播","saytitle":"LOL话题?","if_open":"1","isend":"1","username":"","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_5","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_5.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_5.m3u8","groupid":""},{"id":"61","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"苦逼的一天","saytitle":"LOL话题?","if_open":"1","isend":"1","username":"joker","city":"昌平区","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_7","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.m3u8","groupid":"261668101832049072"}]
+     * appzb_list : [{"id":"54","zhibo_fm_pic":"http://182.92.213.51:1070//img/1.png","btitle":"诶我去额为","saytitle":"#好身材show出来#","if_open":"1","isend":"0","username":"zy","city":"朝阳区","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_2","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.m3u8","groupid":"261681169349740100"},{"id":"58","zhibo_fm_pic":"http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png","btitle":"基督教世界","saytitle":"#好身材show出来#","if_open":"2","isend":"0","username":"小武","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_4","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.m3u8","groupid":""},{"id":"73","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"好尴尬","saytitle":"#新人求关注#","if_open":"1","isend":"1","username":"wd","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_29","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_29.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_29.m3u8","groupid":"262038184244806056"},{"id":"70","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"直播","saytitle":"#新人求关注#","if_open":"1","isend":"1","username":"张大哥","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_31","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_31.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_31.m3u8","groupid":"261871495989429828"},{"id":"71","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"北京故宫","saytitle":"#秀恩爱#","if_open":"1","isend":"1","username":"杨大妈","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_30","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_30.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_30.m3u8","groupid":"261866188450038184"},{"id":"67","zhibo_fm_pic":"http://182.92.213.51:1070//img/defaut_live.png","btitle":"测试","saytitle":"#新人求关注#","if_open":"1","isend":"1","username":"伟伟","city":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_18","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_18.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_18.m3u8","groupid":"261762821635703212"}]
+     * hdzb_list : [{"id":"65","zhibo_fm_pic":"http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png","btitle":"帅哥直播","saytitle":"#好身材show出来#","if_open":"1","isend":"0","username":"刘美女","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_15","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_15.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_15.m3u8","groupid":""},{"id":"63","zhibo_fm_pic":"http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png","btitle":"觉得基督教世界","saytitle":"#好身材show出来#","if_open":"2","isend":"1","username":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_14","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.m3u8","groupid":""},{"id":"62","zhibo_fm_pic":"http://182.92.213.51:1070//img/1.png","btitle":"搜索一下","saytitle":"#我颜值高#","if_open":"1","isend":"1","username":"","watch_num":"0","play_rtmp":"rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_13","play_flv":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_13.flv","play_hls":"http://4971.liveplay.myqcloud.com/live/4971_queqiao_13.m3u8","groupid":""}]
+     * hdsp_list : [{"id":"1","atitle":"关于开展\u201c我们的节日·爱在七夕\u201d","video_pic":"http://182.92.213.51:1070//activityimg/161102105945733747_s.jpg","watch_num":"67","video_url":"http://4971.liveplay.myqcloud.com/live/"}]
+     * hdyg_list : [{"id":"1","atitle":"关于开展\u201c我们的节日·爱在七夕\u201d","trailer_pic":"http://182.92.213.51:1070//activityimg/161102105945733747_s.jpg","city":"东城区","watch_num":"67","participant_num":"10","like_num":"5","daydiff":"22"}]
      */
 
     private String returnvalue;
     private String msg;
     /**
-     * id : 61
+     * id : 66
      * zhibo_fm_pic : http://182.92.213.51:1070//img/defaut_live.png
-     * btitle : joke的直播间
+     * btitle : wq dfsa
      * saytitle : LOL话题?
      * if_open : 1
      * isend : 0
-     * username : joker
+     * username :
      * city :
      * watch_num : 0
-     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_7
-     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.flv
-     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_7.m3u8
+     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_53
+     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_53.flv
+     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_53.m3u8
      * groupid :
      */
 
     private List<PczbListBean> pczb_list;
     /**
-     * id : 58
-     * zhibo_fm_pic : http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png
-     * btitle : 觉得基督教世界
+     * id : 54
+     * zhibo_fm_pic : http://182.92.213.51:1070//img/1.png
+     * btitle : 诶我去额为
      * saytitle : #好身材show出来#
-     * if_open : 2
+     * if_open : 1
      * isend : 0
-     * username : 小武
-     * city :
+     * username : zy
+     * city : 朝阳区
      * watch_num : 0
-     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_4
-     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.flv
-     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_4.m3u8
-     * groupid :
+     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_2
+     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.flv
+     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_2.m3u8
+     * groupid : 261681169349740100
      */
 
     private List<AppzbListBean> appzb_list;
     /**
-     * id : 63
+     * id : 65
      * zhibo_fm_pic : http://182.92.213.51:1070//album_img/1611/161102092534469253_s.png
-     * btitle : 觉得基督教世界
+     * btitle : 帅哥直播
      * saytitle : #好身材show出来#
-     * if_open : 2
-     * isend : 1
-     * username : 你好
-     * city :
+     * if_open : 1
+     * isend : 0
+     * username : 刘美女
      * watch_num : 0
-     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_14
-     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.flv
-     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_14.m3u8
+     * play_rtmp : rtmp://4971.liveplay.myqcloud.com/live/4971_queqiao_15
+     * play_flv : http://4971.liveplay.myqcloud.com/live/4971_queqiao_15.flv
+     * play_hls : http://4971.liveplay.myqcloud.com/live/4971_queqiao_15.m3u8
      * groupid :
      */
 
     private List<HdzbListBean> hdzb_list;
     /**
-     * id : 3
-     * video_pic : http://182.92.213.51:1070//activityimg/161102124940366302_s.jpg
-     * city : 赤峰市
-     * watch_num : 0
-     * participant_num : 0
+     * id : 1
+     * atitle : 关于开展“我们的节日·爱在七夕”
+     * video_pic : http://182.92.213.51:1070//activityimg/161102105945733747_s.jpg
+     * watch_num : 67
+     * video_url : http://4971.liveplay.myqcloud.com/live/
      */
 
     private List<HdspListBean> hdsp_list;
@@ -85,10 +84,10 @@ public class RecommendDataBean {
      * atitle : 关于开展“我们的节日·爱在七夕”
      * trailer_pic : http://182.92.213.51:1070//activityimg/161102105945733747_s.jpg
      * city : 东城区
-     * watch_num : 29
-     * participant_num : 6
-     * like_num : 4
-     * daydiff : 27天后结束
+     * watch_num : 67
+     * participant_num : 10
+     * like_num : 5
+     * daydiff : 22
      */
 
     private List<HdygListBean> hdyg_list;
@@ -149,7 +148,7 @@ public class RecommendDataBean {
         this.hdyg_list = hdyg_list;
     }
 
-    public static class PczbListBean implements Serializable{
+    public static class PczbListBean {
         private String id;
         private String zhibo_fm_pic;
         private String btitle;
@@ -269,7 +268,7 @@ public class RecommendDataBean {
         }
     }
 
-    public static class AppzbListBean implements Serializable{
+    public static class AppzbListBean {
         private String id;
         private String zhibo_fm_pic;
         private String btitle;
@@ -389,7 +388,7 @@ public class RecommendDataBean {
         }
     }
 
-    public static class HdzbListBean implements Serializable{
+    public static class HdzbListBean {
         private String id;
         private String zhibo_fm_pic;
         private String btitle;
@@ -397,7 +396,6 @@ public class RecommendDataBean {
         private String if_open;
         private String isend;
         private String username;
-        private String city;
         private String watch_num;
         private String play_rtmp;
         private String play_flv;
@@ -460,14 +458,6 @@ public class RecommendDataBean {
             this.username = username;
         }
 
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
         public String getWatch_num() {
             return watch_num;
         }
@@ -509,12 +499,12 @@ public class RecommendDataBean {
         }
     }
 
-    public static class HdspListBean implements Serializable{
+    public static class HdspListBean {
         private String id;
+        private String atitle;
         private String video_pic;
-        private String city;
         private String watch_num;
-        private String participant_num;
+        private String video_url;
 
         public String getId() {
             return id;
@@ -522,6 +512,14 @@ public class RecommendDataBean {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getAtitle() {
+            return atitle;
+        }
+
+        public void setAtitle(String atitle) {
+            this.atitle = atitle;
         }
 
         public String getVideo_pic() {
@@ -532,14 +530,6 @@ public class RecommendDataBean {
             this.video_pic = video_pic;
         }
 
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
         public String getWatch_num() {
             return watch_num;
         }
@@ -548,16 +538,16 @@ public class RecommendDataBean {
             this.watch_num = watch_num;
         }
 
-        public String getParticipant_num() {
-            return participant_num;
+        public String getVideo_url() {
+            return video_url;
         }
 
-        public void setParticipant_num(String participant_num) {
-            this.participant_num = participant_num;
+        public void setVideo_url(String video_url) {
+            this.video_url = video_url;
         }
     }
 
-    public static class HdygListBean implements Serializable{
+    public static class HdygListBean {
         private String id;
         private String atitle;
         private String trailer_pic;

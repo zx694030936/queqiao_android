@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.queqiaolove.R;
+import com.queqiaolove.activity.main.MainActivity;
 import com.queqiaolove.global.Constants;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.LoginAPI;
@@ -139,11 +142,52 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     /*验证验证码*/
     private void register() {
         LoginAPI loginAPI = Http.getInstance().create(LoginAPI.class);
-        loginAPI.registFirst(phone,pwd,cetainpwd,invitecode,code,nickname).enqueue(new Callback<RegistBean>() {
+        loginAPI.regist(phone,pwd,cetainpwd,invitecode,code,nickname).enqueue(new Callback<RegistBean>() {
             @Override
             public void onResponse(Call<RegistBean> call, Response<RegistBean> response) {
                 if (response.body().getReturnvalue().equals("true")){
-                    FinishRegisterActivity.intent(mActivity,"1");
+                    //FinishRegisterActivity.intent(mActivity,"1");
+                    RegistBean body = response.body();
+
+                    final String username = body.getUuid();//环信ID
+                    final String password = body.getPassword();//环信密码
+                    /**
+                     * 之后都是环信的代码
+                     */
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                EMClient.getInstance().login(username, password, new EMCallBack() {//环信登录方法（注册完了再登录）
+                                    @Override
+                                    public void onSuccess() {//登陆成功
+                                        EMClient.getInstance().groupManager().loadAllGroups();
+                                        EMClient.getInstance().chatManager().loadAllConversations();
+                                        MainActivity.intent(mActivity,new String[]{"0"});
+                                        finish();
+
+                                    }
+
+                                    @Override
+                                    public void onProgress(int progress, String status) {
+                                    }
+
+                                    @Override
+                                    public void onError(final int code, final String message) {
+                                        runOnUiThread(new Runnable() {
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }else {
                     toast(response.body().getMsg());
                 }
@@ -171,7 +215,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     handler.sendEmptyMessageDelayed(0,60000);
                     toast("正在获取短信验证码...");
                 }else {
-                    toast("数据异常");
+                    toast(response.body().getMsg());
                 }
             }
 

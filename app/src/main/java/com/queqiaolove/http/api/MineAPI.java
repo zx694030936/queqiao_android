@@ -1,15 +1,20 @@
 package com.queqiaolove.http.api;
 
 import com.queqiaolove.javabean.mine.ChangePwdBean;
+import com.queqiaolove.javabean.mine.MyPhotoListBean;
+import com.queqiaolove.javabean.mine.UploadImageBean;
 import com.queqiaolove.javabean.mine.UserBaseInfoBean;
 import com.queqiaolove.javabean.mine.UserInfoLabelListbean;
 import com.queqiaolove.javabean.mine.UserInfroDetailBean;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * Created by LENOVO on 2016/10/25.
@@ -52,4 +57,35 @@ public interface MineAPI {
      */
     @GET("api/sys/label_list/")
     Call<UserInfoLabelListbean> userInfroLabelList();
+
+    /**
+     * 上传头像
+     * @param file
+     * @param userid
+     * @param upflag    1头像，2相册
+     * @param imgwidth
+     * @param imgheight
+     * @return
+     */
+    @Multipart
+    @POST("api/user/user_pic_upload/")
+    Call<UploadImageBean> uploadImage(@Part("userid") int userid,
+                                      @Part("upflag") int upflag,
+                                      @Part("imgwidth") int imgwidth,
+                                      @Part("imgheight") int imgheight,
+                                      @Part("file\";filename=\"usericon.jpg\"") RequestBody file);
+
+    /**
+     * 个人 - 相册列表
+     * @param userid
+     * @param pageno
+     * @param pagesize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/user_pic_list/")
+    Call<MyPhotoListBean> myphotolist(@Field("userid") int userid,
+                                      @Field("pageno") int pageno,
+                                      @Field("pagesize") int pagesize);
+
 }
