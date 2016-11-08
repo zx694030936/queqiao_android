@@ -59,6 +59,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private String cetainpwd="";
     private String nickname="";
     private String invitecode="";
+    private static LoginActivity loginActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +167,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                                         EMClient.getInstance().chatManager().loadAllConversations();
                                         MainActivity.intent(mActivity,new String[]{"0"});
                                         finish();
-
+                                        loginActivity.finish();
                                     }
 
                                     @Override
@@ -234,6 +235,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent();
         intent.setClass(activity, RegisterActivity.class);
         intent.putExtra(REGISTER, data);
+        loginActivity = (LoginActivity) activity;
         activity.startActivity(intent);
     }
 
