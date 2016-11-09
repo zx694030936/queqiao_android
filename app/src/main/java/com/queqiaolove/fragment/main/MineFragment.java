@@ -36,7 +36,7 @@ import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MineAPI;
 import com.queqiaolove.javabean.mine.UserBaseInfoBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 import com.queqiaolove.widget.CircleImageView;
 import com.queqiaolove.widget.MyGridView;
 import com.queqiaolove.widget.dialog.SelectUserIconDialog;
@@ -214,11 +214,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         pic_list = baseInfoBean.getPic_list();
         video_list = baseInfoBean.getVideo_list();
 
-        tv_nickname_mine.setText(nickname);
+        tv_nickname_mine.setText(nickname.trim().equals("") ? "暂无" : nickname);
         tv_id_mine.setText(ucode);
         tv_percent_mine.setText(integrity_degree);
-        CommonUtils.loadImage(R.mipmap.ic_default_usericon, cir_usericon_mine, upic);
-        iv_level_mine.setImageResource(CommonUtils.getLevelImage(step));
+        CommonUtil.loadImage(R.mipmap.ic_default_usericon, cir_usericon_mine, upic);
+        iv_level_mine.setImageResource(CommonUtil.getLevelImage(step));
 
         mlv_pic_mine.setAdapter(new PicMlvAdapter(mActivity, pic_list));
         mlv_video_mine.setAdapter(new VideoMlvAdapter(mActivity, video_list));

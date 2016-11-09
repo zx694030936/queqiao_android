@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.RecommendDataBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class MatchMakingVideoGvAdapter extends BaseAdapter {
             String watch_num = data.getWatch_num();
             String atitle = data.getAtitle();
         /*设置内容*/
-            CommonUtils.loadImage(R.mipmap.default_mylivevideo, holder.iv_anchor_live, video_pic);
+            CommonUtil.loadImage(R.mipmap.default_mylivevideo, holder.iv_anchor_live, video_pic);
             holder.tv_numoflook_matchmakingvideo.setText(watch_num);
             holder.tv_headline_matchmakingvideo.setText(atitle);
         }

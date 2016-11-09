@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.mine.MyPhotoListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class MyPhotoGvAdapter extends BaseAdapter {
     private final Activity mActivity;
     private final List<MyPhotoListBean.ListBean> myphotolist;
-    private int _2dp = CommonUtils.dip2px(2);;
+    private int _2dp = CommonUtil.dip2px(2);;
 
     public MyPhotoGvAdapter(Activity activity, List<MyPhotoListBean.ListBean> list) {
         mActivity=activity;
@@ -52,7 +52,7 @@ public class MyPhotoGvAdapter extends BaseAdapter {
         }else {
             MyPhotoListBean.ListBean listBean = myphotolist.get(position);
             String upic = listBean.getUpic();
-            CommonUtils.loadImage(R.mipmap.mine_myphoto_default, iv, upic);
+            CommonUtil.loadImage(R.mipmap.mine_myphoto_default, iv, upic);
         }
         ViewTreeObserver viewTreeObserver = iv.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

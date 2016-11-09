@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.live.LiveUrlListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class LiveMMGvAdapter extends BaseAdapter{
         String username = data.getUsername();
         String city = data.getCity();
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.ic_peopleoflook_live,holder.iv_anchor_phonelive,zhibo_fm_pic);
+        CommonUtil.loadImage(R.mipmap.ic_peopleoflook_live,holder.iv_anchor_phonelive,zhibo_fm_pic);
         holder.tv_numoflook_phonelive.setText(watch_num);
         holder.tv_location_phonelive.setText(city);
 

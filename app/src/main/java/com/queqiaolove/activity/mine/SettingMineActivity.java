@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.queqiaolove.R;
+import com.queqiaolove.activity.login.LoginActivity;
 import com.queqiaolove.activity.mine.setting.AboutUsActivity;
 import com.queqiaolove.activity.mine.setting.ChangePwdActivity;
 import com.queqiaolove.activity.mine.setting.InfromSettingActivity;
@@ -17,7 +18,8 @@ import com.queqiaolove.activity.mine.setting.UploadActivity;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.global.Constants;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
+import com.queqiaolove.util.SharedPrefUtil;
 
 /**
  * Created by WD on 2016/10/11.
@@ -90,7 +92,9 @@ public class SettingMineActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tv_next:
+            case R.id.tv_next://退出账号
+                SharedPrefUtil.clear(mActivity);
+                LoginActivity.intent(mActivity,"");
                 finish();
                 break;
             case R.id.iv_back:
@@ -110,7 +114,7 @@ public class SettingMineActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_report_setting://举报与投诉
                 servicetel = tv_servicetel.getText().toString().trim();
-                CommonUtils.callPhone(mActivity, servicetel);
+                CommonUtil.callPhone(mActivity, servicetel);
                 break;
 
         }
@@ -132,7 +136,7 @@ public class SettingMineActivity extends BaseActivity implements View.OnClickLis
 
         if (requestCode == Constants.MY_PERMISSIONS_REQUEST_CALL_PHONE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CommonUtils.callPhone(mActivity,servicetel);
+                CommonUtil.callPhone(mActivity,servicetel);
             } else {
                 // Permission Denied
                 Toast.makeText(mActivity, "Permission Denied", Toast.LENGTH_SHORT).show();

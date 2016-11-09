@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.live.LiveUrlListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class PcLiveGvAdapter extends BaseAdapter {
         String username = data.getUsername();
         String city = data.getCity();
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.ic_peopleoflook_live, holder.iv_cover_video, zhibo_fm_pic);
+        CommonUtil.loadImage(R.mipmap.ic_peopleoflook_live, holder.iv_cover_video, zhibo_fm_pic);
         holder.tv_city_activity.setText(username);
         holder.tv_numoflook_pclive.setText(watch_num);
         holder.tv_name_activity.setText(saytitle + btitle);

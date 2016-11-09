@@ -4,12 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.http.Http;
+import com.queqiaolove.http.api.MineAPI;
+import com.queqiaolove.javabean.mine.LoveDeclarationBean;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by WD on 2016/10/14.
@@ -18,6 +27,8 @@ public class LoveManifestoActivity extends BaseActivity implements View.OnClickL
     private static String LOVE = "love";
     private ImageView iv_back;
     private TextView tv_finish;
+    private EditText et_lovedeclaration;//爱情宣言
+    private String lovedeclaration = "";
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -44,8 +55,9 @@ public class LoveManifestoActivity extends BaseActivity implements View.OnClickL
     protected void initView() {
         iv_back = (ImageView) mTitleView.findViewById(R.id.iv_back);
         tv_finish = (TextView) mTitleView.findViewById(R.id.tv_finish);
+        et_lovedeclaration = (EditText) mContentView.findViewById(R.id.et_lovedeclaration);
 
-
+        userid = QueQiaoLoveApp.getUserId();
     }
 
     @Override
@@ -76,8 +88,34 @@ public class LoveManifestoActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.tv_finish:
-                finish();
+                lovedeclaration = et_lovedeclaration.getText().toString().trim();
+                if (lovedeclaration.equals("")||lovedeclaration.length()==0){
+                    toast("爱情宣言不能为空");
+                    break;
+                }
+                changeLoveDeclaration();
                 break;
         }
+    }
+    /*修改爱情宣言*/
+    private void changeLoveDeclaration() {
+        MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
+        mineAPI.lovedeclaration(userid,lovedeclaration).enqueue(new Callback<LoveDeclarationBean>() {
+            @Override
+            public void onResponse(Call<LoveDeclarationBean> call, Response<LoveDeclarationBean> response) {
+                LoveDeclarationBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    toast(body.getMsg());
+                    finish();
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoveDeclarationBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
 }

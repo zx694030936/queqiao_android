@@ -18,7 +18,7 @@ import com.queqiaolove.global.Constants;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MineAPI;
 import com.queqiaolove.javabean.mine.UploadImageBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.io.File;
 
@@ -154,12 +154,12 @@ public class UpLoadPhotoActivity extends Activity {
                 photoUri = data.getData();
                 //Log.e("photoUri", photoUri +"");
                 if (Build.VERSION.SDK_INT >= 23) {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     Log.e("pickphotoUri24", photoUri + "");
                 } else {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
 
@@ -172,12 +172,12 @@ public class UpLoadPhotoActivity extends Activity {
                 carrier = Build.MANUFACTURER;
                 Log.e("phonecarrier", carrier + "");
                 if (Build.VERSION.SDK_INT >= 23) {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     Log.e("takephotoUri24", photoUri + "");
                 } else {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     Log.e("takephotoUri23", photoUri + "");

@@ -153,6 +153,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public static void intent(Activity activity, String data) {
         Intent intent = new Intent();
         intent.setClass(activity, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//清除之前activity
         intent.putExtra(LOGIN, data);
         activity.startActivity(intent);
     }

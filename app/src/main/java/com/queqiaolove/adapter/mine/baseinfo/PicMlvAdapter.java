@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.mine.UserBaseInfoBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class PicMlvAdapter extends BaseAdapter {
         ImageView iv = (ImageView) v.findViewById(R.id.iv_pic1_mine);
         String upic = pic_list.get(i).getUpic();
 
-        CommonUtils.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
+        CommonUtil.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
 
         return v;
     }

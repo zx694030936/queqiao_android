@@ -7,7 +7,7 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 import com.queqiaolove.R;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 public abstract class ContentPage extends FrameLayout {
 	
@@ -92,7 +92,7 @@ public abstract class ContentPage extends FrameLayout {
 	 * 安全显示界面
 	 */
 	protected void showPageSafe() {
-		CommonUtils.runInMainThread(new Runnable() {
+		CommonUtil.runInMainThread(new Runnable() {
 			
 			@Override
 			public void run() {

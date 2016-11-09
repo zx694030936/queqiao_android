@@ -38,7 +38,8 @@ import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MineAPI;
 import com.queqiaolove.javabean.mine.UploadImageBean;
 import com.queqiaolove.javabean.mine.UserInfroDetailBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
+import com.queqiaolove.util.SharedPrefUtil;
 import com.queqiaolove.widget.CircleImageView;
 import com.queqiaolove.widget.dialog.SelectUserIconDialog;
 
@@ -252,9 +253,14 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected ContentPage.RequestState onLoad() {
+        return ContentPage.RequestState.STATE_SUCCESS;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         userid = QueQiaoLoveApp.getUserId();
         loadUserInfoDetail();
-        return ContentPage.RequestState.STATE_SUCCESS;
     }
 
     /*加载个人资料详情*/
@@ -266,7 +272,6 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 userInfoBean = response.body();
                 if (userInfoBean.getReturnvalue().equals("true")) {
                     showUserInfo();
-                    Log.e("userinfo", userInfoBean.getUsername());
                 } else {
                     toast(userInfoBean.getMsg());
                 }
@@ -337,17 +342,17 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
 
         //设置数据/
         /*基本资料*/
-        CommonUtils.loadImage(R.mipmap.ic_default_usericon,cirUsericonUserinfo,upic);
+        CommonUtil.loadImage(R.mipmap.ic_default_usericon,cirUsericonUserinfo,upic);
         tvNicknameUserinfo.setText(nickname.trim().equals("") ? "暂无" : nickname);
         Log.e("level",step);
-        iv_level_userinfo.setImageResource(CommonUtils.getLevelImage(step));
+        iv_level_userinfo.setImageResource(CommonUtil.getLevelImage(step));
         tvAge1Userinfo.setText(age.trim().equals("") ? "暂无" : age);
         tvHeight1Userinfo.setText(myheight.trim().equals("") ? "暂无" : myheight);
         tvLocationUserinfo.setText(address.trim().equals("") ? "暂无" : address);
         /*宣言和介绍*/
         tvDeclarationUserinfo.setText(declaration.trim().equals("") ? "暂无" : declaration);
         tvUcontentUserinfo.setText(ucontent.trim().equals("") ? "暂无" : ucontent);
-        /*消息资料*/
+        /*详细资料*/
         tvUsernameUserinfo.setText(username.trim().equals("") ? "暂无" : username);
         tvAge2Userinfo.setText(age.trim().equals("") ? "暂无" : age);
         tvSexUserinfo.setText(sex_str.trim().equals("") ? "暂无" : sex_str);
@@ -361,6 +366,10 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tvBuyhouseUserinfo.setText(buy_house.trim().equals("") ? "暂无" : buy_house);
         tvBuycarUserinfo.setText(buy_car.trim().equals("") ? "暂无" : buy_car);
         tvAddressUserinfo.setText(address.trim().equals("") ? "暂无" : address);
+        /*联系方式*/
+        tvPhoneUserinfo.setText(mobile.trim().equals("")?"暂无" : mobile);
+        tvWeicharUserinfo.setText(weixin.trim().equals("")?"暂无" : weixin);
+        tvQqUserinfo.setText(qq.trim().equals("")?"暂无" : qq);
         /*教育*/
         tv_school_userinfo.setText(school.trim().equals("") ? "暂无" : school);
         tv_major_userinfo.setText(major.trim().equals("") ? "暂无" : major);
@@ -465,9 +474,20 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 InfoDetailActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_edit_contactway://联系方式
-                ContactWayActivity.intent(mActivity, "1");
+                ContactWayActivity.intent(mActivity, new String[]{weixin,qq});
                 break;
             case R.id.tv_edit_education://教育及工作
+                SharedPrefUtil.putString(mActivity, Constants.SP_COMPANYBUSINESS,tv_companyindustry_userinfo.getText()
+                .toString().trim());
+                SharedPrefUtil.putString(mActivity, Constants.SP_COMPANYNATURE,tv_companynature_userinfo.getText()
+                .toString().trim());
+                SharedPrefUtil.putString(mActivity, Constants.SP_SCHOOL,tv_school_userinfo.getText()
+                        .toString().trim());
+                SharedPrefUtil.putString(mActivity, Constants.SP_MAJOR,tv_major_userinfo.getText()
+                        .toString().trim());
+                SharedPrefUtil.putString(mActivity, Constants.SP_JOB,tv_job_userinfo.getText()
+                        .toString().trim());
+
                 EducationAndWorkActivity.intent(mActivity, "1");
                 break;
         }
@@ -554,13 +574,13 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 photoUri = data.getData();
                 //Log.e("photoUri", photoUri +"");
                 if (Build.VERSION.SDK_INT >= 23) {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     cropImg(photoUri, true);
                     Log.e("pickphotoUri24", photoUri + "");
                 } else {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
 
@@ -573,13 +593,13 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 carrier = Build.MANUFACTURER;
                 Log.e("phonecarrier", carrier + "");
                 if (Build.VERSION.SDK_INT >= 23) {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     Log.e("takephotoUri24", photoUri + "");
                     cropImg(photoUri, true);
                 } else {
-                    picPath = CommonUtils.getPath(mActivity, photoUri);
+                    picPath = CommonUtil.getPath(mActivity, photoUri);
                     File userIcon = new File(picPath);
                     photoUri = Uri.fromFile(userIcon);
                     Log.e("takephotoUri23", photoUri + "");

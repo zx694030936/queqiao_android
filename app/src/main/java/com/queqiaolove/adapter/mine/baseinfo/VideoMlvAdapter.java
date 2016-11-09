@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class VideoMlvAdapter extends BaseAdapter {
             v.setVisibility(View.INVISIBLE);
         }else {
             upic = video_list.get(i);
-            CommonUtils.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
+            CommonUtil.loadImage(R.mipmap.ic_default_uploadphoto, iv, upic);
         }
 
         return v;

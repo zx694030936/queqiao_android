@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 /**
  * Created by WD on 2016/7/28.
@@ -41,8 +41,8 @@ public class PartnerGalleryAdapter extends RecyclerView.Adapter<PartnerGalleryAd
 
         View view = mInflater.inflate(R.layout.item_partner_queqiao,null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                CommonUtils.dip2px(126),CommonUtils.dip2px(172));
-        params.setMargins(0,0,CommonUtils.dip2px(5),0);
+                CommonUtil.dip2px(126), CommonUtil.dip2px(172));
+        params.setMargins(0,0, CommonUtil.dip2px(5),0);
         view.setLayoutParams(params);
         ViewHolder viewHolder = new ViewHolder(view);
         /*viewHolder.mImg = (ImageView) view.findViewById(R.id.iv_apprecommend);

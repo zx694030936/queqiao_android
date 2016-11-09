@@ -17,7 +17,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.queqiaolove.R;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 
 public class CircleImageView extends ImageView {
@@ -169,7 +169,7 @@ public class CircleImageView extends ImageView {
       if (drawable instanceof ColorDrawable) {
         bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
       } else {
-        bitmap = Bitmap.createBitmap(CommonUtils.dip2px(40), CommonUtils.dip2px(40), BITMAP_CONFIG);
+        bitmap = Bitmap.createBitmap(CommonUtil.dip2px(40), CommonUtil.dip2px(40), BITMAP_CONFIG);
       }
 
       Canvas canvas = new Canvas(bitmap);

@@ -1,4 +1,4 @@
-package com.queqiaolove.javabean;
+package com.queqiaolove.javabean.sys;
 
 /**
  * Created by WD on 2016/10/22.

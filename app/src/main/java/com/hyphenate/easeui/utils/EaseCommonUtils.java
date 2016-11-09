@@ -34,7 +34,7 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 public class EaseCommonUtils {
-	private static final String TAG = "CommonUtils";
+	private static final String TAG = "CommonUtil";
 	/**
 	 * check if network avalable
 	 * 

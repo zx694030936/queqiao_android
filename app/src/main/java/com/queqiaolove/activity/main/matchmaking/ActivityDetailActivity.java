@@ -20,7 +20,7 @@ import com.queqiaolove.http.api.FindAPI;
 import com.queqiaolove.javabean.find.JoinActivityBean;
 import com.queqiaolove.javabean.find.MakemakingActivityDetailBean;
 import com.queqiaolove.javabean.find.MakemakingActivityListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -135,7 +135,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
         like_num = activityDetailBean.getLike_num();
         ncontent = activityDetailBean.getNcontent();
 
-        CommonUtils.loadImage(R.mipmap.ic_default_welfare,iv_cover_activity,apic);
+        CommonUtil.loadImage(R.mipmap.ic_default_welfare,iv_cover_activity,apic);
         iv_name_activity.setText(atitle);
         iv_location_activity.setText(city);
         iv_numofjoin_activity.setText(participant_num);

@@ -3,6 +3,7 @@ package com.queqiaolove.util;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +41,7 @@ import com.queqiaolove.global.Constants;
 
 import java.io.File;
 
-public class CommonUtils {
+public class CommonUtil {
     //dip转px
     public static int dip2px(int dip) {
         //px = dip * 逻辑密度
@@ -382,5 +383,14 @@ public class CommonUtils {
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
-
+    /*设置dialog的标题样式*/
+    public static final void dialogTitleLineColor(Dialog dialog, int color) {
+        Context context = dialog.getContext();
+        int divierId = context.getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = dialog.findViewById(divierId);
+        divider.setBackgroundColor(CommonUtil.getColor(R.color.purple_queqiao));
+        /*int divierId = context.getResources().getIdentifier("android:id/alertTitle", null, null);
+        TextView divider = (TextView)dialog.findViewById(divierId);
+        divider.setTextColor(color);*/
+    }
 }

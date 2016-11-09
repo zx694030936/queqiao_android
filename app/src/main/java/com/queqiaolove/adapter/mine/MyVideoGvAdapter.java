@@ -9,14 +9,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.queqiaolove.R;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 /**
  * Created by WD on 2016/10/13.
  */
 public class MyVideoGvAdapter extends BaseAdapter {
     private final Activity mActivity;
-    private int _2dp = CommonUtils.dip2px(2);;
+    private int _2dp = CommonUtil.dip2px(2);;
 
     public MyVideoGvAdapter(Activity activity) {
         mActivity=activity;

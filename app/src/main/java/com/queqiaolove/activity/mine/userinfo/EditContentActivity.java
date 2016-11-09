@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.global.Constants;
+import com.queqiaolove.util.SharedPrefUtil;
 
 /**
  * Created by WD on 2016/10/14.
@@ -17,9 +20,11 @@ import com.queqiaolove.base.ContentPage;
 public class EditContentActivity extends BaseActivity implements View.OnClickListener {
     private static String LOVE = "love";
     private static int NAME = 1;
+    public static int REQUESTCODE_SCHOOL = 110;
     private ImageView iv_back;
     private TextView tv_finish;
     private String title;
+    private EditText et_content_editcontent;
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -47,6 +52,8 @@ public class EditContentActivity extends BaseActivity implements View.OnClickLis
         iv_back = (ImageView) mTitleView.findViewById(R.id.iv_back);
         tv_finish = (TextView) mTitleView.findViewById(R.id.tv_finish);
 
+        et_content_editcontent = (EditText) mContentView.findViewById(R.id.et_content_editcontent);
+
 
     }
 
@@ -64,11 +71,11 @@ public class EditContentActivity extends BaseActivity implements View.OnClickLis
      * 从外部跳转到本类的反复
      * @param activity
      */
-    public static void intent(Activity activity, String data) {
+    public static void intent(Activity activity,String data) {
         Intent intent = new Intent();
         intent.setClass(activity, EditContentActivity.class);
         intent.putExtra(LOVE, data);
-            activity.startActivityForResult(intent,1);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -78,6 +85,22 @@ public class EditContentActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tv_finish:
+                String content = et_content_editcontent.getText().toString().trim();
+                if (content.length()==0){
+                    toast("内容不能为空");
+                    break;
+                }
+                switch (title){
+                    case "毕业院校":
+                        SharedPrefUtil.putString(mActivity, Constants.SP_SCHOOL,content);
+                        break;
+                    case "专业":
+                        SharedPrefUtil.putString(mActivity, Constants.SP_MAJOR,content);
+                        break;
+                    case "职业":
+                        SharedPrefUtil.putString(mActivity, Constants.SP_JOB,content);
+                        break;
+                }
                 finish();
                 break;
         }

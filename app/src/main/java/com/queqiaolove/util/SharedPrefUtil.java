@@ -64,7 +64,7 @@ public class SharedPrefUtil{
     }
 
     public static void clear(Context context) {
-        getSharedPreferences(context).edit().clear();
+        getSharedPreferences(context).edit().clear().commit();
     }
 
     public static void clearCartSp(Context context, String spName){

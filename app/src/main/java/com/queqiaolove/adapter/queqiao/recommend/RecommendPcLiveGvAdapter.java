@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.RecommendDataBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class RecommendPcLiveGvAdapter extends BaseAdapter {
         String username = data.getUsername();
         String city = data.getCity();
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.ic_peopleoflook_live, holder.iv_anchor_phonelive, zhibo_fm_pic);
+        CommonUtil.loadImage(R.mipmap.ic_peopleoflook_live, holder.iv_anchor_phonelive, zhibo_fm_pic);
         holder.tv_anchor_pclive.setText(username);
         holder.tv_numoflook_pclive.setText(watch_num);
         holder.tv_headline_pclive.setText(saytitle + btitle);

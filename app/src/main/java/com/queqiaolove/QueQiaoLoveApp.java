@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.queqiaolove.global.Constants;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 import com.queqiaolove.util.SharedPrefUtil;
 
 
@@ -35,7 +35,7 @@ public class QueQiaoLoveApp extends Application {
         //初始化Handler
         handler = new Handler();
         /*初始化imageloader*/
-        CommonUtils.initImageLoader(mContext);
+        CommonUtil.initImageLoader(mContext);
         //TIMManager.getInstance().init(mContext);
         //QalService.serviceInit(mContext,true);
         //QALSDKManager.getInstance().init(mContext,Constants.IMSDK_APPID);

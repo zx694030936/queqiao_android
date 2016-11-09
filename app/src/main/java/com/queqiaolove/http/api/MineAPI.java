@@ -1,6 +1,8 @@
 package com.queqiaolove.http.api;
 
+import com.queqiaolove.javabean.mine.ChangeContactWayBean;
 import com.queqiaolove.javabean.mine.ChangePwdBean;
+import com.queqiaolove.javabean.mine.LoveDeclarationBean;
 import com.queqiaolove.javabean.mine.MyPhotoListBean;
 import com.queqiaolove.javabean.mine.UploadImageBean;
 import com.queqiaolove.javabean.mine.UserBaseInfoBean;
@@ -15,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 /**
  * Created by LENOVO on 2016/10/25.
@@ -87,5 +90,39 @@ public interface MineAPI {
     Call<MyPhotoListBean> myphotolist(@Field("userid") int userid,
                                       @Field("pageno") int pageno,
                                       @Field("pagesize") int pagesize);
+
+    /**
+     * 个人-爱情宣言
+     * @param userid
+     * @param declaration   宣言
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/userdeclaration_upd/")
+    Call<LoveDeclarationBean> lovedeclaration(@Field("userid") int userid,
+                                              @Field("declaration") String declaration);
+
+    /**
+     * 个人 - 自我介绍
+     * @param userid
+     * @param content
+     * @return
+     */
+    @GET("api/user/usercontent_upd/")
+    Call<LoveDeclarationBean> changeMyIntroduce(@Query("userid") int userid,
+                                              @Query("content") String content);
+
+    /**
+     * 个人-修改联系方式
+     * @param userid
+     * @param weixin
+     * @param qq
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/usercontact_upd/")
+    Call<ChangeContactWayBean> changeContactWay(@Field("userid") int userid,
+                                                @Field("weixin") String weixin,
+                                                @Field("qq") String qq);
 
 }

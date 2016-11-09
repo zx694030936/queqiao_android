@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.find.MakemakingActivityListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class ActivityLvAdapter extends BaseAdapter {
         String like_num = data.getLike_num();
         String if_like = data.getIf_like();//是否点赞
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.ic_default_welfare, holder.iv_cover_video, apic);
+        CommonUtil.loadImage(R.mipmap.ic_default_welfare, holder.iv_cover_video, apic);
         holder.tv_name_activity.setText(atitle);
         holder.tv_city_activity.setText(city);
         holder.tv_endofday_activity.setText(daydiff);

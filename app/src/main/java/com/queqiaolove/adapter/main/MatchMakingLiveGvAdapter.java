@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.RecommendDataBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class MatchMakingLiveGvAdapter extends BaseAdapter {
         String watch_num = data.getWatch_num();
         String username = data.getUsername();
         /*设置内容*/
-        CommonUtils.loadImage(R.mipmap.ic_peopleoflook_live,holder.iv_anchor_phonelive,zhibo_fm_pic);
+        CommonUtil.loadImage(R.mipmap.ic_peopleoflook_live,holder.iv_anchor_phonelive,zhibo_fm_pic);
         holder.tv_numoflook_phonelive.setText(watch_num);
         holder.tv_headline_phonelive.setText(saytitle+btitle);
 

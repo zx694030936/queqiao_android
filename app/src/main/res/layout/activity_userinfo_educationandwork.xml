@@ -32,6 +32,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_school_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_major_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,6 +104,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_job_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,6 +140,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_companybussiness_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,6 +176,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_companynature_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

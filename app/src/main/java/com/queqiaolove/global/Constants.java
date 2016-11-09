@@ -48,4 +48,16 @@ public interface Constants {
     /*个人*/
     final int UPLOADIMAGE_USERICON = 1;//上传用户头像
     final int UPLOADIMAGE_PHOTO = 2;//上传用户照片
+    /*个人资料sp存储*/
+    final String SP_COMPANYBUSINESS = "companybusiness";//公司行业
+    final String SP_COMPANYNATURE = "companynature";//公司性质
+    final String SP_SCHOOL = "scholl";//学校
+    final String SP_MAJOR = "major";//专业
+    final String SP_JOB = "job";//职业
+
+    /*系统*/
+    final int ATTRIBUTE_BUSSINESS = 104;//属性码：公司行业
+    final int ATTRIBUTE_NATURE = 105;//属性码：公司性质
+
+
 }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.find.ILikeWhoListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class ILikeWhoGvAdapter extends BaseAdapter{
         String pic = listBean.getPic();
         String indbdate = listBean.getIndbdate();
 
-        CommonUtils.loadImage(R.mipmap.ic_otherhead_welfare,holder.iv_usericon,pic);
+        CommonUtil.loadImage(R.mipmap.ic_otherhead_welfare,holder.iv_usericon,pic);
         holder.tv_time.setText(indbdate);
 
         return convertView;

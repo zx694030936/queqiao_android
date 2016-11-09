@@ -24,7 +24,7 @@ import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MainAPI;
 import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.javabean.live.LiveUrlListBean;
-import com.queqiaolove.util.CommonUtils;
+import com.queqiaolove.util.CommonUtil;
 import com.queqiaolove.widget.MyGridView;
 
 import java.util.List;
@@ -249,7 +249,7 @@ public class RecommendFragment extends BaseFragment implements View.OnClickListe
         String like_num = hdygListBean.getLike_num();
 
         tv_name_activity.setText(atitle);
-        CommonUtils.loadImage(R.mipmap.ic_default_welfare, iv_cover_video, trailer_pic);
+        CommonUtil.loadImage(R.mipmap.ic_default_welfare, iv_cover_video, trailer_pic);
         tv_city_activity.setText(city);
         tv_day_activity.setText(daydiff);
         tv_numofjoin_activity.setText(participant_num);
