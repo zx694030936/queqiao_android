@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.queqiaolove.activity.mine.userinfo.InfoDetailActivity;
 import com.queqiaolove.activity.mine.userinfo.IntroduceActivity;
 import com.queqiaolove.activity.mine.userinfo.LabelActivity;
 import com.queqiaolove.activity.mine.userinfo.LoveManifestoActivity;
+import com.queqiaolove.adapter.mine.LabelListGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.global.Constants;
@@ -46,6 +48,7 @@ import com.queqiaolove.widget.dialog.SelectUserIconDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.HashSet;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -154,7 +157,7 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
     private String company_industry_str;//
     private String company_nature;//公司性质的编号
     private String company_nature_str;//
-    private List<String> language_list;//掌握的语言
+    private List<UserInfroDetailBean.LanguageListBean> language_list;//掌握的语言
     private List<UserInfroDetailBean.LabelListBean> label_list;//用户的标签
     private List<UserInfroDetailBean.PicListBean> pic_list;//个人相册照片
     private String language = "";
@@ -169,6 +172,7 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
     private final int RESULT_CAMERA_CROP_PATH_RESULT = 3;
     private String carrier;//厂商
     private int selectflag;//上传方式
+    private GridView gv_label_userinfo;
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -205,6 +209,8 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tvAge1Userinfo = (TextView) mContentView.findViewById(R.id.tv_age1_userinfo);
         tvHeight1Userinfo = (TextView) mContentView.findViewById(R.id.tv_height1_userinfo);
         tvLocationUserinfo = (TextView) mContentView.findViewById(R.id.tv_location_userinfo);
+        /*标签*/
+        gv_label_userinfo = (GridView) mContentView.findViewById(R.id.gv_label_userinfo);
 
         tvDeclarationUserinfo = (TextView) mContentView.findViewById(R.id.tv_declaration_userinfo);
         tvUcontentUserinfo = (TextView) mContentView.findViewById(R.id.tv_ucontent_userinfo);
@@ -330,16 +336,6 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         language_list = userInfoBean.getLanguage_list();
         label_list = userInfoBean.getLabel_list();
         pic_list = userInfoBean.getPic_list();
-
-        if (language_list.size() == 0) {
-            language = "";
-        } else {
-            for (String str : language_list
-                    ) {
-                language = language + str + ";";
-            }
-        }
-
         //设置数据/
         /*基本资料*/
         CommonUtil.loadImage(R.mipmap.ic_default_usericon,cirUsericonUserinfo,upic);
@@ -349,6 +345,16 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tvAge1Userinfo.setText(age.trim().equals("") ? "暂无" : age);
         tvHeight1Userinfo.setText(myheight.trim().equals("") ? "暂无" : myheight);
         tvLocationUserinfo.setText(address.trim().equals("") ? "暂无" : address);
+        /*标签*/
+        //记录标签内容
+        HashSet<String> labelSet = new HashSet<String>();
+        for (UserInfroDetailBean.LabelListBean bean:label_list
+             ) {
+            labelSet.add(bean.getAcode());
+        }
+        SharedPrefUtil.putSet(mActivity, Constants.SP_LABELLIST,labelSet);
+
+        gv_label_userinfo.setAdapter(new LabelListGvAdapter(mActivity,label_list));
         /*宣言和介绍*/
         tvDeclarationUserinfo.setText(declaration.trim().equals("") ? "暂无" : declaration);
         tvUcontentUserinfo.setText(ucontent.trim().equals("") ? "暂无" : ucontent);
@@ -357,15 +363,41 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tvAge2Userinfo.setText(age.trim().equals("") ? "暂无" : age);
         tvSexUserinfo.setText(sex_str.trim().equals("") ? "暂无" : sex_str);
         tvNationUserinfo.setText(nation_str.trim().equals("") ? "暂无" : nation_str);
-        tvHeight1Userinfo.setText(myheight.trim().equals("") ? "暂无" : myheight);
+        tvHeight2Userinfo.setText(myheight.trim().equals("") ? "暂无" : myheight);
         tvWeightUserinfo.setText(myweight.trim().equals("") ? "暂无" : myweight);
         tvEducationUserinfo.setText(education_str.trim().equals("") ? "暂无" : education_str);
         tvMonthincomeUserinfo.setText(month_income_str.trim().equals("") ? "暂无" : month_income_str);
         tvMaritalstatusUserinfo.setText(marital_status_str.trim().equals("") ? "暂无" : marital_status_str);
-        tvChildstatusUserinfo.setText(child_status.trim().equals("") ? "暂无" : child_status);
-        tvBuyhouseUserinfo.setText(buy_house.trim().equals("") ? "暂无" : buy_house);
-        tvBuycarUserinfo.setText(buy_car.trim().equals("") ? "暂无" : buy_car);
-        tvAddressUserinfo.setText(address.trim().equals("") ? "暂无" : address);
+        if (child_status.trim().equals("")){
+            tvChildstatusUserinfo.setText("暂无");
+        }else if(child_status.trim().equals("1")){
+            tvChildstatusUserinfo.setText("有");
+        }else {
+            tvChildstatusUserinfo.setText("无");
+
+        }
+        if (buy_house.trim().equals("")){
+            tvBuyhouseUserinfo.setText("暂无");
+        }else if(buy_house.trim().equals("1")){
+            tvBuyhouseUserinfo.setText("有");
+        }else {
+            tvBuyhouseUserinfo.setText("无");
+
+        }
+        if (buy_car.trim().equals("")){
+            tvBuycarUserinfo.setText("暂无");
+        }else if(buy_car.trim().equals("1")){
+            tvBuycarUserinfo.setText("有");
+        }else {
+            tvBuycarUserinfo.setText("无");
+
+        }
+        if (area_str.trim().equals("")){
+            tvAddressUserinfo.setText("暂无");
+        } else {
+            tvAddressUserinfo.setText(area_str+city_str);
+
+        }
         /*联系方式*/
         tvPhoneUserinfo.setText(mobile.trim().equals("")?"暂无" : mobile);
         tvWeicharUserinfo.setText(weixin.trim().equals("")?"暂无" : weixin);
@@ -376,6 +408,25 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
         tv_job_userinfo.setText(job.trim().equals("") ? "暂无" : job);
         tv_companyindustry_userinfo.setText(company_industry_str.trim().equals("") ? "暂无" : company_industry_str);
         tv_companynature_userinfo.setText(company_nature_str.trim().equals("") ? "暂无" : company_nature_str);
+
+        HashSet<String> languageCodeSet = new HashSet<String>();
+        HashSet<String> languageStrSet = new HashSet<String>();
+        if (language_list.size() == 0) {
+            language = "";
+        } else {
+            language="";
+            for (UserInfroDetailBean.LanguageListBean languageListBean : language_list
+                    ) {
+                language = language + languageListBean.getAname() + ",";
+                languageCodeSet.add(languageListBean.getAcode());
+                languageStrSet.add(languageListBean.getAname());
+            }
+            SharedPrefUtil.putSet(mActivity, Constants.SP_LANGUAGECODELIST,languageCodeSet);
+            SharedPrefUtil.putSet(mActivity, Constants.SP_LANGUAGELIST,languageStrSet);
+        }
+        if (language.length()>0) {
+            language = language.substring(0, language.length() - 1);
+        }
         tv_language_userinfo.setText(language.trim().equals("") ? "暂无" : language);
     }
 
@@ -471,12 +522,14 @@ public class UserInfoMineActivity extends BaseActivity implements View.OnClickLi
                 IntroduceActivity.intent(mActivity, "1");
                 break;
             case R.id.tv_edit_infodetail://详细资料
-                InfoDetailActivity.intent(mActivity, "1");
+                InfoDetailActivity.intent(mActivity, userInfoBean);
                 break;
             case R.id.tv_edit_contactway://联系方式
                 ContactWayActivity.intent(mActivity, new String[]{weixin,qq});
                 break;
             case R.id.tv_edit_education://教育及工作
+                SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYBUSINESS_CODE,company_industry);
+                SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYNATURE_CODE,company_nature);
                 SharedPrefUtil.putString(mActivity, Constants.SP_COMPANYBUSINESS,tv_companyindustry_userinfo.getText()
                 .toString().trim());
                 SharedPrefUtil.putString(mActivity, Constants.SP_COMPANYNATURE,tv_companynature_userinfo.getText()

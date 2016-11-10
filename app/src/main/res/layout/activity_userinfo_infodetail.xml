@@ -31,23 +31,16 @@
                     android:paddingTop="18dp"
                     android:text="姓名：" />
 
-                <ImageView
-                    android:id="@id/iv_more"
-                    android:layout_width="9dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_more_mine" />
-
-                <TextView
-                    android:id="@+id/tv_name"
+                <EditText
+                    android:id="@+id/et_name"
                     style="@style/textstyle_userinfo_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="14dp"
-                    android:layout_toLeftOf="@id/iv_more"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="33dp"
+                    android:background="@null"
+                    android:inputType="text|textWebEditText"
                     android:text="暂无" />
             </RelativeLayout>
 
@@ -193,7 +186,7 @@
                     android:layout_marginLeft="10dp"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
-                    android:text="身高：" />
+                    android:text="身高(cm)：" />
 
                 <ImageView
                     android:id="@id/iv_more"
@@ -234,7 +227,7 @@
                     android:layout_marginLeft="10dp"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
-                    android:text="体重：" />
+                    android:text="体重(kg)：" />
 
                 <ImageView
                     android:id="@id/iv_more"
@@ -533,7 +526,7 @@
                     android:src="@mipmap/ic_more_mine" />
 
                 <TextView
-                    android:id="@+id/tv_location"
+                    android:id="@+id/tv_address"
                     style="@style/textstyle_userinfo_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

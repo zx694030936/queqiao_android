@@ -1,62 +1,63 @@
 package com.queqiaolove.javabean.mine;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by zchk on 2016/11/3.
  * 个人-个人资料
  */
-public class UserInfroDetailBean {
+public class UserInfroDetailBean implements Serializable{
 
     /**
      * returnvalue : true
      * msg : 成功
-     * ucode : 1211010
+     * ucode : 1211026
      * like_num : 0
-     * gz_num : 1
+     * gz_num : 0
      * fs_num : 0
-     * username : 张勇
-     * nickname : zy
-     * sex : 1
-     * sex_str : 男
-     * upic : http://182.92.213.51:1070//user_img/161101150006439881_s.png
-     * age : 34
-     * areaid : 1
-     * area_str : 北京市
-     * cityid : 384
-     * city_str : 朝阳区
-     * nation : 10101
-     * nation_str : 汉族
-     * education : 10202
-     * education_str : 本科
-     * mobile : 13366357516
-     * declaration : 给你我的爱
-     * ucontent :
-     * qq : 240099000
-     * weixin : zy@163.com
+     * username :
+     * nickname : wd
+     * sex : 0
+     * sex_str : 保密
+     * upic : http://182.92.213.51:1070//user_img/161109102525040487_s.jpg
+     * age : 无
+     * areaid : 0
+     * area_str :
+     * cityid : 0
+     * city_str :
+     * nation : 0
+     * nation_str :
+     * education : 0
+     * education_str :
+     * mobile : 13388006724
+     * declaration : fdsfdsf
+     * ucontent : 可考虑进来了
+     * qq : 3343443
+     * weixin : sssss
      * address :
      * step : 1
-     * yqcode : pgfu31
+     * yqcode : h4yymg
      * qqbi : 0
-     * myheight : 160
-     * myweight : 55
-     * month_income : 10303
-     * month_income_str : 10000以上
-     * marital_status : 1
-     * marital_status_str : 未婚
-     * child_status : 有一儿一女
-     * buy_house : 无房
-     * buy_car : 无车
-     * school :
-     * major :
-     * job :
-     * company_industry_str : 证券/金融
-     * company_industry : 10401
-     * company_nature_str : 私企
-     * company_nature : 10501
-     * language_list : []
-     * label_list : [{"acode":"1","aname":"帅气"},{"acode":"2","aname":"阳光"},{"acode":"3","aname":"长腿欧巴"},{"acode":"4","aname":"男神呀"}]
-     * pic_list : [{"id":"10","upic":"http://182.92.213.51:1070//img/1.png"},{"id":"3","upic":"http://182.92.213.51:1070//img/3.png"},{"id":"14","upic":""}]
+     * myheight : 无
+     * myweight : 无
+     * month_income : 0
+     * month_income_str :
+     * marital_status : 0
+     * marital_status_str :
+     * child_status :
+     * buy_house :
+     * buy_car :
+     * school : 北大
+     * major : 计算机
+     * job : 程序员
+     * company_industry_str :
+     * company_industry : 0
+     * company_nature_str :
+     * company_nature : 0
+     * language_list : [{"acode":"10601","aname":"中文"}]
+     * label_list : [{"acode":"3","aname":"长腿欧巴"}]
+     * pic_list : [{"id":"81","upic":"http://182.92.213.51:1070//album_img/1611/161108211917204736_s.jpg"},{"id":"55","upic":"http://182.92.213.51:1070//album_img/1611/161108193717565540_s.jpg"},{"id":"49","upic":"http://182.92.213.51:1070//album_img/1611/161108192250246054_s.jpg"},{"id":"40","upic":"http://182.92.213.51:1070//album_img/1611/161108182958640376_s.jpg"},{"id":"39","upic":"http://182.92.213.51:1070//album_img/1611/161108182812515853_s.jpg"},{"id":"38","upic":"http://182.92.213.51:1070//album_img/1611/161108182802562051_s.jpg"},{"id":"37","upic":"http://182.92.213.51:1070//album_img/1611/161108180043935132_s.jpg"},{"id":"36","upic":"http://182.92.213.51:1070//album_img/1611/161108180004966388_s.jpg"},{"id":"35","upic":"http://182.92.213.51:1070//album_img/1611/161108175839825445_s.jpg"},{"id":"34","upic":"http://182.92.213.51:1070//album_img/1611/161108175339011067_s.jpg"}]
      */
 
     private String returnvalue;
@@ -104,16 +105,21 @@ public class UserInfroDetailBean {
     private String company_industry;
     private String company_nature_str;
     private String company_nature;
-    private List<String> language_list;
     /**
-     * acode : 1
-     * aname : 帅气
+     * acode : 10601
+     * aname : 中文
+     */
+
+    private List<LanguageListBean> language_list;
+    /**
+     * acode : 3
+     * aname : 长腿欧巴
      */
 
     private List<LabelListBean> label_list;
     /**
-     * id : 10
-     * upic : http://182.92.213.51:1070//img/1.png
+     * id : 81
+     * upic : http://182.92.213.51:1070//album_img/1611/161108211917204736_s.jpg
      */
 
     private List<PicListBean> pic_list;
@@ -478,11 +484,11 @@ public class UserInfroDetailBean {
         this.company_nature = company_nature;
     }
 
-    public List<String> getLanguage_list() {
+    public List<LanguageListBean> getLanguage_list() {
         return language_list;
     }
 
-    public void setLanguage_list(List<String> language_list) {
+    public void setLanguage_list(List<LanguageListBean> language_list) {
         this.language_list = language_list;
     }
 
@@ -502,7 +508,7 @@ public class UserInfroDetailBean {
         this.pic_list = pic_list;
     }
 
-    public static class LabelListBean {
+    public static class LanguageListBean implements Serializable{
         private String acode;
         private String aname;
 
@@ -523,7 +529,28 @@ public class UserInfroDetailBean {
         }
     }
 
-    public static class PicListBean {
+    public static class LabelListBean implements Serializable{
+        private String acode;
+        private String aname;
+
+        public String getAcode() {
+            return acode;
+        }
+
+        public void setAcode(String acode) {
+            this.acode = acode;
+        }
+
+        public String getAname() {
+            return aname;
+        }
+
+        public void setAname(String aname) {
+            this.aname = aname;
+        }
+    }
+
+    public static class PicListBean implements Serializable{
         private String id;
         private String upic;
 

@@ -176,6 +176,8 @@
         <activity android:name=".activity.mine.userinfo.contactway.ChangeQQActivity" />
         <!--教育及工作-->
         <activity android:name=".activity.mine.userinfo.EducationAndWorkActivity" />
+        <!--教育列表-->
+        <activity android:name=".activity.mine.userinfo.LanguageListActivity" />
         <!--更改内容页-->
         <activity android:name=".activity.mine.userinfo.EditContentActivity" />
 

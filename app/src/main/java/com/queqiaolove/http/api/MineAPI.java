@@ -1,5 +1,6 @@
 package com.queqiaolove.http.api;
 
+import com.queqiaolove.javabean.BaseBean;
 import com.queqiaolove.javabean.mine.ChangeContactWayBean;
 import com.queqiaolove.javabean.mine.ChangePwdBean;
 import com.queqiaolove.javabean.mine.LoveDeclarationBean;
@@ -124,5 +125,74 @@ public interface MineAPI {
     Call<ChangeContactWayBean> changeContactWay(@Field("userid") int userid,
                                                 @Field("weixin") String weixin,
                                                 @Field("qq") String qq);
+
+    /**
+     * 个人-修改教育及工作
+     * @param userid
+     * @param school
+     * @param major
+     * @param job
+     * @param company_industry  acode值
+     * @param company_nature    acode值
+     * @param mylanguage    acode值，多个值之间使用英文逗号分隔
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/userjob_upd/")
+    Call<BaseBean> changeEduAndWork(@Field("userid") int userid,
+                                    @Field("school") String school,
+                                    @Field("major") String major,
+                                    @Field("job") String job,
+                                    @Field("company_industry") String company_industry,
+                                    @Field("company_nature") String company_nature,
+                                    @Field("mylanguage") String mylanguage);
+
+    /**
+     * 个人-修改个人标签
+     * @param userid
+     * @param label_list    多个标签ID之间用英文逗号分隔（从用户所有标签列表接口获取标签ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/userlabel_upd/")
+    Call<BaseBean> changeMyLabel(@Field("userid") int userid,
+                                                @Field("label_list") String label_list);
+
+    /**
+     * 个人-修改个人详细资料
+     * @param userid
+     * @param username
+     * @param age
+     * @param sex
+     * @param areaid
+     * @param cityid
+     * @param nation
+     * @param education
+     * @param myheight
+     * @param myweight
+     * @param month_income
+     * @param marital_status
+     * @param child_status
+     * @param buy_house
+     * @param buy_car
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/user/userinfo_upd/")
+    Call<BaseBean> changeUserInfoDetail(@Field("userid") int userid,
+                                    @Field("username") String username,
+                                    @Field("age") String age,
+                                    @Field("sex") String sex,
+                                    @Field("areaid") String areaid,
+                                    @Field("cityid") String cityid,
+                                    @Field("nation") String nation,
+                                        @Field("education") String education,
+                                        @Field("myheight") String myheight,
+                                        @Field("myweight") String myweight,
+                                        @Field("month_income") String month_income,
+                                        @Field("marital_status") String marital_status,
+                                        @Field("child_status") String child_status,
+                                        @Field("buy_house") String buy_house,
+                                        @Field("buy_car") String buy_car);
 
 }

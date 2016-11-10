@@ -5,6 +5,7 @@
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>
+
     <!--数字选中器的style属性-->
     <declare-styleable name="CustomNumberPicker">
         <attr name="np_dividerColor" format="color" />

@@ -67,9 +67,13 @@ public class ContactWayActivity extends BaseActivity implements View.OnClickList
 
         if (mData[0].trim().equals("")||mData[0].equals("暂无")){
             et_weixin_contactway.setHint("暂无");
+        }else {
+            et_weixin_contactway.setText(mData[0].trim());
         }
         if (mData[1].trim().equals("")||mData[1].equals("暂无")){
             et_qq_contactway.setHint("暂无");
+        }else {
+            et_qq_contactway.setText(mData[1].trim());
         }
 
         userid = QueQiaoLoveApp.getUserId();

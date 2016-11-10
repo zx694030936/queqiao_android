@@ -38,99 +38,16 @@
         android:layout_marginRight="10dp"
         android:background="@color/gray_background_queqiaopage" />
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/gv_label_userinfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/textstyle_userinfo_label"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="15dp">
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-
-        <TextView
-            style="@style/textstyle_userinfo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="帅气" />
-    </LinearLayout>
+        android:layout_marginTop="8dp"
+        android:descendantFocusability="blocksDescendants"
+        android:numColumns="4"
+        android:scrollbars="none"
+        ></GridView>
 </LinearLayout>

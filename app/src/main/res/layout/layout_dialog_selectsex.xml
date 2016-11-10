@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="17dp"
+    android:paddingRight="17dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rectangle_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_cancel_selectsex_myaccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="29dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingTop="33dp"
+                android:text="取消"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_save_selectsex_myaccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="29dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingTop="33dp"
+                android:text="确认"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/rg_sex_myaccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_mansex_myaccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="14dp"
+                android:paddingTop="16dp"
+                android:background="@drawable/background_sex_selector"
+                android:text="男"
+                android:textColor="@color/rb_queqiao_color_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_womansex_myaccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="62dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="14dp"
+                android:paddingTop="16dp"
+                android:background="@drawable/background_sex_selector"
+                android:text="女"
+                android:textColor="@color/rb_queqiao_color_selector"
+                android:textSize="16sp" />
+        </RadioGroup>
+    </LinearLayout>
+</LinearLayout>

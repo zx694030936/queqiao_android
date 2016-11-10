@@ -212,6 +212,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/ic_more_mine"/>
             <TextView
+                android:id="@+id/tv_language_eduandwork"
                 android:layout_toLeftOf="@id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

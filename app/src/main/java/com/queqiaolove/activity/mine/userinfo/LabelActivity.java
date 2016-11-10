@@ -8,14 +8,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
-import com.queqiaolove.adapter.mine.LabelUserInfoGvAdapter;
+import com.queqiaolove.adapter.mine.LabelEditGvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.global.Constants;
 import com.queqiaolove.http.Http;
 import com.queqiaolove.http.api.MineAPI;
+import com.queqiaolove.javabean.BaseBean;
 import com.queqiaolove.javabean.mine.UserInfoLabelListbean;
+import com.queqiaolove.util.SharedPrefUtil;
 
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,6 +35,7 @@ public class LabelActivity extends BaseActivity implements View.OnClickListener 
     private ImageView iv_back;
     private TextView tv_finish;
     private GridView gv_label_userinfo;
+    private HashSet<String> set;
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -83,7 +89,7 @@ public class LabelActivity extends BaseActivity implements View.OnClickListener 
                 UserInfoLabelListbean body = response.body();
                 if (body.getReturnvalue().equals("true")) {
                     List<UserInfoLabelListbean.ListBean> list = body.getList();
-                    gv_label_userinfo.setAdapter(new LabelUserInfoGvAdapter(mActivity,list));
+                    gv_label_userinfo.setAdapter(new LabelEditGvAdapter(mActivity,list));
                 } else {
                     toast(body.getMsg());
                 }
@@ -114,8 +120,37 @@ public class LabelActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.tv_finish:
-                finish();
+                set = new HashSet<String>();
+                set = SharedPrefUtil.getSet(mActivity, Constants.SP_LABELLIST,new HashSet<String>());
+                changeMyLabel();
                 break;
         }
+    }
+    /*修改我的标签*/
+    private void changeMyLabel() {
+        String labellist = "";
+        for (String label :set
+                ) {
+            labellist = labellist+label+",";
+        }
+        userid = QueQiaoLoveApp.getUserId();
+        MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
+        mineAPI.changeMyLabel(userid,labellist).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                BaseBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    toast(body.getMsg());
+                    finish();
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
 }

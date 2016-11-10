@@ -1,6 +1,7 @@
 package com.queqiaolove.http.api;
 
 import com.queqiaolove.javabean.sys.AttributeListBean;
+import com.queqiaolove.javabean.sys.CityListBean;
 import com.queqiaolove.javabean.sys.ProviceListBean;
 
 import retrofit2.Call;
@@ -16,14 +17,23 @@ public interface SysAPI {
 
     /**
      * 省列表接口
-     * @param encoding
      * @param isshow
      * @return
      */
     @FormUrlEncoded
     @POST("api/sys/province/")
-    Call<ProviceListBean> provinceList(@Field("encoding") String encoding,
-                                        @Field("isshow") int isshow);
+    Call<ProviceListBean> provinceList(@Field("isshow") int isshow);
+
+    /**
+     * 城市列表
+     * @param pid
+     * @param isshow    1显示当前省份下
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/sys/city/")
+    Call<CityListBean> cityList(@Field("pid") int pid,
+                                @Field("isshow") int isshow);
 
     /**
      * 属性列表接口

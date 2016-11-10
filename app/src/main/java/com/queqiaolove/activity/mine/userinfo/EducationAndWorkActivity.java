@@ -13,18 +13,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.global.Constants;
 import com.queqiaolove.http.Http;
+import com.queqiaolove.http.api.MineAPI;
 import com.queqiaolove.http.api.SysAPI;
+import com.queqiaolove.javabean.BaseBean;
 import com.queqiaolove.javabean.sys.AttributeListBean;
 import com.queqiaolove.util.CommonUtil;
 import com.queqiaolove.util.SharedPrefUtil;
 import com.queqiaolove.widget.WheelView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,6 +65,9 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
     private TextView tv_job_eduandwork;
     private String companybusiness;
     private String companynature;
+    private String languageCodelist = "";
+    private String languageStrlist = "";
+    private TextView tv_language_eduandwork;
 
     @Override
     protected void activityOnCreate(Bundle extras) {
@@ -80,7 +87,7 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initTitle() {
         TextView tv_title = (TextView) mTitleView.findViewById(R.id.tv_title);
-        tv_title.setText("联系方式");
+        tv_title.setText("教育及工作");
     }
 
     @Override
@@ -101,6 +108,7 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
         tv_school_eduandwork = (TextView) mContentView.findViewById(R.id.tv_school_eduandwork);
         tv_major_eduandwork = (TextView) mContentView.findViewById(R.id.tv_major_eduandwork);
         tv_job_eduandwork = (TextView) mContentView.findViewById(R.id.tv_job_eduandwork);
+        tv_language_eduandwork = (TextView) mContentView.findViewById(R.id.tv_language_eduandwork);
 
 
     }
@@ -121,6 +129,8 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+        acode_companyBusiness = SharedPrefUtil.getString(mActivity,Constants.SP_COMPANYBUSINESS_CODE,"");
+        acode_companyNature = SharedPrefUtil.getString(mActivity,Constants.SP_COMPANYNATURE_CODE,"");
         companybusiness=SharedPrefUtil.getString(mActivity,Constants.SP_COMPANYBUSINESS,"暂无");
         companynature=SharedPrefUtil.getString(mActivity,Constants.SP_COMPANYNATURE,"暂无");
         school=SharedPrefUtil.getString(mActivity,Constants.SP_SCHOOL,"暂无");
@@ -132,6 +142,25 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
         tv_school_eduandwork.setText(school);
         tv_major_eduandwork.setText(major);
         tv_job_eduandwork.setText(job);
+
+        languageCodelist = "";
+        languageStrlist = "";
+        HashSet<String> languageCodeSet = new HashSet<String>();
+        languageCodeSet = SharedPrefUtil.getSet(mActivity, Constants.SP_LANGUAGECODELIST,new HashSet<String>());
+        for (String languagecode : languageCodeSet
+                ) {
+            languageCodelist = languageCodelist +languagecode+",";
+        }
+        HashSet<String> languageStrSet = new HashSet<String>();
+        languageStrSet = SharedPrefUtil.getSet(mActivity, Constants.SP_LANGUAGELIST,new HashSet<String>());
+        for (String language : languageStrSet
+                ) {
+            languageStrlist = languageStrlist +language+",";
+        }
+        if (languageStrlist.length()>0) {
+            languageStrlist = languageStrlist.substring(0, languageStrlist.length() - 1);
+        }
+        tv_language_eduandwork.setText(languageStrlist.trim().equals("")?"暂无":languageStrlist);
     }
 
     @Override
@@ -156,7 +185,11 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
                 finish();
                 break;
             case R.id.tv_finish:
-                finish();
+                school = tv_school_eduandwork.getText().toString();
+                major = tv_major_eduandwork.getText().toString();
+                job=tv_job_eduandwork.getText().toString();
+
+                changeEduAndWork();
                 break;
             case R.id.rl_school_eduandwork://
                 EditContentActivity.intent(mActivity,"毕业院校");
@@ -169,17 +202,42 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.rl_companybusiness_eduandwork://
                 //EditContentActivity.intent(mActivity,"公司行业");
-                showAttributeList(Constants.ATTRIBUTE_BUSSINESS,"公司行业");
+                showAttributeList(Constants.ATTRIBUTE_COMPANYBUSSINESS,"公司行业");
                 break;
             case R.id.rl_companynature_eduandwork://
                 //EditContentActivity.intent(mActivity,"公司性质");
-                showAttributeList(Constants.ATTRIBUTE_NATURE,"公司性质");
+                showAttributeList(Constants.ATTRIBUTE_COMPANYNATURE,"公司性质");
                 break;
             case R.id.rl_language_eduandwork://
                 //EditContentActivity.intent(mActivity,"掌握语言");
+                LanguageListActivity.intent(mActivity,"");
                 break;
         }
     }
+    /*更改教育及工作*/
+    private void changeEduAndWork() {
+        userid = QueQiaoLoveApp.getUserId();
+        MineAPI mineAPI = Http.getInstance().create(MineAPI.class);
+        mineAPI.changeEduAndWork(userid,school,major,job,
+                acode_companyBusiness,acode_companyNature, languageCodelist).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                BaseBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    toast(body.getMsg());
+                    finish();
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
+    }
+
     /*公司行业列表*/
     private void showAttributeList(int atcode, final String title) {
         SysAPI sysAPI = Http.getInstance().create(SysAPI.class);
@@ -255,12 +313,14 @@ public class EducationAndWorkActivity extends BaseActivity implements View.OnCli
                                 acode_companyBusiness = attributeData.getAcode();
                                 tv_companybussiness_eduandwork.setText(aname);
                                 SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYBUSINESS,aname);
+                                SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYBUSINESS_CODE,acode_companyBusiness);
                                 index = 0;
                                 break;
                             case "公司性质":
                                 acode_companyNature = attributeData.getAcode();
                                 tv_companynature_eduandwork.setText(aname);
                                 SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYNATURE,aname);
+                                SharedPrefUtil.putString(mActivity,Constants.SP_COMPANYNATURE_CODE,acode_companyNature);
                                 index = 0;
                                 break;
                         }

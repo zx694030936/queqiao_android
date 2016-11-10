@@ -32,7 +32,7 @@ public class EaseChatRowLocation extends EaseChatRow{
 
     @Override
     protected void onFindViewById() {
-    	locationView = (TextView) findViewById(R.id.tv_location);
+    	locationView = (TextView) findViewById(R.id.tv_address);
     }
 
 

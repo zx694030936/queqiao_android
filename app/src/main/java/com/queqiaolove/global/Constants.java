@@ -50,14 +50,24 @@ public interface Constants {
     final int UPLOADIMAGE_PHOTO = 2;//上传用户照片
     /*个人资料sp存储*/
     final String SP_COMPANYBUSINESS = "companybusiness";//公司行业
+    final String SP_COMPANYBUSINESS_CODE = "companybusiness_code";//公司行业
     final String SP_COMPANYNATURE = "companynature";//公司性质
+    final String SP_COMPANYNATURE_CODE = "companynature_code";//公司性质
     final String SP_SCHOOL = "scholl";//学校
     final String SP_MAJOR = "major";//专业
     final String SP_JOB = "job";//职业
 
+    final String SP_LABELLIST = "labellist";//标签list
+    final String SP_LANGUAGECODELIST = "languagecodelist";//标签list
+    final String SP_LANGUAGELIST = "languagelist";//标签list
+
     /*系统*/
-    final int ATTRIBUTE_BUSSINESS = 104;//属性码：公司行业
-    final int ATTRIBUTE_NATURE = 105;//属性码：公司性质
+    final int ATTRIBUTE_COMPANYBUSSINESS = 104;//属性码：公司行业
+    final int ATTRIBUTE_COMPANYNATURE = 105;//属性码：公司性质
+    final int ATTRIBUTE_LAGUAGE = 106;//属性码：语言
+    final int ATTRIBUTE_NATURE = 101;//属性码：民族
+    final int ATTRIBUTE_EDUCATION = 102;//属性码：学历
+    final int ATTRIBUTE_MONTHLYINCOME = 103;//属性码：月收入
 
 
 }

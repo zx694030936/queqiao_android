@@ -48,7 +48,7 @@ public class FinishRegisterActivity extends Activity implements View.OnClickList
 
         et_nickname = (EditText) findViewById(R.id.et_nickname);
 
-        tv_location = (TextView) findViewById(R.id.tv_location);
+        tv_location = (TextView) findViewById(R.id.tv_address);
         tv_high = (TextView) findViewById(R.id.tv_high);
         tv_education = (TextView) findViewById(R.id.tv_education);
 

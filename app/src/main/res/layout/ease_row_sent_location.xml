@@ -36,7 +36,7 @@
             android:background="@drawable/ease_chatto_bg" >
 
             <TextView
-                android:id="@+id/tv_location"
+                android:id="@+id/tv_address"
                 style="@style/chat_content_date_style"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
