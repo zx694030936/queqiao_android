@@ -44,17 +44,17 @@
             android:id="@+id/gv_live_matchmaking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:descendantFocusability="blocksDescendants"
             android:divider="@null"
-            android:numColumns="3"
+            android:numColumns="2"
             android:scrollbars="none"></com.queqiaolove.widget.MyGridView>
         <!--相亲视频-->
         <com.queqiaolove.widget.MyGridView
             android:id="@+id/gv_video_matchmaking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:descendantFocusability="blocksDescendants"
             android:divider="@null"
             android:numColumns="2"
@@ -65,7 +65,7 @@
             layout="@layout/lvitem_activity_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp" />
     </LinearLayout>
 </RelativeLayout>

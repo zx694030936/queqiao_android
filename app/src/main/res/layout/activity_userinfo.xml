@@ -86,6 +86,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_nickname_userinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -94,6 +95,7 @@
                             android:textSize="16sp" />
 
                         <ImageView
+                            android:id="@+id/iv_level_userinfo"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_gravity="center_vertical"
@@ -110,6 +112,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_age1_userinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -118,6 +121,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_height1_userinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -128,6 +132,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_location_userinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -148,7 +153,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:text="观看人数"
+                            android:text="粉丝"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -157,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@id/tv_look_endpusher"
-                            android:text="鹊桥币"
+                            android:text="关注"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -166,12 +171,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/tv_look_endpusher"
-                            android:text="喜欢"
+                            android:text="点赞"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_looknum_endpusher"
+                            android:id="@+id/tv_fsnum_endpusher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_look_endpusher"
@@ -183,10 +188,10 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_binum_endpusher"
+                            android:id="@+id/tv_gznum_endpusher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/tv_looknum_endpusher"
+                            android:layout_alignBottom="@id/tv_fsnum_endpusher"
                             android:layout_alignRight="@id/tv_queqiaobi_endpusher"
                             android:text="20"
                             android:textColor="@color/white"
@@ -196,7 +201,7 @@
                             android:id="@+id/tv_likenum_endpusher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/tv_looknum_endpusher"
+                            android:layout_alignBottom="@id/tv_fsnum_endpusher"
                             android:layout_alignLeft="@id/tv_like_endpusher"
                             android:text="100"
                             android:textColor="@color/white"
@@ -205,23 +210,54 @@
                 </LinearLayout>
             </RelativeLayout>
             <!--照片-->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <com.queqiaolove.widget.MyGridView
                     android:id="@+id/gv_pic_userinfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="6"
-                    android:scrollbars="none"></com.queqiaolove.widget.MyGridView>
-            </RelativeLayout>
+                    android:paddingLeft="10dp"
+                    android:gravity="left"
+                    android:horizontalSpacing="0dp"
+                    android:scrollbars="none">
+                </com.queqiaolove.widget.MyGridView>
+            </LinearLayout>
+            <!--标签-->
+            <include layout="@layout/sv_liveuserinfo_label"
+                android:id="@+id/ll_label_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                />
+            <!--爱情宣言-->
+            <include layout="@layout/sv_liveuserinfo_lovemanifesto"
+                android:id="@+id/ll_lovemanifesto_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                />
+            <!--自我介绍-->
+            <include layout="@layout/sv_liveuserinfo_introduce"
+                android:id="@+id/ll_introduce_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                />
             <!--详细资料-->
             <include
                 layout="@layout/sv_liveuserinfo_infodetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp" />
+            <!--联系方式-->
+            <include layout="@layout/sv_liveuserinfo_contactway"
+                android:id="@+id/ll_lovemanifesto_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"/>
             <!--教育及工作-->
             <include
                 layout="@layout/sv_liveuserinfo_education"

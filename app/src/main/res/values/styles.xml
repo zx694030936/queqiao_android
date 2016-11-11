@@ -1,4 +1,8 @@
 <resources>
+    <!--自定义宽高比的imageview-->
+    <declare-styleable name="MyImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
     <!--字体样式-->
     <!--横屏直播-->
     <style name="textstyle_liveuserinfo_label">

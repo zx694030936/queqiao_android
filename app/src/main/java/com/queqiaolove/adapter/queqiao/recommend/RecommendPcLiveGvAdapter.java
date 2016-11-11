@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.util.CommonUtil;
+import com.queqiaolove.widget.MyImageView;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class RecommendPcLiveGvAdapter extends BaseAdapter {
         } else {
             holder = (Viewholder) convertView.getTag();
         }
-        holder.iv_anchor_phonelive = (ImageView) convertView.findViewById(R.id.iv_anchor_live);
+        holder.iv_anchor_phonelive = (MyImageView) convertView.findViewById(R.id.iv_anchor_live);
         holder.tv_numoflook_pclive = (TextView) convertView.findViewById(R.id.tv_numoflook_pclive);
         holder.tv_anchor_pclive = (TextView) convertView.findViewById(R.id.tv_anchor_pclive);
         holder.tv_headline_pclive = (TextView) convertView.findViewById(R.id.tv_headline_pclive);
@@ -71,7 +71,7 @@ public class RecommendPcLiveGvAdapter extends BaseAdapter {
     }
 
     public class Viewholder {
-        ImageView iv_anchor_phonelive;//封面图片
+        MyImageView iv_anchor_phonelive;//封面图片
         TextView tv_numoflook_pclive;//观看人数
         TextView tv_anchor_pclive;//主播名
         TextView tv_headline_pclive;//标题

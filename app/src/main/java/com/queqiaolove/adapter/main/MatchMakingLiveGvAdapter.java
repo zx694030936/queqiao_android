@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.queqiaolove.R;
 import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.util.CommonUtil;
+import com.queqiaolove.widget.MyImageView;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class MatchMakingLiveGvAdapter extends BaseAdapter {
         }else{
             holder = (Viewholder) convertView.getTag();
         }
-        holder.iv_anchor_phonelive = (ImageView) convertView.findViewById(R.id.iv_anchor_live);
+        holder.iv_anchor_phonelive = (MyImageView) convertView.findViewById(R.id.iv_anchor_live);
         holder.tv_numoflook_phonelive = (TextView) convertView.findViewById(R.id.tv_numoflook_phonelive);
         holder.tv_headline_phonelive = (TextView) convertView.findViewById(R.id.tv_headline_phonelive);
         /*获取数据*/
@@ -67,7 +67,7 @@ public class MatchMakingLiveGvAdapter extends BaseAdapter {
         return convertView;
     }
     public class Viewholder{
-        ImageView iv_anchor_phonelive;//封面图片
+        MyImageView iv_anchor_phonelive;//封面图片
         TextView tv_numoflook_phonelive;//观看人数
         TextView tv_anchor_phonelive;//主播名
         TextView tv_headline_phonelive;//位置

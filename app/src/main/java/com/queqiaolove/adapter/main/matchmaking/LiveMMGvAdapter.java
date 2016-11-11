@@ -52,7 +52,7 @@ public class LiveMMGvAdapter extends BaseAdapter{
         }
         holder.iv_anchor_phonelive = (ImageView) convertView.findViewById(R.id.iv_anchor_live);
         holder.tv_numoflook_phonelive = (TextView) convertView.findViewById(R.id.tv_numoflook_phonelive);
-        holder.tv_location_phonelive = (TextView) convertView.findViewById(R.id.tv_location_phonelive);
+        holder.tv_headline_phonelive = (TextView) convertView.findViewById(R.id.tv_headline_phonelive);
         /*获取数据*/
         LiveUrlListBean.ListBean data = datalist.get(position);
         String zhibo_fm_pic = data.getZhibo_fm_pic();
@@ -60,11 +60,10 @@ public class LiveMMGvAdapter extends BaseAdapter{
         String saytitle = data.getSaytitle();
         String watch_num = data.getWatch_num();
         String username = data.getUsername();
-        String city = data.getCity();
         /*设置内容*/
         CommonUtil.loadImage(R.mipmap.ic_peopleoflook_live,holder.iv_anchor_phonelive,zhibo_fm_pic);
         holder.tv_numoflook_phonelive.setText(watch_num);
-        holder.tv_location_phonelive.setText(city);
+        holder.tv_headline_phonelive.setText(saytitle+btitle);
 
         return convertView;
     }
@@ -72,7 +71,7 @@ public class LiveMMGvAdapter extends BaseAdapter{
         ImageView iv_anchor_phonelive;//封面图片
         TextView tv_numoflook_phonelive;//观看人数
         TextView tv_anchor_phonelive;//主播名
-        TextView tv_location_phonelive;//位置
+        TextView tv_headline_phonelive;//位置
         public TextView tv_headlineandtopic_phonelive;//话题标题
     }
 }

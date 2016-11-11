@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingRight="5dp"
-    android:paddingBottom="5dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="2dp"
     android:background="@color/gray_background_queqiaopage">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
+        <com.queqiaolove.widget.MyImageView
             android:id="@+id/iv_anchor_live"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:src="@mipmap/default_mylivevideo"
+            custom:ratio="1.4"
             android:scaleType="centerCrop"/>
 
         <TextView

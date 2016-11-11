@@ -55,7 +55,7 @@
             android:id="@+id/gv_live_matchmaking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:descendantFocusability="blocksDescendants"
             android:divider="@null"
             android:numColumns="2"

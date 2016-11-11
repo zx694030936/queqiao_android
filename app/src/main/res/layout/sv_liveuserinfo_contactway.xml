@@ -12,10 +12,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:drawableLeft="@mipmap/userinfo_education"
+            android:drawableLeft="@mipmap/userinfo_infodetail"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="教育及工作"
+            android:text="联系方式"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -41,10 +41,10 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="毕业院校:" />
+            android:text="手机号码:" />
 
         <TextView
-            android:id="@+id/tv_school_userinfo"
+            android:id="@+id/tv_phone_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -64,10 +64,10 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="专业:" />
+            android:text="微信:" />
 
         <TextView
-            android:id="@+id/tv_major_userinfo"
+            android:id="@+id/tv_weichar_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -87,83 +87,15 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="职业:" />
+            android:text="QQ:" />
 
         <TextView
-            android:id="@+id/tv_job_userinfo"
+            android:id="@+id/tv_qq_userinfo"
             style="@style/textstyle_userinfo_gray"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="暂无" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="34dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginTop="14dp"
-        android:orientation="horizontal">
 
-        <TextView
-            style="@style/textstyle_userinfo_params"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="公司行业:" />
-
-        <TextView
-            android:id="@+id/tv_companyindustry_userinfo"
-            style="@style/textstyle_userinfo_gray"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="暂无" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="34dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginTop="14dp"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/textstyle_userinfo_params"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="公司性质:" />
-
-        <TextView
-            android:id="@+id/tv_companynature_userinfo"
-            style="@style/textstyle_userinfo_gray"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="暂无" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="34dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginTop="14dp"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/textstyle_userinfo_params"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="掌握语音:" />
-
-        <TextView
-            android:id="@+id/tv_language_userinfo"
-            style="@style/textstyle_userinfo_gray"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="暂无" />
-    </LinearLayout>
 </LinearLayout>

@@ -5,23 +5,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.queqiaolove.R;
+import com.queqiaolove.javabean.mine.UserInfroDetailBean;
+import com.queqiaolove.util.CommonUtil;
+
+import java.util.List;
 
 /**
  * Created by LENOVO on 2016/10/25.
  */
 public class UserInfoPicGvAdapter extends BaseAdapter {
     private final Activity mActivity;
+    private final List<UserInfroDetailBean.PicListBean> pic_list;
 
-    public UserInfoPicGvAdapter(Activity activity) {
+    public UserInfoPicGvAdapter(Activity activity, List<UserInfroDetailBean.PicListBean> list) {
         mActivity = activity;
+        pic_list = list;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return pic_list.size();
     }
 
     @Override
@@ -36,21 +41,22 @@ public class UserInfoPicGvAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        /*Viewholder holder = new Viewholder();
+        Viewholder holder = new Viewholder();
         if(convertView == null){
-            convertView = View.inflate(mActivity, R.layout.gvitem_vertical_live,null);
+            convertView = View.inflate(mActivity, R.layout.gvitem_userinfo_pic,null);
             convertView.setTag(holder);
         }else{
             holder = (Viewholder) convertView.getTag();
-        }*/
+        }
+        holder.iv_liveuserinfo = (ImageView) convertView.findViewById(R.id.iv_liveuserinfo);
+        UserInfroDetailBean.PicListBean picListBean = pic_list.get(position);
+        String upic = picListBean.getUpic();
 
-        View v =  View.inflate(mActivity, R.layout.gvitem_userinfo_pic,null);
-        return v;
+        CommonUtil.loadImage(R.mipmap.ic_pic_live,holder.iv_liveuserinfo,upic);
+
+        return convertView;
     }
     public class Viewholder{
-        ImageView iv_anchor_phonelive;//封面图片
-        TextView tv_numoflook_phonelive;//观看人数
-        TextView tv_anchor_phonelive;//主播名
-        TextView tv_location_phonelive;//位置
+        ImageView iv_liveuserinfo;//封面图片
     }
 }

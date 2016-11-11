@@ -30,14 +30,18 @@
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_default_photo" />
             <TextView
+                android:id="@+id/tv_distance_photo"
                 android:layout_alignRight="@id/iv_user_photo"
                 android:layout_alignBottom="@id/iv_user_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="8dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:drawableLeft="@mipmap/ic_location_live"
                 android:drawablePadding="5dp"
+                android:background="@drawable/shape_rectangle_transgray"
                 android:text="距离"
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
@@ -64,6 +68,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_name_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="姓名"
@@ -87,6 +92,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_age_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -95,6 +101,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_city_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -103,6 +110,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_height_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="身高"
@@ -121,6 +129,7 @@
                     android:src="@mipmap/ic_praise_video"
                     android:scaleType="centerCrop"/>
                 <TextView
+                    android:id="@+id/tv_numofpraise_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -143,6 +152,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_percent_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

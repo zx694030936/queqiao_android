@@ -3,13 +3,21 @@ package com.queqiaolove.fragment.queqiao;
 import android.view.View;
 
 import com.huxq17.swipecardsview.SwipeCardsView;
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.adapter.queqiao.SwipePhotoAdapter;
 import com.queqiaolove.base.BaseFragment;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.http.Http;
+import com.queqiaolove.http.api.MainAPI;
+import com.queqiaolove.javabean.main.PhotoListBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by WD on 2016/10/2.
@@ -47,12 +55,33 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected ContentPage.RequestState onLoad() {
-        for (int i = 0; i < imageUrls.length; i++) {
+       /* for (int i = 0; i < imageUrls.length; i++) {
             list.add(imageUrls[i]);
-        }
-
-        scv_photo.setAdapter(new SwipePhotoAdapter(mActivity,list));
+        }*/
+        loadPhotoList();
         return ContentPage.RequestState.STATE_SUCCESS;
+    }
+    /*相册列表*/
+    private void loadPhotoList() {
+        userid = QueQiaoLoveApp.getUserId();
+        MainAPI mainAPI = Http.getInstance().create(MainAPI.class);
+        mainAPI.photoList(userid).enqueue(new Callback<PhotoListBean>() {
+            @Override
+            public void onResponse(Call<PhotoListBean> call, Response<PhotoListBean> response) {
+                PhotoListBean body = response.body();
+                if (body.getReturnvalue().equals("true")){
+                    List<PhotoListBean.ListBean> photolist = body.getList();
+                    scv_photo.setAdapter(new SwipePhotoAdapter(mActivity,photolist));
+                }else {
+                    toast(body.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PhotoListBean> call, Throwable t) {
+                toast("网络数据异常");
+            }
+        });
     }
 
     @Override
