@@ -1,6 +1,5 @@
 package com.queqiaolove.fragment.live.horizontal;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,31 +15,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMChatRoomChangeListener;
-import com.hyphenate.EMValueCallBack;
-import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-import com.hyphenate.util.EMLog;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.live.horizontal.HorizontalLiveActivity;
-import com.queqiaolove.adapter.live.horizontal.HorizontalLiveBulletLvAdapter;
-import com.queqiaolove.base.BaseFragment;
-import com.queqiaolove.base.ContentPage;
 import com.queqiaolove.im.imDanMuAdapter;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by WD on 2016/10/7.
@@ -56,21 +37,11 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
     private int chatType;
     private EditText edit_text;
 
-
-
-
-
     protected static final String TAG = "EaseChatFragment";
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
-    protected EMConversation conversation;
     protected Handler handler = new Handler();
-    protected EMMessage contextMenuMessage;
-    private EMChatRoomChangeListener chatRoomChangeListener;
-
-
-
 
 
     @Nullable
@@ -87,7 +58,7 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
     private void initIMData(){
         fragmentArgs = getArguments();
         toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);//获取聊天对象ID
-        chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE);//获取聊天类型（该数值为聊天室的）
+        chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE);//获取聊天类型
         Log.w("user", "user" + toChatUsername + "  " + chatType);
 
     }
@@ -116,7 +87,6 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
 
         tv_send.setOnClickListener(this);
 
-       // onChatRoomViewCreation();//配置聊天室相关的信息
     }
 
 
@@ -141,8 +111,8 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
     public class Receiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("danmu_message")) {
-                lv_bulletscreen.setSelection(lv_bulletscreen.getBottom());//收到消息时，滑动到ListView的底部
                 adapter.notifyDataSetChanged();
+                lv_bulletscreen.setSelection(lv_bulletscreen.getBottom());//收到消息时，滑动到ListView的底部
                 Log.w("adapter","adapter");
 
             }
@@ -151,120 +121,19 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
 
 
 
-
-
-
-
-//    protected void onChatRoomViewCreation() {
-//        final ProgressDialog pd = ProgressDialog.show(getActivity(), "", "Joining......");
-//        EMClient.getInstance().chatroomManager().joinChatRoom(toChatUsername, new EMValueCallBack<EMChatRoom>() {
-//            @Override
-//            public void onSuccess(final EMChatRoom value) {
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if(getActivity().isFinishing() || !toChatUsername.equals(value.getId()))
-//                            return;
-//                        pd.dismiss();
-//                        EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(toChatUsername);
-//                        if (room != null) {
-//                            EMLog.d(TAG, "join room success : " + room.getName());
-//                        } else {
-//                        }
-//                        addChatRoomChangeListenr();
-//                        onConversationInit();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onError(final int error, String errorMsg) {
-//
-//            }
-//        });
-//    }
-
-
-    protected void onConversationInit(){
-        conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
-        conversation.markAllMessagesAsRead();
-        final List<EMMessage> msgs = conversation.getAllMessages();
-
-    }
-
-
-//    protected void addChatRoomChangeListenr() {
-//        chatRoomChangeListener = new EMChatRoomChangeListener() {
-//
-//            @Override
-//            public void onChatRoomDestroyed(String roomId, String roomName) {
-//                if (roomId.equals(toChatUsername)) {
-//                    showChatroomToast(" room : " + roomId + " with room name : " + roomName + " was destroyed");
-//                    getActivity().finish();
-//                }
-//            }
-//
-//            @Override
-//            public void onMemberJoined(String roomId, String participant) {
-//                showChatroomToast("member : " + participant + " join the room : " + roomId);
-//            }
-//
-//            @Override
-//            public void onMemberExited(String roomId, String roomName, String participant) {
-//                showChatroomToast("member : " + participant + " leave the room : " + roomId + " room name : " + roomName);
-//            }
-//
-//            @Override
-//            public void onMemberKicked(String roomId, String roomName, String participant) {
-//                if (roomId.equals(toChatUsername)) {
-//                    String curUser = EMClient.getInstance().getCurrentUser();
-//                    if (curUser.equals(participant)) {
-//                        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
-//                        getActivity().finish();
-//                    }else{
-//                        showChatroomToast("member : " + participant + " was kicked from the room : " + roomId + " room name : " + roomName);
-//                    }
-//                }
-//            }
-//
-//        };
-//
-//        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(chatRoomChangeListener);
-//    }
-
-
-
-
-
-    protected void showChatroomToast(final String toastContent){
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(getActivity(), toastContent, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
-     * 发送消息
+     * 发送消息（竖屏）
      * @param content
      */
     private void sendTextMessage(String content) {
 
         EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+        /**
+         * 消息扩展,昵称以及头像等
+         */
+        message.setAttribute("usernick",message.getFrom());//昵称
+        //message.setAttribute("userhead",message.getFrom());//头像
+        //message.setAttribute("userlevel",message.getFrom());//会员等级
         sendMessage(message,content);
 
     }
@@ -273,23 +142,20 @@ public class ChartLiveFragment extends Fragment implements View.OnClickListener{
         if (message == null) {
             return;
         }
-        if (chatType == EaseConstant.CHATTYPE_GROUP){
-            message.setChatType(EMMessage.ChatType.GroupChat);
-        }else if(chatType == EaseConstant.CHATTYPE_CHATROOM){
+       if(chatType == EaseConstant.CHATTYPE_CHATROOM){
             message.setChatType(EMMessage.ChatType.ChatRoom);
         }
-        EMClient.getInstance().chatManager().sendMessage(message);
-
+        EMClient.getInstance().chatManager().sendMessage(message);//环信发送消息的方法
         HorizontalLiveActivity.instance.messagelist.add(message);
         edit_text.setText("");
-
+        lv_bulletscreen.setSelection(lv_bulletscreen.getBottom());//收到消息时，滑动到ListView的底部
 
     }
 
 
-
-
-
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(rec);
+    }
 }

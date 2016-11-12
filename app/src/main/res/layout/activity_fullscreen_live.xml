@@ -12,6 +12,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" />
+        <SurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <LinearLayout
+            android:id="@+id/gift_con"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+            android:padding="5dp"/>
 
         <master.flame.danmaku.ui.widget.DanmakuView
             android:id="@+id/danmaku_view"
@@ -154,6 +168,7 @@
                     android:textColor="@color/graywhite"/>
             </LinearLayout>
             <ImageView
+                android:id="@+id/img_gift"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_alignParentRight="true"
@@ -164,4 +179,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+
 </LinearLayout>

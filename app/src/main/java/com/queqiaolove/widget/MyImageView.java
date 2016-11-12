@@ -3,7 +3,6 @@ package com.queqiaolove.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.queqiaolove.R;
@@ -41,7 +40,7 @@ public class MyImageView extends ImageView {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.EXACTLY);
         //必须调用下面的两个方法之一完成onMeasure方法的重写，否则会报错
 //        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
-        Log.e("widthandheight",widthSize+","+heightSize);
+        //Log.e("widthandheight",widthSize+","+heightSize);
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 

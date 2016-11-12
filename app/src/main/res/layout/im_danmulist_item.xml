@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="#000"
+            android:textColor="@color/red"
             android:text="鹊桥:"
             android:layout_marginLeft="10dp"
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="#000"
+            android:textColor="@color/red"
             android:text="你好"
             android:layout_marginLeft="5dp"
 

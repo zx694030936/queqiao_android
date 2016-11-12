@@ -3,8 +3,17 @@ package com.queqiaolove.activity.live.vertical;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -14,14 +23,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hyphenate.EMChatRoomChangeListener;
 import com.hyphenate.EMMessageListener;
+import com.hyphenate.EMValueCallBack;
+import com.hyphenate.chat.EMChatRoom;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.chatuidemo.DemoModel;
+import com.hyphenate.easeui.EaseConstant;
 import com.queqiaolove.R;
-import com.queqiaolove.adapter.live.vertical.VerticalLiveBulletLvAdapter;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
+import com.queqiaolove.im.GiftShowManager;
+import com.queqiaolove.im.GiftVo;
 import com.queqiaolove.im.imDanMuAdapter;
 import com.queqiaolove.javabean.live.LiveUrlListBean;
 import com.queqiaolove.widget.dialog.NoPusherDialog;
@@ -67,6 +84,19 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_send;//发送消息的按钮
     private InputMethodManager imm;
     private InputMethodManager manager;
+    private ImageView img_sendgif;
+
+
+    private SurfaceView surfaceView;//后面的SurfaceView
+    private LinearLayout giftCon;//礼物的里列表的外层ViewGroup
+    private int SCREEN_WITH = 0;//屏幕的宽度
+    private int SCREEN_HEIGHT = 0;//屏幕的高度
+    private GiftShowManager giftManger;
+    private DemoModel settingsModel;
+
+    private int chatType;
+    private String toChatUsername;
+    private EMChatRoomChangeListener chatRoomChangeListener;
 
 
     @Override
@@ -78,7 +108,8 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
     protected void activityOnCreate(Bundle extras) {
         data = (LiveUrlListBean.ListBean) extras.getSerializable(NORMAL_HORIZONTALLIVE);
         if (data != null) {
-            isend = data.getIsend();
+            // isend = data.getIsend();
+            isend = "0";
             username = data.getUsername();
             roomid = data.getId();
             watch_num = data.getWatch_num();
@@ -105,6 +136,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         iv_back = (ImageView) mContentView.findViewById(R.id.iv_back);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (isend.equals("0")) {
+
             lv_bullet = (ListView) mContentView.findViewById(R.id.lv_bullet_verticallive);
             tv_name = (TextView) mContentView.findViewById(R.id.tv_name_verticallive);
             tv_numoflook = (TextView) mContentView.findViewById(R.id.tv_numoflook_verticallive);
@@ -125,6 +157,9 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             img_message.setOnClickListener(this);
             adapter = new imDanMuAdapter(this, messagelist);
             lv_bullet.setAdapter(adapter);
+            img_sendgif = (ImageView) mContentView.findViewById(R.id.img_sendgif);
+            img_sendgif.setOnClickListener(this);
+            initGif();
 
         } else {
             tv_name = (TextView) mContentView.findViewById(R.id.tv_name_verticalnolive);
@@ -139,8 +174,12 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             tv_send = (TextView) mContentView.findViewById(R.id.tv_send);
             tv_send.setOnClickListener(this);
             img_message.setOnClickListener(this);
-
+            img_sendgif = (ImageView) mContentView.findViewById(R.id.img_sendgif);
+            img_sendgif.setOnClickListener(this);
         }
+
+        initEventData();
+        initIM();//配置环信
     }
 
     @Override
@@ -167,6 +206,9 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         Intent intent = new Intent();
         intent.setClass(activity, VerticalLiveActivity.class);
         intent.putExtra(NORMAL_HORIZONTALLIVE, data);
+        intent.putExtra(EaseConstant.EXTRA_USER_ID, "114714059982504528");//测试用的聊天室ID
+//        intent.putExtra(EaseConstant.EXTRA_USER_ID, data.getGroupid());//测试用的聊天室ID
+        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, 3);//聊天室为3
         activity.startActivity(intent);
     }
 
@@ -188,7 +230,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         }*/
             Log.e("verticallive", result + "");
 
-            lv_bullet.setAdapter(new VerticalLiveBulletLvAdapter(mActivity));
+            //lv_bullet.setAdapter(new VerticalLiveBulletLvAdapter(mActivity));
         } else {
 
         }
@@ -202,6 +244,14 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         if (mLivePlayer != null) {
             mLivePlayer.stopPlay(true);
         }
+        EMClient.getInstance().chatManager().removeMessageListener(this);
+        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EMClient.getInstance().chatManager().addMessageListener(this);//注册消息监听
     }
 
     @Override
@@ -232,6 +282,10 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
                     imm.hideSoftInputFromWindow(edit_text.getWindowToken(), 0);
+                    String content = edit_text.getText().toString().trim();
+                    if (!TextUtils.isEmpty(content)) {
+                        sendTextMessage(edit_text.getText().toString().trim());
+                    }
                 } else {
                     rl_bottom.setVisibility(View.GONE);
                     ll_bottom.setVisibility(View.VISIBLE);
@@ -239,8 +293,14 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
 
                     imm.hideSoftInputFromWindow(edit_text.getWindowToken(), 0);
                 }
-                
-                
+
+
+                break;
+
+            case R.id.img_sendgif:
+                giftManger.showGift();//开始显示礼物
+                new Thread(new GetGiftRunnable()).start();//启动线程获取礼物的Vo
+                break;
 
 
         }
@@ -276,10 +336,16 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    /**
+     * 此监听是消息接收的监听，每次加入聊天室的时候，环信会强制返回10条消息，环信的问题。。。
+     * @param list
+     */
     @Override
     public void onMessageReceived(List<EMMessage> list) {
         messagelist.addAll(list);
         adapter.notifyDataSetChanged();
+        lv_bullet.setSelection(lv_bullet.getBottom());//收到消息时，滑动到ListView的底部
+
     }
 
     @Override
@@ -315,6 +381,204 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             }
 
         }, 300);
+    }
+
+
+    /**
+     * 送礼物动画
+     */
+    private void initGif() {
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+
+        SCREEN_WITH = dm.widthPixels;
+        SCREEN_HEIGHT = dm.heightPixels;
+
+        surfaceView = (SurfaceView) mContentView.findViewById(R.id.surface_view);
+        surfaceView.getHolder().addCallback(new LivingHolderCallBack());
+        giftCon = (LinearLayout) mContentView.findViewById(R.id.gift_con);
+
+
+        giftManger = new GiftShowManager(this, giftCon);
+
+
+    }
+
+
+    //往队列中加入礼物
+    private class GetGiftRunnable implements Runnable {
+        @Override
+        public void run() {
+            GiftVo vo = new GiftVo();
+            vo.setUserId("unfind");
+            vo.setNum(1);
+            giftManger.addGift(vo);
+            GiftVo vo2 = new GiftVo();
+            vo2.setUserId("unfind");
+            vo2.setNum(1);
+            giftManger.addGift(vo2);
+
+            GiftVo vo3 = new GiftVo();
+            vo3.setUserId("zhong");
+            vo3.setNum(1);
+            giftManger.addGift(vo3);
+            GiftVo vo4 = new GiftVo();
+            vo4.setUserId("xiao");
+            vo4.setNum(1);
+            giftManger.addGift(vo4);
+            GiftVo vo5 = new GiftVo();
+            vo5.setUserId("xiao");
+            vo5.setNum(1);
+            giftManger.addGift(vo5);
+            GiftVo vo6 = new GiftVo();
+            vo6.setUserId("xiao");
+            vo6.setNum(1);
+            giftManger.addGift(vo6);
+
+        }
+    }
+
+
+    //SurfaceView绘制直播的界面的子类
+    private class LivingHolderCallBack implements SurfaceHolder.Callback {
+        private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            Canvas canvas = holder.lockCanvas();
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.girl);
+            RectF rectF = new RectF(0, 0, SCREEN_WITH, SCREEN_HEIGHT);   //w和h分别是屏幕的宽和高，也就是你想让图片显示的宽和高
+            canvas.drawBitmap(bm, null, rectF, null);
+            holder.unlockCanvasAndPost(canvas);
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+
+        }
+    }
+
+
+    /**
+     * 配置环信
+     */
+    private void initIM() {
+        settingsModel = DemoHelper.getInstance().getModel();
+        settingsModel.setSettingMsgNotification(false);//关闭消息通知（通知栏），聊天室消息不需要消息提醒。
+        onChatRoomViewCreation();
+    }
+
+    private void initEventData() {
+        chatType = getIntent().getExtras().getInt(EaseConstant.EXTRA_CHAT_TYPE, 0);//获取聊天类型
+        toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);//获取聊天ID
+        Log.w("chatType", "chatType" + chatType);
+        Log.w("toChatUsername", "toChatUsername" + toChatUsername);
+    }
+
+
+    /**
+     * 发送消息
+     *
+     * @param content
+     */
+    private void sendTextMessage(String content) {
+
+        EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+        /**
+         * 消息扩展,昵称以及头像等
+         */
+        message.setAttribute("usernick", message.getFrom());//昵称（目前暂时用环信ID代替昵称显示，实际应该从本地取app的用户昵称）
+        //message.setAttribute("userhead",......);//头像
+        //message.setAttribute("userlevel",......);//会员等级
+
+
+        sendMessage(message, content);
+
+    }
+
+    private void sendMessage(EMMessage message, final String content) {
+        if (message == null) {
+            return;
+        }
+        if (chatType == EaseConstant.CHATTYPE_CHATROOM) {//聊天室类型的
+            message.setChatType(EMMessage.ChatType.ChatRoom);
+        }
+        EMClient.getInstance().chatManager().sendMessage(message);//环信发送消息的方法
+
+        messagelist.add(message);
+        adapter.notifyDataSetChanged();
+        lv_bullet.setSelection(lv_bullet.getBottom());//收到消息时，滑动到ListView的底部
+        edit_text.setText("");
+    }
+
+
+    public void onChatRoomViewCreation() {
+        EMClient.getInstance().chatroomManager().joinChatRoom(toChatUsername, new EMValueCallBack<EMChatRoom>() {
+            @Override
+            public void onSuccess(final EMChatRoom value) {
+                addChatRoomChangeListenr();
+            }
+
+            @Override
+            public void onError(final int error, String errorMsg) {
+
+            }
+        });
+    }
+
+
+    protected void addChatRoomChangeListenr() {
+        chatRoomChangeListener = new EMChatRoomChangeListener() {
+
+            @Override
+            public void onChatRoomDestroyed(String roomId, String roomName) {
+                if (roomId.equals(toChatUsername)) {
+                    showChatroomToast(" room : " + roomId + " with room name : " + roomName + " was destroyed");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onMemberJoined(String roomId, String participant) {
+                showChatroomToast("member : " + participant + " join the room : " + roomId);
+            }
+
+            @Override
+            public void onMemberExited(String roomId, String roomName, String participant) {
+                showChatroomToast("member : " + participant + " leave the room : " + roomId + " room name : " + roomName);
+            }
+
+            @Override
+            public void onMemberKicked(String roomId, String roomName, String participant) {
+                if (roomId.equals(toChatUsername)) {
+                    String curUser = EMClient.getInstance().getCurrentUser();
+                    if (curUser.equals(participant)) {
+                        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+                        finish();
+                    } else {
+                        showChatroomToast("member : " + participant + " was kicked from the room : " + roomId + " room name : " + roomName);
+                    }
+                }
+            }
+
+        };
+
+        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(chatRoomChangeListener);
+    }
+
+
+    protected void showChatroomToast(final String toastContent) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(VerticalLiveActivity.this, toastContent, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

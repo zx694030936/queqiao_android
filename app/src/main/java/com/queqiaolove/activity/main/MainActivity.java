@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.chatuidemo.DemoModel;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsResultAction;
@@ -72,7 +74,7 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
-
+    private DemoModel settingsModel;
 
 
     @Override
@@ -229,38 +231,40 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
     /**
      * check if current user account was remove
      */
-    private void initIM(Bundle savedInstanceState){
+  private void initIM(Bundle savedInstanceState){
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String packageName = getPackageName();
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                Intent intent = new Intent();
-                intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setData(Uri.parse("package:" + packageName));
-                startActivity(intent);
-            }
-        }
+      settingsModel = DemoHelper.getInstance().getModel();
 
-        //make sure activity will not in background if user is logged into another device or removed
-        if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
-            DemoHelper.getInstance().logout(false,null);
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        } else if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false)) {
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        }
-        requestPermissions();
-        initIMView();
-        showExceptionDialogFromIntent(getIntent());
+      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          String packageName = getPackageName();
+          PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+          if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+              Intent intent = new Intent();
+              intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+              intent.setData(Uri.parse("package:" + packageName));
+              startActivity(intent);
+          }
+      }
 
-        registerBroadcastReceiver();
-        EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
-        registerInternalDebugReceiver();
-    }
+      //make sure activity will not in background if user is logged into another device or removed
+      if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
+          DemoHelper.getInstance().logout(false,null);
+          finish();
+          startActivity(new Intent(this, LoginActivity.class));
+          return;
+      } else if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false)) {
+          finish();
+          startActivity(new Intent(this, LoginActivity.class));
+          return;
+      }
+      requestPermissions();
+      initIMView();
+      showExceptionDialogFromIntent(getIntent());
+
+      registerBroadcastReceiver();
+      EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
+      registerInternalDebugReceiver();
+  }
 
 
     private void requestPermissions() {
@@ -330,7 +334,7 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
             public void run() {
                 // refresh unread count
                 updateUnreadLabel();
-                // refresh conversation list
+                    // refresh conversation list
 
             }
         });
@@ -446,6 +450,7 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
         sdkHelper.pushActivity(this);
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
+        settingsModel.setSettingMsgNotification(true);//打开消息通知（通知栏提示）
     }
 
     @Override
@@ -571,8 +576,8 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,  String[] permissions,
-                                            int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
     }
 

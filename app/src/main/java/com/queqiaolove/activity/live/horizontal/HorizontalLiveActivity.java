@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,17 +25,24 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hyphenate.EMChatRoomChangeListener;
 import com.hyphenate.EMMessageListener;
+import com.hyphenate.EMValueCallBack;
+import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.chatuidemo.DemoModel;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.controller.EaseUI;
 import com.queqiaolove.R;
 import com.queqiaolove.adapter.live.horizontal.ChartOrInfoVpAdapter;
 import com.queqiaolove.global.Constants;
+import com.queqiaolove.im.GiftShowManager;
+import com.queqiaolove.im.GiftVo;
+import com.queqiaolove.javabean.RecommendDataBean;
 import com.queqiaolove.widget.NoScrollViewPager;
 import com.queqiaolove.widget.dialog.NoPusherDialog;
 import com.tencent.rtmp.ITXLivePlayListener;
@@ -81,15 +95,19 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
     private TextView send;
     private EditText editText;
 
+    private EMChatRoomChangeListener chatRoomChangeListener;
+    private DemoModel settingsModel;
 
-    private static final String TAG = "MainActivity";
+    private SurfaceView surfaceView;//后面的SurfaceView
+    private LinearLayout giftCon;//礼物的里列表的外层ViewGroup
+    private int SCREEN_WITH = 0;//屏幕的宽度
+    private int SCREEN_HEIGHT = 0;//屏幕的高度
+    private GiftShowManager giftManger;
+    private ImageView img_gift;
 
     private boolean showDanmaku;
-
     private DanmakuView danmakuView;
-
     private DanmakuContext danmakuContext;
-
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
         protected IDanmakus parse() {
@@ -101,23 +119,49 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_littlescreen_live);
+        messagelist.clear();
         instance = this;
         initVerticalView();
         initVerticalEvent();
         initEventData();
+        initIM();//配置环信
 
-        /**
-         * 环信相关的配置
-         */
-        DemoHelper sdkHelper = DemoHelper.getInstance();
-        sdkHelper.pushActivity(this);
-        EMClient.getInstance().chatManager().addMessageListener(this);//注册消息监听
+    }
+
+    /**
+     * 配置环信
+     */
+    private void initIM(){
+        settingsModel = DemoHelper.getInstance().getModel();
+        settingsModel.setSettingMsgNotification(false);//关闭消息通知（通知栏），聊天室消息不需要消息提醒。
+        onChatRoomViewCreation();
+    }
+
+    /**
+     * 送礼物动画
+     */
+    private void initGif(){
+        img_gift = (ImageView) findViewById(R.id.img_gift);
+        img_gift.setOnClickListener(this);
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+
+        SCREEN_WITH = dm.widthPixels;
+        SCREEN_HEIGHT = dm.heightPixels;
+
+        surfaceView = (SurfaceView) findViewById(R.id.surface_view);
+        surfaceView.getHolder().addCallback(new LivingHolderCallBack());
+        giftCon = (LinearLayout) findViewById(R.id.gift_con);
+
+
+        giftManger = new GiftShowManager(this, giftCon);
+
+
     }
 
 
     private void initEventData(){
-        chatType = getIntent().getExtras().getInt(EaseConstant.EXTRA_CHAT_TYPE,0) ;
-        toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
+        chatType = getIntent().getExtras().getInt(EaseConstant.EXTRA_CHAT_TYPE,0) ;//获取聊天类型
+        toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);//获取聊天ID
         Log.w("chatType", "chatType" + chatType);
         Log.w("toChatUsername", "toChatUsername" + toChatUsername);
     }
@@ -168,10 +212,12 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
      *
      * @param activity
      */
-    public static void intent(Activity activity, String data) {
+    public static void intent(Activity activity, RecommendDataBean.PczbListBean data) {
         Intent intent = new Intent();
         intent.setClass(activity, HorizontalLiveActivity.class);
-        intent.putExtra(EaseConstant.EXTRA_USER_ID, "wcdma123");
+        intent.putExtra(EaseConstant.EXTRA_USER_ID, "114714059982504528");//测试用的聊天室ID
+        //intent.putExtra(EaseConstant.EXTRA_USER_ID, data.getGroupid());//测试用的聊天室ID
+        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, 3);
         intent.putExtra(NORMAL_HORIZONTALLIVE, data);
         activity.startActivity(intent);
     }
@@ -221,6 +267,10 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
                     initDanMu();
                 }
                 break;
+            case R.id.img_gift:
+                giftManger.showGift();//开始显示礼物
+                new Thread(new GetGiftRunnable()).start();//启动线程获取礼物的Vo
+                break;
         }
     }
 
@@ -231,9 +281,8 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         stopDanMu();
 
         EMClient.getInstance().chatManager().removeMessageListener(this);
+        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
 
-        // remove activity from foreground activity list
-        EaseUI.getInstance().popActivity(this);
     }
 
     @Override
@@ -269,6 +318,7 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
             initHorizontalEvent();
             stopDanMu();//停止弹幕，必须调用
             initDanMu();//初始化弹幕
+            initGif();//送礼物动画
 
         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             // port do nothing is ok竖
@@ -283,6 +333,7 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
 
     /*初始化横屏布局*/
     private void initHorizontalView() {
+
         issetVisibility = true;
         iv_back = (ImageView) findViewById(R.id.iv_back);
         rl_live_above = (RelativeLayout) findViewById(R.id.rl_live_above);
@@ -298,6 +349,8 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
 
         iv_switch_block_groupmsg.setOnClickListener(this);
         iv_switch_unblock_groupmsg.setOnClickListener(this);
+
+
 
     }
 
@@ -445,7 +498,7 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         if (danmakuView != null && danmakuView.isPrepared() && danmakuView.isPaused()) {
             danmakuView.resume();
         }
-
+        EMClient.getInstance().chatManager().addMessageListener(this);//注册消息监听
     }
 
 
@@ -492,18 +545,89 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
     }
 
 
+    //线往队列中加入礼物
+    private class GetGiftRunnable implements Runnable {
+        @Override
+        public void run() {
+            Log.w("123","123");
+            GiftVo vo = new GiftVo();
+            vo.setUserId("unfind");
+            vo.setNum(1);
+            giftManger.addGift(vo);
+            GiftVo vo2 = new GiftVo();
+            vo2.setUserId("unfind");
+            vo2.setNum(1);
+            giftManger.addGift(vo2);
+
+            GiftVo vo3 = new GiftVo();
+            vo3.setUserId("zhong");
+            vo3.setNum(1);
+            giftManger.addGift(vo3);
+            GiftVo vo4 = new GiftVo();
+            vo4.setUserId("xiao");
+            vo4.setNum(1);
+            giftManger.addGift(vo4);
+            GiftVo vo5 = new GiftVo();
+            vo5.setUserId("xiao");
+            vo5.setNum(1);
+            giftManger.addGift(vo5);
+            GiftVo vo6 = new GiftVo();
+            vo6.setUserId("xiao");
+            vo6.setNum(1);
+            giftManger.addGift(vo6);
+
+        }
+    }
+
+
+    //SurfaceView绘制直播的界面的子类
+    private class LivingHolderCallBack implements SurfaceHolder.Callback {
+        private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            Canvas canvas = holder.lockCanvas();
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.girl);
+            RectF rectF = new RectF(0, 0, SCREEN_WITH, SCREEN_HEIGHT);   //w和h分别是屏幕的宽和高，也就是你想让图片显示的宽和高
+            canvas.drawBitmap(bm, null, rectF, null);
+            holder.unlockCanvasAndPost(canvas);
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+
+        }
+    }
+
+
+
+
     /**
-     * 接收到他人发的消息后，发送广播，并刷新弹幕
+     * 接收到他人发的消息后，发送广播
      */
-    private void sendReceiver(EMMessage message){
-        HorizontalLiveActivity.instance.messagelist.add(message);
+    private void sendReceiver(List<EMMessage> messages){
+        HorizontalLiveActivity.instance.messagelist.addAll(messages);
         Intent intent = new Intent();
         intent.setAction("danmu_message");
         sendBroadcast(intent);//发送广播，通知ChartLiveFragment刷新
+        Log.w("list", "list" + HorizontalLiveActivity.instance.messagelist.size());
+        sendDanMu(messages);
+    }
 
-        EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-        String msg = txtBody.getMessage();
-        addDanmaku(msg,false);
+    private void sendDanMu(List<EMMessage> messages){
+        for (EMMessage message : messages) {
+            // sendDanMu(message);
+            EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+            String msg = txtBody.getMessage();
+            addDanmaku(msg, false);
+        }
+
     }
 
 
@@ -515,9 +639,8 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
 
     @Override
     public void onMessageReceived(List<EMMessage> messages) {//收到消息
-        for (EMMessage message : messages) {
-            sendReceiver(message);
-        }
+            sendReceiver(messages);
+
     }
 
     @Override
@@ -548,13 +671,20 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
 
 
     /**
-     * 发送消息
+     * 发送消息（横屏）
      * @param content
      */
     private void sendTextMessage(String content) {
 
         EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
-        sendMessage(message,content);
+        /**
+         * 消息扩展,昵称以及头像等
+         */
+        message.setAttribute("usernick",message.getFrom());//昵称
+        //message.setAttribute("userhead",message.getFrom());//头像
+        //message.setAttribute("userlevel",message.getFrom());//会员等级
+
+        sendMessage(message, content);
 
     }
 
@@ -562,18 +692,86 @@ public class HorizontalLiveActivity extends FragmentActivity implements RadioGro
         if (message == null) {
             return;
         }
-        if (chatType == EaseConstant.CHATTYPE_GROUP){
-            message.setChatType(EMMessage.ChatType.GroupChat);
-        }else if(chatType == EaseConstant.CHATTYPE_CHATROOM){
+        if(chatType == EaseConstant.CHATTYPE_CHATROOM){//聊天室类型的
             message.setChatType(EMMessage.ChatType.ChatRoom);
         }
         EMClient.getInstance().chatManager().sendMessage(message);//环信发送消息的方法
         messagelist.add(message);
         editText.setText("");
-        if (iv_switch_block_groupmsg.getVisibility() == View.VISIBLE){//弹幕开关开启，才能发弹幕
+        if (iv_switch_block_groupmsg.getVisibility() == View.VISIBLE){//弹幕开关开启，才能显示弹幕
             addDanmaku(content, true);
         }
 
 
     }
+
+
+    public void onChatRoomViewCreation() {
+        EMClient.getInstance().chatroomManager().joinChatRoom(toChatUsername, new EMValueCallBack<EMChatRoom>() {
+            @Override
+            public void onSuccess(final EMChatRoom value) {
+                addChatRoomChangeListenr();
+            }
+
+            @Override
+            public void onError(final int error, String errorMsg) {
+
+            }
+        });
+    }
+
+
+    protected void addChatRoomChangeListenr() {
+        chatRoomChangeListener = new EMChatRoomChangeListener() {
+
+            @Override
+            public void onChatRoomDestroyed(String roomId, String roomName) {
+                if (roomId.equals(toChatUsername)) {
+                    showChatroomToast(" room : " + roomId + " with room name : " + roomName + " was destroyed");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onMemberJoined(String roomId, String participant) {
+                showChatroomToast("member : " + participant + " join the room : " + roomId);
+            }
+
+            @Override
+            public void onMemberExited(String roomId, String roomName, String participant) {
+                showChatroomToast("member : " + participant + " leave the room : " + roomId + " room name : " + roomName);
+            }
+
+            @Override
+            public void onMemberKicked(String roomId, String roomName, String participant) {
+                if (roomId.equals(toChatUsername)) {
+                    String curUser = EMClient.getInstance().getCurrentUser();
+                    if (curUser.equals(participant)) {
+                        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+                        finish();
+                    }else{
+                        showChatroomToast("member : " + participant + " was kicked from the room : " + roomId + " room name : " + roomName);
+                    }
+                }
+            }
+
+        };
+
+        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(chatRoomChangeListener);
+    }
+
+
+
+
+
+    protected void showChatroomToast(final String toastContent){
+       runOnUiThread(new Runnable() {
+           public void run() {
+               Toast.makeText(HorizontalLiveActivity.this, toastContent, Toast.LENGTH_SHORT).show();
+           }
+       });
+    }
+
+
+
 }

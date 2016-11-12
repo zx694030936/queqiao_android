@@ -1,6 +1,7 @@
 package com.queqiaolove.im;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.exceptions.HyphenateException;
 import com.queqiaolove.R;
 
 import java.util.ArrayList;
@@ -56,13 +58,26 @@ public class imDanMuAdapter extends BaseAdapter {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
         String msg = txtBody.getMessage();
         holder.tv_content.setText(msg);
+        /**
+         * 从消息扩展中获取对方的昵称、头像等
+         */
+        try {
+            String username = message.getStringAttribute("usernick");
+            holder.tv_usernick.setText(username);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
+
+
+        Log.w("MESS", "MESS" + message);
 
         return contentView;
     }
 
 
     class ViewHolder {
-        TextView tv_usernick, tv_content;
+        TextView tv_usernick,//用户昵称
+                tv_content;//消息内容
 
         public ViewHolder(View view) {
             tv_usernick = (TextView) view.findViewById(R.id.tv_usernick);

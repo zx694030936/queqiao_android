@@ -101,11 +101,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     LoginBean body = response.body();
                     QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
 
-//                    String username = "wcdma123456";//环信测试ID
-//                    String password = "123";//环信测试密码
+                    String username = "wcdma123456";//环信测试ID
+                    String password = "123";//环信测试密码
 
-                    String username = body.getUuid();//环信ID
-                    String password = body.getPassword();//环信密码
+//                    String username = "wcdma123";//环信测试ID
+//                    String password = "123456";//环信测试密码
+
+//                    String username = body.getUuid();//环信ID
+//                    String password = body.getPassword();//环信密码
 
 
                     EMClient.getInstance().login(username, password, new EMCallBack() {//环信登录方法

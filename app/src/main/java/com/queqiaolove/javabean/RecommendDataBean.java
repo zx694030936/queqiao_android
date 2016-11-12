@@ -1,11 +1,12 @@
 package com.queqiaolove.javabean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by zchk on 2016/11/3.
  */
-public class RecommendDataBean {
+public class RecommendDataBean implements Serializable{
 
 
     /**
@@ -148,7 +149,7 @@ public class RecommendDataBean {
         this.hdyg_list = hdyg_list;
     }
 
-    public static class PczbListBean {
+    public static class PczbListBean implements Serializable{
         private String id;
         private String zhibo_fm_pic;
         private String btitle;

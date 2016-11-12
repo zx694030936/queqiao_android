@@ -534,15 +534,18 @@
         <!-- huawei push end -->
 
 
-
-        <!--设置环信应用的appkey-->
-        <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="loska#queqiaozhilian" />
-
+        <!--环信正式appkey-->
+        <!--&lt;!&ndash;设置环信应用的appkey&ndash;&gt;-->
         <!--<meta-data-->
-        <!--android:name="EASEMOB_APPKEY"-->
-        <!--android:value="easemob-demo#chatdemoui" />-->
+            <!--android:name="EASEMOB_APPKEY"-->
+            <!--android:value="loska#queqiaozhilian" />-->
+
+        <!--环信 测试appkey-->
+        <meta-data
+        android:name="EASEMOB_APPKEY"
+        android:value="easemob-demo#chatdemoui" />
+
+
         <!-- 声明sdk所需的service -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
