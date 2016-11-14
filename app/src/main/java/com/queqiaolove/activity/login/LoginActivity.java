@@ -98,8 +98,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 if (response.body().getReturnvalue().equals("true")){
 
-                    LoginBean body = response.body();
-                    QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
+                    final LoginBean body = response.body();
 
 //                    String username = "wcdma123456";//环信测试ID
 //                    String password = "123";//环信测试密码
@@ -117,7 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                             EMClient.getInstance().groupManager().loadAllGroups();
                             EMClient.getInstance().chatManager().loadAllConversations();
-
+                            QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
                             MainActivity.intent(LoginActivity.this, new String[]{""});
                             finish();
                         }

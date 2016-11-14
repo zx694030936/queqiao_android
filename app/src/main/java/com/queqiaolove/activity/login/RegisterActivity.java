@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.main.MainActivity;
 import com.queqiaolove.global.Constants;
@@ -148,7 +149,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             public void onResponse(Call<RegistBean> call, Response<RegistBean> response) {
                 if (response.body().getReturnvalue().equals("true")){
                     //FinishRegisterActivity.intent(mActivity,"1");
-                    RegistBean body = response.body();
+                    final RegistBean body = response.body();
 
                     final String username = body.getUuid();//环信ID
                     final String password = body.getPassword();//环信密码
@@ -166,6 +167,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                                         EMClient.getInstance().groupManager().loadAllGroups();
                                         EMClient.getInstance().chatManager().loadAllConversations();
                                         MainActivity.intent(mActivity,new String[]{"0"});
+                                        QueQiaoLoveApp.setUserId(Integer.parseInt(body.getUserid()));
                                         finish();
                                         loginActivity.finish();
                                     }

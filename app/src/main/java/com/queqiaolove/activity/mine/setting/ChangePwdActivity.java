@@ -178,6 +178,7 @@ public class ChangePwdActivity extends BaseActivity implements View.OnClickListe
                     tv_obtaincode_changephone.setClickable(false);
                     handler.sendEmptyMessageDelayed(0,60000);
                     Log.e("sms",response.body().getMsg());
+                    toast(response.body().getMsg());
                 }else {
                     toast(response.body().getMsg());
                 }
