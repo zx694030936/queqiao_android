@@ -27,7 +27,7 @@ public class MatchMakingLiveGvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return hdzb_list.size();
     }
 
     @Override

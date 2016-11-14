@@ -109,7 +109,8 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         data = (LiveUrlListBean.ListBean) extras.getSerializable(NORMAL_HORIZONTALLIVE);
         if (data != null) {
             // isend = data.getIsend();
-            isend = "0";
+            isend = data.getIsend();
+            Log.e("phoneisend",isend);
             username = data.getUsername();
             roomid = data.getId();
             watch_num = data.getWatch_num();
@@ -206,8 +207,8 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
         Intent intent = new Intent();
         intent.setClass(activity, VerticalLiveActivity.class);
         intent.putExtra(NORMAL_HORIZONTALLIVE, data);
-        intent.putExtra(EaseConstant.EXTRA_USER_ID, "114714059982504528");//测试用的聊天室ID
-//        intent.putExtra(EaseConstant.EXTRA_USER_ID, data.getGroupid());//测试用的聊天室ID
+//        intent.putExtra(EaseConstant.EXTRA_USER_ID, "114714059982504528");//测试用的聊天室ID
+        intent.putExtra(EaseConstant.EXTRA_USER_ID, data.getGroupid());//测试用的聊天室ID
         intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, 3);//聊天室为3
         activity.startActivity(intent);
     }

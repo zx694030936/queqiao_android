@@ -94,7 +94,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 bean.setWatch_num(data.getWatch_num());
                 bean.setZhibo_fm_pic(data.getZhibo_fm_pic());
 
-                HorizontalLiveActivity.intent(mActivity, data);
+                HorizontalLiveActivity.intent(mActivity, bean);
             }
         });
         //手机直播

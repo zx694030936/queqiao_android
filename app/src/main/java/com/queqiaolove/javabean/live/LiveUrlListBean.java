@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/24.
  */
-public class LiveUrlListBean {
+public class LiveUrlListBean implements Serializable{
 
 
     /**

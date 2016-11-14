@@ -1,6 +1,7 @@
 package com.queqiaolove.fragment.queqiao;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -133,8 +134,8 @@ public class RecommendFragment extends BaseFragment implements View.OnClickListe
                 bean.setUsername(data.getUsername());
                 bean.setWatch_num(data.getWatch_num());
                 bean.setZhibo_fm_pic(data.getZhibo_fm_pic());
-
-                HorizontalLiveActivity.intent(mActivity, data);
+                Log.e("pcplayurl",data.getPlay_rtmp());
+                HorizontalLiveActivity.intent(mActivity, bean);
             }
         });
         //手机直播
