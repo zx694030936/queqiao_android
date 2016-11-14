@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.queqiaolove.R;
 import com.queqiaolove.activity.login.LoginActivity;
 import com.queqiaolove.activity.mine.setting.AboutUsActivity;
@@ -94,8 +96,24 @@ public class SettingMineActivity extends BaseActivity implements View.OnClickLis
         switch (view.getId()){
             case R.id.tv_next://退出账号
                 SharedPrefUtil.clear(mActivity);
-                LoginActivity.intent(mActivity,"");
-                finish();
+                EMClient.getInstance().logout(true, new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        SettingMineActivity.this.finish();
+                        LoginActivity.intent(mActivity,"");
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s) {
+                    }
+                });
+
+
                 break;
             case R.id.iv_back:
                 finish();

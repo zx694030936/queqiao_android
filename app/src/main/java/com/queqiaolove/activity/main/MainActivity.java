@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -469,14 +470,29 @@ public class MainActivity extends FragmentActivity implements  MyRadioGroup.OnCh
         super.onSaveInstanceState(outState);
     }
 
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_BACK) {
-//			//moveTaskToBack(false);
-//			return true;
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			//moveTaskToBack(false);
+            EMClient.getInstance().logout(true, new EMCallBack() {
+                @Override
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onError(int i, String s) {
+
+                }
+
+                @Override
+                public void onProgress(int i, String s) {
+                }
+            });
+            finish();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 
 

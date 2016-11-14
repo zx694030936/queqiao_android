@@ -168,7 +168,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             tv_attention = (TextView) mContentView.findViewById(R.id.tv_attention_verticalnolive);
             tv_roomid = (TextView) mContentView.findViewById(R.id.tv_roomid_verticalnolive);
 
-            ll_bottom = (LinearLayout) mContentView.findViewById(R.id.ll_bottom);
+            /*ll_bottom = (LinearLayout) mContentView.findViewById(R.id.ll_bottom);
             img_message = (ImageView) mContentView.findViewById(R.id.img_message);
             rl_bottom = (RelativeLayout) mContentView.findViewById(R.id.rl_bottom);
             edit_text = (EditText) mContentView.findViewById(R.id.edit_text);
@@ -176,7 +176,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             tv_send.setOnClickListener(this);
             img_message.setOnClickListener(this);
             img_sendgif = (ImageView) mContentView.findViewById(R.id.img_sendgif);
-            img_sendgif.setOnClickListener(this);
+            img_sendgif.setOnClickListener(this);*/
         }
 
         initEventData();
@@ -414,7 +414,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             vo.setUserId("unfind");
             vo.setNum(1);
             giftManger.addGift(vo);
-            GiftVo vo2 = new GiftVo();
+            /*GiftVo vo2 = new GiftVo();
             vo2.setUserId("unfind");
             vo2.setNum(1);
             giftManger.addGift(vo2);
@@ -434,7 +434,7 @@ public class VerticalLiveActivity extends BaseActivity implements View.OnClickLi
             GiftVo vo6 = new GiftVo();
             vo6.setUserId("xiao");
             vo6.setNum(1);
-            giftManger.addGift(vo6);
+            giftManger.addGift(vo6);*/
 
         }
     }

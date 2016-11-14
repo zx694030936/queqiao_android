@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.queqiaolove.QueQiaoLoveApp;
 import com.queqiaolove.R;
 import com.queqiaolove.base.BaseActivity;
 import com.queqiaolove.base.ContentPage;
@@ -135,7 +136,8 @@ public class HomePusherActivity extends BaseActivity implements View.OnClickList
     /*获取推流地址*/
     private void getPushUrl() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.put(Constants.USERID, 2);
+        userid = QueQiaoLoveApp.getUserId();
+        map.put(Constants.USERID, userid);
         map.put(Constants.IF_OPEN, Constants.IF_OPEN_OPEN);
 
         map.put(Constants.TICKET_PRICE, ticket_price);
